@@ -1,0 +1,106 @@
+Before writing the code for the task "TASK_NAME_TEMPLATE". Here are some runtime errors that you do not want to make. Please confirm that you understand these runtime errors.
+
+"""
+- environment.py, line 338, in info
+    pos, rot = p.getBasePositionAndOrientation(obj_id)
+TypeError: an integer is required (got type NoneType)
+
+- task.py, line 118, in act
+    objs, matches, targs, replace, rotations, _, _, _ = self.goals[0]
+IndexError: list index out of range
+
+- task.py, line 308, in is_match
+    diff_pos = np.float32(pose0[0][:2]) - np.float32(pose1[0][:2])
+TypeError: 'float' object is not subscriptable
+
+- task.py", line 315, in is_match
+  rot1 = np.array(utils.quatXYZW_to_eulerXYZ(pose1[1]))[2]
+
+- utils.py", line 280, in quatXYZW_to_eulerXYZ
+  quaternion_wxyz = np.array([q[3], q[0], q[1], q[2]])
+IndexError: tuple index out of range
+
+- pallet_pose = self.get_random_pose(env, pallet_size)
+pallet_surface_height = pallet_pose[0][2]
+TypeError: 'NoneType' object is not subscriptable
+
+- No such file or directory: './cliport/environments/assets/circle/circle-template.urdf'
+
+- No such file or directory: './cliport/environments/assets/block/block-template.urdf'
+
+- task.py", line 308, in is_match
+    diff_pos = np.float32(pose0[0][:2]) - np.float32(pose1[0][:2])
+IndexError: invalid index to scalar variable.
+
+- generated_task.py", line 41, in reset
+    utils.COLORS['green'], utils.COLORS['blue'], utils.COLORS['indigo'],
+KeyError: 'indigo'
+
+-TypeError: get_random_size() missing 4 required positional arguments: 'min_y', 'max_y', 'min_z', and 'max_z' 
+
+- task.py", line 195, in reward
+    obj_pts, zones = params
+TypeError: cannot unpack non-iterable NoneType object
+
+-  environment.py", line 230, in step
+    reward, info = self.task.reward() if action is not None else (0, {})
+  File "/home/liruiw/Projects/cliport/cliport/tasks/task.py", line 200, in reward
+    pts = obj_pts[obj_id]
+IndexError: arrays used as indices must be of integer (or boolean) type
+
+- environment.py", line 195, in reset
+    self.task.reset(self)
+  File "<string>", line 38, in reset
+TypeError: can only concatenate str (not "list") to str
+
+- environment.py", line 195, in reset
+  object_shape = np.random.choice(object_shapes)
+  in numpy.random.mtrand.RandomState.choice
+ValueError: a must be 1-dimensional
+
+- No such file or directory: 'assets/box-template/box-template.urdf'
+
+- line 38, in reset.py
+{'HALF': box_size / 2}
+TypeError: unsupported operand type(s) for /: 'tuple' and 'int'. box_size is a tuple not a float.
+
+- line 38, in reset.py
+IndexError: tuple index out of range
+box_pose = (pallet_pose[0], pallet_pose[1], pallet_pose[2] + np.sum(box_sizes[:i+1]))
+
+- task.py", line 338, in fill_template
+    for i in range(len(replace[field])):
+TypeError: object of type 'float' has no len().
+
+- task.py", line 325, in get_random_pose
+    pos = (pos[0], pos[1], obj_size[2] / 2)
+IndexError: tuple index out of range
+
+- task.py", line 206, in reward
+    for zone_idx, (zone_pose, zone_size) in enumerate(zones):
+TypeError: 'NoneType' object is not iterable
+
+- task.py",
+ball_pose = self.get_random_pose(env, ball_size)
+ball_pose[0][2] += 0.02
+TypeError: 'tuple' object does not support item assignment
+"""
+
+
+You do not want to make mistakes such as
+- using assets (urdfs) that do not exist
+- use get_random_pose or add_object without checking if they return None afterwards. Should skip these objects if these functions failed.
+- designing goals or tasks that are impossible to finish
+- use too sparse task reward. Should assign subgoal reward for each subgoal. I.e. the `step_max_reward` argument in `add_goal()` should be less than 1 for multistep tasks such as stacking. And `add_goal()` need to be called multiple times. 
+- use ambiguous language descriptions as goals. For instance, "place the colored blocks into the matching colored bowls" with one goal and sparse reward as the task instead of adding subgoal "place blue block into blue bowl" and give continuous reward. 
+- set the wrong number of subgoals (for example only set one goal) or total timesteps in a multi-step task
+- `matches` in the goal has wrong dimensions. It should have the same dimensions as number of objects (N) multiplied by the number of goal poses (M). Usually it is N by M.
+- have vector dimension problem such as `np.random.choice(box_size)` or `box_size / 2` where `box_size` is a tuple and not an int
+- make too large an object for stacking or make the task objects invisible for picking. 
+- accessing index out of bound `pallet_pose[2]` for `pallet_pose`.  `pallet_pose=get_random_pose` returns a tuple (translation, rotation). It does not have 3rd component. Similarly accessing `container_pose[2]` or `box_pose[2]` would cause errors as well. Since it's a tuple, try to modify it in-place will also trigger errors.
+- forget to replace str using `fill_template()` for urdfs with template such as `cylinder-template.urdf`. `ball-template.urdf`, `line-template.urf`. 
+- forget to import libraries before using them such as `from cliport.tasks import primitives` and `from cliport.tasks.grippers import Spatula`
+- divide tuple by int. This will cause syntax errors such as when you do `ball_size / 2` and `cylinder_size / 2` when these sizes are tuples.
+- use `self.ee = Spatula()` as a function when doing pushing tasks, which is incorrect. It should be `self.ee = Spatula`.
+- forget to compute target poses `targ_poses` for matching.
+- change colors of complex objects such as `zone`. You can only change color of teomplate primitive such as `cylinder-template`.

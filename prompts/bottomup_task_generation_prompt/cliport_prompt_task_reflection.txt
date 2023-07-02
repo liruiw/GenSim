@@ -1,0 +1,76 @@
+
+
+Do you think your task is sufficently interesting to be added as a new task for future task given that we already have the following task name and descriptions? Moreover, does the simulation code achieve the goal and the language descriptions in the task? Be as rigorous and high-standard as possible.
+
+Reminder:
+your task:
+TASK_STRING_TEMPLATE
+
+TASK_CODE_TEMPLATE
+
+current task list:
+CURRENT_TASK_NAME_TEMPLATE
+
+=========
+Reply explain your reasons and then say True or False, formatted in a python dictionary, do not miss commas or add extra spaces. Here are some examples.
+
+{
+	"task_name": "sort-color-blocks",
+	"task_descriptions": "Pick up differently colored blocks and place them into separate bowls of matching color."
+    "assets-used": ["bowl.urdf", "yellow-bowl.urdf", "box/box-template.urdf],
+	"reasons": "not interesting because it overlaps with the current task `put-block-in-bowl`"
+	"add_to_the_task_list": "False",
+}
+
+{
+  	"task-name": "guided-ball-maze",
+  	"task-description": "Navigate a small ball through a maze by tilting the maze board to reach the target zone.",
+  	"assets-used": ["zone-template.urdf", "square-template.urdf", "ball.urdf", "maze.urdf"],
+   	"reasons": "the language descriptions are too ambiguous. Navigation is also hard to complete."
+  	"add_to_the_task_list": "False",  
+}
+
+{
+ 	"task-name": "sort-blocks-by-zone",
+ 	"task-description": "Sort different colored blocks into their corresponding colored zones marked on the tabletop.",
+ 	"assets-used": ["zone/zone.urdf", "stacking/block.urdf"],
+	"reasons": "the task is not covered in the current list and is an interesting combination of zone and block objects." 
+	"add_to_the_task_list": "True",
+}
+
+{
+    "task-name": "insert_cylinder_in_sphere",
+    "task-description": "Pick up the cylinder and insert it into the sphere with an opening on top.",
+    "assets-used": ["cylinder/cylinder-template.urdf", "sphere/sphere-template.urdf"],
+    "reasons": "this task does not make sense. The sphere does not have an opening on top, and you cannot insert a cylinder into a sphere.", 
+    "add_to_the_task_list": "False",
+}
+
+{
+    "task-name": "arrange-blocks-on-pallet",
+    "task-description": "arrange the blocks on the pallet in the order: red, orange, yellow, green, blue, and purple.",
+    "assets-used": ["stacking/block.urdf", "pallet/pallelt.urdf"],
+    "reasons": "this task overlaps with `arrange-boxes-on-pallet` by merely changing the blocks to boxes.", 
+    "add_to_the_task_list": "False",
+}
+
+{
+    "task-name": "cylinder-color-alignment",
+    "task-description": "Pick up cylinders of different colors and align them inside a box in the order of the colors displayed on the single green line on the tabletop.",
+    "assets-used": ["cylinder/cylinder-template.urdf", "box/box-template.urdf", "line/single-green-line-template.urdf   
+    "reasons": "the execution code only has one goal, i.e. it will only move one cylinder on top of the box, which is not that interesting.", 
+    "add_to_the_task_list": "False","]
+}
+
+{
+    "task-name": "build-bridge",
+    "task-description": "Construct a bridge using two yellow blocks and three blue blocks. Firstly, place the two yellow blocks on each of the two bases parallel to each other with a fair amount of space in between. Then, place the blue block horizontally on top of the yellow blocks.",
+     "assets-used": ["block/block.urdf", "ball/ball-template.urdf"]
+    "reasons": "this task is an interesting and long-horizon task for pick and place primitives. Training manipulation agent with this skill will be a useful building block for next skills.", 
+    "add_to_the_task_list": "True",
+}
+
+=========
+
+Please incorporate these feedbacks when you design new task!
+

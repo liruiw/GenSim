@@ -1,0 +1,30 @@
+# @package _global_
+root_dir: ${oc.env:AUTOSIM_ROOT} # set this ENV variable if you didn't `python setup.py develop`
+
+tag: default
+debug: False
+gpt_temperature: 0.8 # GPT-4 response temperature. higher means more diversity
+prompt_folder: vanilla_task_generation_prompt # the prompt folder that stores the prompt chain
+max_env_run_cnt: 3 # maximum number of runs for each environment
+trials: 10 # how many times of spawning each environment generated
+output_folder: 'output/output_stats'
+model_output_dir: '' # to be filled in with date
+gpt_model: "gpt-4-0613" # which openai gpt model to use
+openai_key: ${oc.env:OPENAI_KEY}
+
+# Advanced options
+task_description_candidate_num: -1 # the number of sample task descriptions. -1 means all 
+task_asset_candidate_num: -1 # the number of sample task descriptions. -1 means all 
+task_code_candidate_num: 4 # the number of sample task code. -1 means all 
+
+
+# Save and Load Memory
+prompt_data_path: prompts/data/
+save_memory: False # save the assets, task code, task descriptions generated offline
+load_memory: False # load the assets, task code, task descriptions generated offline
+use_template: False # use template when constructing prompts, better for scaling
+reflection_agreement_num: 2 # how many models that need to agree to add a new task in reflection
+
+target_task_name: "" # specific desired task name
+save_code_early: False # ignore test and save the code after implementation
+load_task_num: -1 # how many tasks to load from offline

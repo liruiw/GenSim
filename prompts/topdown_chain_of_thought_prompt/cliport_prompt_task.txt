@@ -1,0 +1,94 @@
+You are an AI in robot simulation code and task design. I will provide you some example tasks, code implementation, and some guidelines for how to generate tasks and then you will help me generate a new task for tabletop manipulation. My goal is to design creative and feasible simpler tasks to eventually help solve the task `TARGET_TASK_NAME`. I will first ask you to describe the task in natural languages and then will let you write the code for it. 
+
+=========
+Here are all the assets. Please try to come up with tasks using only these assets. 
+"""
+TASK_ASSET_PROMPT
+"""
+
+There are certain rules on the asset usage.
+1. Sweeping piles task must have small blocks `block/small.urdf` and zones `zone.urdf`. Only the piles can be swept in all assets
+2. Insertion tasks must have `insertion/ell.urdf` and `insertion/fixture.urdf`. Only the fixture can be inserted in all assets.
+
+=========
+Here are some examples of good tasks. Try to be creative and high standard, and avoid overlapping with these tasks. 
+
+TASK_DESCRIPTION_PROMPT
+
+
+=========
+Here are some bad example task instances with reasons.
+{
+    "task_name": "sort-color-blocks",
+    "task_descriptions": "Pick up differently colored blocks and place them into separate bowls of matching color."
+    "assets-used": ["bowl.urdf", "box/box-template.urdf],
+}
+reasons: not interesting because it overlaps with the current task `put-block-in-bowl`.
+
+{
+    "task-name": "guided-ball-maze",
+    "task-description": "Navigate a small ball through a maze by tilting the maze board to reach the target zone.",
+    "assets-used": ["zone-template.urdf", "square-template.urdf", "ball.urdf", "maze.urdf"],
+}
+reasons: the language descriptions are too ambiguous. Navigation is also hard to complete. Also maze.urf does not exist.
+
+{
+    "task-name": "insert_cylinder_in_sphere",
+    "task-description": "Pick up the cylinder and insert it into the sphere with an opening on top.",
+    "assets-used": ["cylinder/cylinder-template.urdf", "sphere/sphere-template.urdf"],
+}
+reasons: this task does not make sense. The sphere does not have an opening on top, and you cannot insert a cylinder into a sphere. Similarly you cannot create task like `insert-ball-into-cylinder`.
+
+{
+    "task-name": "ball-box-obstacle-course",
+    "task-description": "Navigate a ball through an obstacle course created by randomly placed boxes and finally place it inside a container.",
+    "assets-used": ["ball/ball-template.urdf", "box/box-template.urdf", "container/container-template.urdf"]
+}
+reasons: Navigate the ball is not related to tabletop manipulation tasks.
+
+{
+    "task-name": "ball-in-box",
+    "task-description": "Use a cable to guide a ball into an open box.",
+    "assets-used": ["cable/cable.urdf", "ball/ball-template.urdf", "box/box-template.urdf"]
+}
+reasons: This task is too hard since it involves interaction of the cable and the ball and cannot be easily completed.
+
+{
+    "task-name": "ball-in-container",
+    "task-description": "Use the spatula to lift a ball over a wall of boxes and drop it into a container.",
+    "assets-used": ["ball/ball-template.urdf", "box/box-template.urdf", "container/container-template.urdf"]
+}
+reasons: The only action primitives as pick and place. One cannot use a spatula to lift an object.
+
+{
+    "task-name": "line-ball-sorting",
+    "task-description": "Move balls of different colors along a single green line, placing each ball in a designated colored box at the end of the line. The challenge includes precision in maintaining the ball on the line and the correct identification of the box color corresponding to each ball.",
+    "assets-used": ["ball/ball-template.urdf", "box/box-template.urdf", "line/single-green-line-template.urdf"]
+}
+reasons: Piling or stacking balls are physically infeasible in the simulation.
+
+
+{
+    "task-name": "sweep-and-stack-blocks",
+    "task-description": "Sweep a pile of small red and blue blocks into two separate zones marked on the tabletop. Then pick up these blocks in each zone and stack them in two towers according to their colors, with the red tower higher than the blue.",
+    "assets-used": ["zone/zone.urdf", "block/small.urdf"]
+}
+reasons: Cannot do sweeping and stacking in the same task.
+
+=========
+Here are some tasks that you have come up with before. Try to have a high-standard and avoid overlapping with these tasks. For instance, `bowl_ball_placement` and `sort_balls_in_bowls` are the same task. `pile_boxes_in_corner` and `stack_blocks_into_pallet` are similar tasks, `align-cylinder-in-corner` and `align-cylinder-corner` are similar.
+Past Tasks:
+
+PAST_TASKNAME_TEMPLATE
+
+=========
+The goal is to solve the task `TARGET_TASK_NAME` eventually. Due to its complexity, let's think step-by-step about what simpler task can be useful to achieve this goal. Please describe the new task, which is not `TARGET_TASK_NAME` but can help training a policy to generalize torwards it, in natural languages in a clear and detailed way. Think step by step how this task can help contribute to the skills that are quired to solve TARGET_TASK_NAME. Then format the answer in a python dictionary with keys "task-name" and value type string with lower-case and separated by hyphens, "task-description" (one sentence and do not mention urdf paths) and value type string, and "assets-used" and value type list of strings.
+
+Note:
+- Do not use assets that are not in the list above. 
+- Tasks that have more colors and shapes are interesting.
+- Be as specific as possible about the number, shape, and color of each asset in the task descriptions. 
+- The task need to obey physics and remain feasible.
+- Blocks and boxes are easier to stack than cylinders or balls. Specifically, you can update dimensions of a "box/box-template.urdf".
+- Avoiding small obstacles / blocks is not that interesting in this context.
+- Try to use `box-template.urdf` for modifiable blocks instead of `block.urdf'.

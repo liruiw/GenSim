@@ -1,0 +1,16 @@
+Now I will provide you some reference code and you can write the code for the task "TASK_NAME_TEMPLATE". 
+
+"""
+TASK_CODE_REFERENCE_TEMPLATE
+"""
+
+Do not use libraries, functions, and assets that you don't know. For each object, try to describe its color, size, category in the task first before you write the code. You do not need extra helper functions. Comment the code liberally to explain what each piece does and why it's written that way. 
+Note:
+1. Use `make_piles` to create piles of small blocks.
+2. Use `make_ropes` to create cables.
+3. Us `self.primitive = primitives.push` and `self.ee = Spatula` to use spatula.
+4. Do not use random pose or the initial pose for the target poses. Come up with the specified pose. Especially for building tasks, use a consistent `anchor_pose` and use `self.add_corner_anchor_for_pose(env, anchor_pose)` to add an anchor there.
+5. Do not use target poses that are not in the workspace bound `bounds = np.array([[0.25, 0.75], [-0.5, 0.5], [0, 0.3]])`
+
+
+For each object, try to describe its color, size, category in the task first before you write the code. Now write the code for the task "TASK_NAME_TEMPLATE" in python code block starting with ```python.  Reminder: TASK_STRING_TEMPLATE 
