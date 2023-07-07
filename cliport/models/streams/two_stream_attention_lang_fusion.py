@@ -51,7 +51,6 @@ class TwoStreamAttentionLangFusion(Attention):
 
         # Rotate input.
         in_tens = in_tens.permute(0, 3, 1, 2)  # [B 6 W H]
-        # import IPython; IPython.embed()
 
         # in_tens = in_tens.repeat(self.n_rotations, 1, 1, 1)
         # make n copies, but keep batchsize

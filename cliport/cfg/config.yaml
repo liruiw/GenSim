@@ -1,5 +1,5 @@
 # @package _global_
-root_dir: ${oc.env:AUTOSIM_ROOT} # set this ENV variable if you didn't `python setup.py develop`
+root_dir: ${oc.env:GENSIM_ROOT} # set this ENV variable if you didn't `python setup.py develop`
 
 tag: default
 debug: False

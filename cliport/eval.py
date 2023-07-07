@@ -163,7 +163,7 @@ def main(vcfg):
 
         # Save results in a json file.
         if vcfg['save_results']:
-
+            print("save results to:", save_json)
             # Load existing results
             if os.path.exists(save_json):
                 with open(save_json, 'r') as f:
@@ -222,6 +222,7 @@ def list_ckpts_to_eval(vcfg, existing_results):
         ckpt = checkpoint
         ckpts_to_eval.append(ckpt)
 
+    print("ckpts_to_eval:", ckpts_to_eval)
     return ckpts_to_eval
 
 

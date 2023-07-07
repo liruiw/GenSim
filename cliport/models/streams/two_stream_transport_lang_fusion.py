@@ -69,31 +69,10 @@ class TwoStreamTransportLangFusion(Transport):
             in_tensors.append(in_tensor_i)
             crops.append(crop)
 
-        # import time
-        # start_time = time.time()
         logits, kernels = self.transport(torch.cat(in_tensors,dim=0), torch.cat(crops, dim=0), lang_goal)
         res =  self.correlate(logits, kernels, softmax)
         return res
         
-        # # channel_num = kernels.shape[0] // logits.shape[0]
-        # # res = torch.stack([res[i,i*channel_num:(i+1)*channel_num] for i in range(len(logits))], dim=0)
-        # print(f"forward time 1: {time.time() - start_time} {res.mean().item()}")
-
-        # for loop 2
-        # start_time = time.time()        
-        # logits, kernels = self.transport(torch.cat(in_tensors,dim=0), torch.cat(crops,dim=0),  (lang_goal))
-        # res = [self.correlate(logit[None], kernel, softmax) for logit, kernel in zip(logits, kernels.view(len(logits),-1,kernels.shape[1],kernels.shape[2],kernels.shape[3]))]
-        # print(f"forward time 2: {time.time() - start_time} {torch.cat(res,dim=0).mean().item()}")
-        
-        # # for loop
-        # res = []
-        # for i in range(len(in_tensors)):
-        #     logit, kernel = self.transport(in_tensors[i], crops[i], lang_goal[i])
-        #     res.append(self.correlate(logit, kernel, softmax))
-        # print(f"forward time 3: {time.time() - start_time} {torch.cat(res,dim=0).mean().item()}")
-
-        return torch.cat(res, dim=0)
-
 class TwoStreamTransportLangFusionLat(TwoStreamTransportLangFusion):
     """Two Stream Transport (a.k.a Place) module with lateral connections"""
 

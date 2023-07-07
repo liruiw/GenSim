@@ -104,7 +104,6 @@ class TransporterAgent(LightningModule):
         label = label.permute((0, 3, 1, 2)).contiguous()
 
         # Get loss.
-        # print("unique out:", torch.unique(out))
         loss = self.cross_entropy_with_logits(out, label)
 
         # Backpropagate.
@@ -169,6 +168,9 @@ class TransporterAgent(LightningModule):
         label = torch.zeros(label_size, dtype=torch.float, device=output.device)
 
         # remove this for-loop laters
+        q[:,0] = torch.clamp(q[:,0], 0, label.shape[1]-1)
+        q[:,1] = torch.clamp(q[:,1], 0, label.shape[2]-1)
+
         for idx, q_i in enumerate(q):
             label[idx, int(q_i[0]), int(q_i[1]), itheta[idx]] = 1
         label = label.permute((0, 3, 1, 2)).contiguous()
@@ -269,8 +271,6 @@ class TransporterAgent(LightningModule):
         loss0 /= self.val_repeats
         loss1 /= self.val_repeats
         val_total_loss = loss0 + loss1
-        # self.trainer.evaluation_loop.trainer.train_loop.running_loss
-        # self.trainer.evaluation_loop.running_loss.append(val_total_loss)
 
         return dict(
             val_loss=val_total_loss,

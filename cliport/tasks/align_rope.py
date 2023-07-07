@@ -38,7 +38,16 @@ class AlignRope(Task):
         urdf = self.fill_template(square_template, replace)
         env.add_object(urdf, square_pose, 'fixed')
 
-        # ....
+        # Get four corner points of square.
+        corner0 = ( length / 2,  length / 2, 0.001)
+        corner1 = (-length / 2,  length / 2, 0.001)
+        corner2 = ( length / 2, -length / 2, 0.001)
+        corner3 = (-length / 2, -length / 2, 0.001)
+
+        corner0 = utils.apply(square_pose, corner0)
+        corner1 = utils.apply(square_pose, corner1)
+        corner2 = utils.apply(square_pose, corner2)
+        corner3 = utils.apply(square_pose, corner3)
         
         # Four possible alignment tasks.
         task_descs = [

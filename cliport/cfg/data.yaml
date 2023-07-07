@@ -28,6 +28,7 @@ record:
   save_video: False
   save_video_path: ${data_dir}/${task}-${mode}/videos/
   add_text: False
+  add_task_text: True
   fps: 20
   video_height: 640
   video_width: 720
