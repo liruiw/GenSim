@@ -29,7 +29,6 @@ import json
 import operator
 import csv
 
-openai.api_key = "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"
 model = "gpt-4"
 
 def mkdir_if_missing(dst_dir):

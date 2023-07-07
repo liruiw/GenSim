@@ -124,7 +124,7 @@ Overall we explored the use of LLM in simulation environment and task generation
 There are a few limitations which could be interesting future directions
 1. The asset diversity limits how GPT-4 can generate high diverse and creative tasks. One interesting future direction is to explore asset generation jointly with code generation. 
 2. It would be cool to generate thousands of tasks using this pipeline by bootstrapping as well as train an agent that can fit these number of tasks.
-3. It would be interesting to carefully study task-level generalization. We have generated an embedding of tasks by use GPT embedding AI to encode the generated code for each task below.
+3. It would be interesting to carefully study task-level generalization. We have generated a TSNE plot of the task code embeddings by use GPT embedding AI to encode the generated code for each task below.
 
 ![](media/task_embedding.png) 
 
