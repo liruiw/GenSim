@@ -44,7 +44,7 @@ TypeError: cannot unpack non-iterable NoneType object
 
 -  environment.py", line 230, in step
     reward, info = self.task.reward() if action is not None else (0, {})
-  File "/home/liruiw/Projects/cliport/cliport/tasks/task.py", line 200, in reward
+  File "task.py", line 200, in reward
     pts = obj_pts[obj_id]
 IndexError: arrays used as indices must be of integer (or boolean) type
 

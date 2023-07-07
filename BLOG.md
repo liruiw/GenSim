@@ -1,4 +1,4 @@
-# On An Attempt to Supersize Simulation Task Generation in Robotics with LLM
+# Supersize Simulation Task Generation in Robotics with LLM
 
 
 ## Overview
