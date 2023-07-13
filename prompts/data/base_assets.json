@@ -1,0 +1,52 @@
+{
+    "stacking": [
+        "stacking/block.urdf",
+        "stacking/stand.urdf"
+    ],
+    "corner": [
+        "corner/corner-template.urdf"
+    ],
+    "ball": [
+        "ball/ball-template.urdf",
+        "ball/ball.urdf"
+    ],
+    "sphere": [
+        "sphere/sphere.urdf",
+        "sphere/sphere-template.urdf"
+    ],
+    "zone": [
+        "zone/zone.urdf",
+        "zone/zone.obj"
+    ],
+    "block": [
+        "block/block.urdf",
+        "block/block_for_anchors.urdf",
+        "block/small.urdf"
+    ],
+    "pallet": [
+        "pallet/pallet.urdf",
+        "pallet/pallet.obj"
+    ],
+    "cylinder": [
+        "cylinder/cylinder-template.urdf"
+    ],
+    "container": [
+        "container/container-template.urdf"
+    ],
+    "bowl": [
+        "bowl/bowl.urdf"
+    ],
+    "square": [
+        "square/square-template.urdf"
+    ],    
+    "box": [
+        "box/box-template.urdf"
+    ],
+    "line": [
+        "line/line-template.urdf"
+    ],    
+    "insertion": [
+        "insertion/ell.urdf",
+        "insertion/fixture.urdf"
+    ]
+}
