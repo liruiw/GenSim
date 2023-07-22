@@ -1058,15 +1058,16 @@ def get_colors(mode, n_colors=-1, **kwargs):
     return [COLORS[cn] for cn in all_color_names], all_color_names
 
 def get_colors_names(mode):
-    if mode == 'train':
-        return TRAIN_COLORS
-    elif mode == 'full':
-        return TRAIN_COLORS + EVAL_COLORS
-    else:
-        return EVAL_COLORS
+    return TRAIN_COLORS
+    # if mode == 'train':
+    #     return TRAIN_COLORS
+    # elif mode == 'full':
+    #     return TRAIN_COLORS + EVAL_COLORS
+    # else:
+    #     return EVAL_COLORS
 
 def get_random_color():
-    return self.get_colors(mode='train', n_colors=1)
+    return get_colors(mode='train', n_colors=1)
 
 def solve_hanoi_all(n_disks):
     # Solve Hanoi sequence with dynamic programming.
