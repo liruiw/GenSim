@@ -1063,12 +1063,7 @@ def get_colors(mode, n_colors=-1, **kwargs):
     return [COLORS[cn] for cn in all_color_names], all_color_names
 
 def get_colors_names(mode):
-    if mode == 'train':
-        return TRAIN_COLORS
-    elif mode == 'full':
-        return TRAIN_COLORS
-    else:
-        return TRAIN_COLORS
+    return TRAIN_COLORS
 
 def get_random_color():
     return get_colors(mode='train', n_colors=1)
