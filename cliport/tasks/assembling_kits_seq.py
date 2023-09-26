@@ -81,9 +81,10 @@ language instruction at each timestep."""
         target_idxs = list(range(n_objects))
         np.random.shuffle(target_idxs)
         for i in target_idxs:
-            self.add_goal(objs=[objects[i]], matches=np.int32([[1]]), targ_poses=[targets[i]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / n_objects)
-            self.lang_goals.append(self.lang_template.format(color=color_names[i],
+            language_goal = (self.lang_template.format(color=color_names[i],
                                                              obj=shapes[obj_shapes[i]],
                                                              loc=targets_spatial_desc[i]))
+            self.add_goal(objs=[objects[i]], matches=np.int32([[1]]), targ_poses=[targets[i]], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1 / n_objects, language_goal=language_goal)
+            
         self.max_steps = n_objects

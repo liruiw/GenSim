@@ -1,62 +1,37 @@
-"""Aligning task."""
-
-import numpy as np
-from cliport.tasks.task import Task
-from cliport.utils import utils
-import os
-import pybullet as p
-import random
 import numpy as np
 from cliport.tasks import primitives
-from cliport.tasks.grippers import Spatula
 from cliport.tasks.task import Task
 from cliport.utils import utils
-
+import random
+import pybullet as p
+import os
 
 class GeneratedTask(Task):
-    """Move two piles of small blocks, one red and one blue, along their respective lines drawn on the tabletop into a marked zone. Each pile should be moved along a unique line and into a different zone."""
-
+    """Construct a pyramid with six blocks of different colors (red, blue, green, yellow, orange, and purple). Arrange the blocks in a specific order to form a pyramid on the tabletop."""
     def __init__(self):
         super().__init__()
-        self.max_steps = 20
-        self.lang_template = "move the piles of blocks along the lines into the marked zones"
-        self.task_completed_desc = "done moving piles."
-        self.primitive = primitives.push
-        self.ee = Spatula
+        self.max_steps = 10
+        self.lang_template = "place the block on top of the cylinder on the pallet"
+        self.task_completed_desc = "done placing block on cylinder."
         self.additional_reset()
-
     def reset(self, env):
         super().reset(env)
-
-        # Add two lines.
-        line_size = (0.12, 0.01, 0.01)
-        line_urdf = 'line/line-template.urdf'
-        line_poses = []
-        for _ in range(2):
-            line_pose = self.get_random_pose(env, line_size)
-            env.add_object(line_urdf, line_pose, 'fixed')
-            line_poses.append(line_pose)
-
-        # Add two zones.
-        zone_size = (0.12, 0.12, 0)
-        zone_urdf = 'zone/zone.urdf'
-        zone_poses = []
-        for _ in range(2):
-            zone_pose = self.get_random_pose(env, zone_size)
-            env.add_object(zone_urdf, zone_pose, 'fixed')
-            zone_poses.append(zone_pose)
-
-        # Add two piles of blocks.
+        # Add pallet.
+        pallet_size = (0.35, 0.35, 0.01)
+        pallet_pose = self.get_random_pose(env, pallet_size)
+        pallet_urdf = 'pallet/pallet.urdf'
+        env.add_object(pallet_urdf, pallet_pose, 'fixed')
+        # Add cylinder.
+        cylinder_size = (0.05, 0.05, 0.1)
+        cylinder_pose = self.get_random_pose(env, cylinder_size)
+        cylinder_urdf = 'cylinder/cylinder.urdf'
+        cylinder_id = env.add_object(cylinder_urdf, cylinder_pose)
+        # Add block.
         block_size = (0.04, 0.04, 0.04)
-        block_urdf = 'block/small.urdf'
-        block_colors = [utils.COLORS['red'], utils.COLORS['blue']]
-        piles = []
-        for i in range(2):
-            pile = self.make_piles(env, num_piles=1, num_objs=5, obj_size=block_size, obj_urdf=block_urdf, obj_color=block_colors[i])
-            piles.append(pile)
-
-        # Add goals.
-        for i in range(2):
-            self.add_goal(objs=piles[i], matches=np.ones((len(piles[i]), 1)), targ_poses=[zone_poses[i]], replace=False,
-                rotations=False, metric='zone', params=[(zone_poses[i], zone_size)], step_max_reward=1/2)
-        self.lang_goals.append(self.lang_template)
+        block_urdf = 'block/block.urdf'
+        block_pose = self.get_random_pose(env, block_size)
+        block_id = env.add_object(block_urdf, block_pose)
+        # Goal: the block is on top of the cylinder on the pallet.
+        self.add_goal(objs=[block_id], matches=np.ones((1, 1)), targ_poses=[cylinder_pose], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1,
+                language_goal=self.lang_template)

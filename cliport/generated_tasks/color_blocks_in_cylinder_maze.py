@@ -44,10 +44,8 @@ class ColorBlocksInCylinderMaze(Task):
 
         # Goal: red, yellow, and blue blocks are in the first, second, and third cylinder respectively.
         self.add_goal(objs=blocks[:3], matches=np.ones((3, 3)), targ_poses=cylinder_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, language_goal=self.lang_template)
 
         # Goal: green and orange blocks are stacked on top of any cylinder.
         self.add_goal(objs=blocks[3:], matches=np.ones((2, 3)), targ_poses=cylinder_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2)
-
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, language_goal=self.lang_template)

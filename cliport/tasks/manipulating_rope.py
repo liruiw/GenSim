@@ -45,8 +45,7 @@ class ManipulatingRope(Task):
         # IMPORTANT: use `make_ropes` to add cable (series of articulated small blocks).
         objects, targets, matches = self.make_ropes(env, corners=(corner_0, corner_1))
         self.add_goal(objs=objects, matches=matches, targ_poses=targets, replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=1.)
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='pose', params=None, step_max_reward=1., lang_goal=self.lang_template)
 
         for i in range(480):
             p.stepSimulation()

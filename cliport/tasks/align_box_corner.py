@@ -55,5 +55,5 @@ class AlignBoxCorner(Task):
 
         # Goal: box is aligned with corner (1 of 4 possible poses).
         self.add_goal(objs=[box_id], matches=np.int32([[1, 1, 1, 1]]), targ_poses=[corner_pose, pose1, pose2, pose3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1, symmetries=[2 * np.pi])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1, symmetries=[2 * np.pi],
+                language_goal=self.lang_template)

@@ -54,5 +54,5 @@ class CylinderStandAlignment(Task):
         # Goal: each cylinder is on a stand of the same color.
         for i in range(4):
             self.add_goal(objs=[cylinders[i]], matches=np.ones((1, 1)), targ_poses=[stands[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-            self.lang_goals.append(self.lang_template.format(color=color_names[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                          language_goal=self.lang_template.format(color=color_names[i]))

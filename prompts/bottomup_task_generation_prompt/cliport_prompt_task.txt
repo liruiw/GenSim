@@ -84,7 +84,7 @@ reasons: Cannot do sweeping and stacking in the same task.
 
 
 =========
-Now please describe the new task in natural languages and explain its novelty and challenges. Format the answer in a python dictionary with keys "task-name" and value type string, "task-description" (one specific sentence) and value type string with lower-case and separated by hyphens, and "assets-used" and value type list of strings. Try to be as creative as possible.
+Now please describe the new task in natural languages. Format the answer in a python dictionary with keys "task-name" and value type string, "task-description" (one specific sentence) and value type string with lower-case and separated by hyphens, and "assets-used" and value type list of strings. Try to be as creative as possible.
 
 Note:
 - Do not use assets that are not in the list above. 

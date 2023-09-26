@@ -63,11 +63,11 @@ class MulticolorBlockBridge(Task):
         # Goal: blocks are stacked on the pallet in the order red, blue, green.
         for i in range(9):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[targs[i // 3]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / 9, symmetries=[np.pi/2])
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / 9, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: cylinders are placed on top of the stacked blocks.
         for i in range(3):
             self.add_goal(objs=[cylinders[i]], matches=np.ones((1, 1)), targ_poses=[targs[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2], 
+                          language_goal=self.lang_template)

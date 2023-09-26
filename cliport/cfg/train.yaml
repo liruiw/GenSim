@@ -10,7 +10,7 @@ hydra:
 dataset:
   type: 'single' # 'single' or 'multi'
   images: True
-  cache: False # load episodes to memory instead of reading from disk
+  cache: True # load episodes to memory instead of reading from disk
   augment:
     theta_sigma: 60 # rotation sigma in degrees; N(mu = 0, sigma = theta_sigma).
 
@@ -29,7 +29,7 @@ train:
 
   # hyper params
   n_rotations: 36
-  batch_size: 1
+  batch_size: 8
   batchnorm: False # important: False because batch_size=1
   lr: 1e-4
 
@@ -39,13 +39,15 @@ train:
   training_step_scale: 200 # How many epochs are needed. 100 data sample requires 20000 steps. -1 means ignored.
 
   # script configs
-  gpu: [0] # -1 for all
-  log: True # log metrics and stats to wandb
-  n_val: 100
+  gpu: -1 # -1 for all
+  log: False # log metrics and stats to wandb
+  n_val: 1
   val_repeats: 1
   save_steps: [1000, 2000, 3000, 4000, 5000, 7000, 10000, 20000, 40000, 80000, 120000, 160000, 200000, 300000, 400000, 500000, 600000, 800000, 1000000, 1200000]
   load_from_last_ckpt: False # still change to True
 
+  # sim to real
+  data_augmentation: False # additional data augmentation for simtoreal
 wandb:
   run_name: 'cliport0'
   logger:

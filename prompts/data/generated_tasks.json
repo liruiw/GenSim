@@ -93,20 +93,12 @@
             "container/container-template.urdf"
         ]
     },
-    "insert-blocks-into-fixture": {
-        "task-name": "insert-blocks-into-fixture",
-        "task-description": "Pick up four colored blocks (red, blue, green, and yellow) and insert them one-by-one into a fixture on the tabletop. The order of insertion starts with the red block, followed by the blue, green, and lastly the yellow block.",
-        "assets-used": [
-            "block/block.urdf",
-            "insertion/fixture.urdf"
-        ]
-    },
     "color-coordinated-block-tower": {
         "task-name": "color-coordinated-block-tower",
-        "task-description": "Stack four blocks on a pallet in the following order from bottom to top: two blue blocks side by side, one red block centered on the blue blocks, and one green block on top of the red block.",
+        "task-description": "On a tabletop, there are fifteen blocks of three different colors (five red, five blue, and five green). The task is to pick up these blocks and stack them onto three different stands on the table, creating three different towers. Each stand should have a tower of the same color blocks with five blocks each. The blocks in each tower should be stacked in a way that the block on top is slightly displaced in relation to the block underneath, creating a spiral-like effect. The challenge lies in the color-based sorting, precise placement for achieving the spiral effect and careful stacking of the blocks to avoid toppling.",
         "assets-used": [
             "block/block.urdf",
-            "pallet/pallet.urdf"
+            "stacking/stand.urdf"
         ]
     },
     "color-structured-block-tower": {
@@ -162,15 +154,6 @@
             "block/block.urdf",
             "corner/corner-template.urdf",
             "cylinder/cylinder-template.urdf"
-        ]
-    },
-    "align-cylinders-in-square": {
-        "task-name": "align-cylinders-in-square",
-        "task-description": "Arrange four cylinders of different colors (red, blue, green, yellow) on the corners of a square facing the center. The square is outlined by four zones of matching colors at each corner. The red cylinder should be placed at the red zone and facing the center of the square, and same for the remaining colors.",
-        "assets-used": [
-            "cylinder/cylinder-template.urdf",
-            "zone/zone.urdf",
-            "square/square-template.urdf"
         ]
     },
     "construct-corner-blocks": {
@@ -230,10 +213,10 @@
     },
     "color-coordinated-sphere-insertion": {
         "task-name": "color-coordinated-sphere-insertion",
-        "task-description": "There are four spheres and four bowls on the table, each coming in one of the following colors: red, blue, green, or yellow. The task is to insert each sphere into the bowl of the same color. The challenge is in the precise placement and color matching.",
+        "task-description": "There are four spheres and four boxes of different colors (red, blue, green, and yellow). Each sphere is inside a box, but not corresponding to the color of the box. The task is to pick up each sphere and place it in the box of the same color. The challenge lies in the precise placement and color matching.",
         "assets-used": [
-            "sphere/sphere-template.urdf",
-            "bowl/bowl.urdf"
+            "sphere/sphere.urdf",
+            "box/box-template.urdf"
         ]
     },
     "block-pyramid-with-limited-space": {
@@ -287,13 +270,6 @@
             "pallet/pallet.urdf"
         ]
     },
-    "triangle-block-arrangement": {
-        "task-name": "triangle-block-arrangement",
-        "task-description": "Arrange blocks of three different colors (red, green, and blue) in a triangular layout on the tabletop. The base of the triangle should consist of three red blocks, followed by a row of two green blocks, and finally a single blue block at the top of the triangle. The task is challenging due to the need for precise placement and color coordination.",
-        "assets-used": [
-            "block/block.urdf"
-        ]
-    },
     "place-ball-in-elevated-bowl": {
         "task-name": "place-ball-in-elevated-bowl",
         "task-description": "The primary objective of the task is to pick up a red ball and carefully place it into a bowl, which is positioned on a raised platform that is surrounded by small blocks. The challenge lies in precise navigation, maintaining a hold of the ball, and avoiding the surrounding blocks.",
@@ -331,7 +307,7 @@
         "task-name": "sphere-align-stand",
         "task-description": "On a table there are five differently colored stands and five spheres. The task involves picking up each sphere and placing it on the stand of the matching color. The task is challenging due to the precision required in picking up and placing the spheres, and the color coordination.",
         "assets-used": [
-            "stand/stand.urdf",
+            "stacking/stand.urdf",
             "sphere/sphere.urdf"
         ]
     },
@@ -375,21 +351,12 @@
             "insertion/fixture.urdf"
         ]
     },
-    "color-coordinated-cylinders-in-boxes": {
-        "task-name": "color-coordinated-cylinders-in-boxes",
-        "task-description": "Arrange four cylinders of different colors (red, blue, green, and yellow) into four matching colored boxes, such that each box contains a cylinder of the same color. The task is challenging due to the manipulation of cylindrical objects and the color coordination required.",
-        "assets-used": [
-            "cylinder/cylinder-template.urdf",
-            "box/box-template.urdf"
-        ]
-    },
     "color-coordinated-insertion": {
         "task-name": "color-coordinated-insertion",
-        "task-description": "There are four fixtures and four blocks on the table, each coming in one of the following colors: red, blue, green, or yellow. The task is to insert each block into the fixture of the same color, and then place these fixtures onto a pallet. The challenge lies in the precise insertion, color matching, and careful placement of the fixtures onto the pallet.",
+        "task-description": "There are three insertion fixtures and three ell shaped blocks of different colors (red, blue, green) on the table top. The task is to pick up the ell shaped blocks and insert each one of them into the fixture of the same color. However, the ell blocks should be inserted in a specific sequence - red first, then blue, and finally green. This task is challenging due to the precision required for insertion and the need for color coordination and sequencing.",
         "assets-used": [
-            "block/block.urdf",
-            "insertion/fixture.urdf",
-            "pallet/pallet.urdf"
+            "insertion/ell.urdf",
+            "insertion/fixture.urdf"
         ]
     },
     "cylinder-stand-alignment": {
@@ -398,14 +365,6 @@
         "assets-used": [
             "cylinder/cylinder-template.urdf",
             "stacking/stand.urdf"
-        ]
-    },
-    "color-coordinated-container-sorting": {
-        "task-name": "color-coordinated-container-sorting",
-        "task-description": "On the table there are four different colored containers (red, blue, green and yellow) and sixteen blocks of the same four colors (four blocks of each color). The task challenges the robot to pick up these blocks and sort them into the containers of the same color, with each container having one of each color of blocks in it. To make the task interesting, each container should have the blocks in a different order. One container might have them in the order red, blue, green, yellow; another one in the order yellow, green, blue, red; and the last two could have them in the orders green, red, yellow, blue; and blue, yellow, red, green. The robot would need to first identify the correct container for sorting, and then plan the correct order of the blocks.",
-        "assets-used": [
-            "block/block.urdf",
-            "container/container-template.urdf"
         ]
     },
     "color-sorted-block-race": {
@@ -422,14 +381,6 @@
         "assets-used": [
             "block/block.urdf",
             "pallet/pallet.urdf"
-        ]
-    },
-    "color-linked-ball-bowl-ordering": {
-        "task-name": "color-linked-ball-bowl-ordering",
-        "task-description": "On a tabletop, there are four bowls and four balls of different colors (red, blue, green, and yellow). Each ball is inside a bowl, but not corresponding to the color of the bowl. The task is to pick up each ball and place it in the bowl of the same color, in the specific sequence of red, blue, green and yellow from left to right. The challenge lies in the precise placement, color matching and sequence following.",
-        "assets-used": [
-            "bowl/bowl.urdf",
-            "ball/ball.urdf"
         ]
     },
     "color-blocks-in-cylinder-maze": {
@@ -480,6 +431,818 @@
         "assets-used": [
             "block/block.urdf",
             "pallet/pallet.urdf"
+        ]
+    },
+    "align-balls-in-colored-boxes": {
+        "task-name": "align-balls-in-colored-boxes",
+        "task-description": "On a tabletop, there are four balls and four boxes of different colors (red, blue, green, and yellow). Each ball is inside a box, but not corresponding to the color of the box. The task is to pick up each ball and place it in the box of the same color, in the specific sequence of red, blue, green and yellow from left to right. The challenge lies in the precise placement, color matching and sequence following.",
+        "assets-used": [
+            "ball/ball.urdf",
+            "box/box-template.urdf"
+        ]
+    },
+    "colored-balls-sorting-in-corner": {
+        "task-name": "colored-balls-sorting-in-corner",
+        "task-description": "There are four balls and four corners of different colors (red, blue, green, and yellow). Each ball is located at a corner, but not corresponding to the color of the corner. The task is to pick up each ball and place it in the corner of the same color, in the specific sequence of red, blue, green and yellow, starting from the leftmost corner to the rightmost. The challenge lies in the precise placement, color matching and sequence following.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "color-coordinated-ball-insertion": {
+        "task-name": "color-coordinated-ball-insertion",
+        "task-description": "There are three balls of different colors (blue, yellow, green) and three ell-shaped fixtures of matching colors on the tabletop. The task is to pick up each ball and insert it into the ell-shaped fixture of the same color. The insertion should follow a specific sequence - blue first, then yellow, and finally green.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "insertion/ell.urdf"
+        ]
+    },
+    "color-sequenced-pyramid-packing": {
+        "task-name": "color-sequenced-pyramid-packing",
+        "task-description": "There are twelve cubes of different colors (three red, three green, three blue, and three yellow) scattered on the tabletop. The task is to pick up the cubes, sort them according to color into four pallets, and stack them in each pallet as a pyramid with the base layer containing two cubes and the top layer containing one cube. The challenge lies in the color-based sorting, the precise placement of cubes, and the construction of the pyramid in each pallet.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "ball-sorting-with-blocks-barrier": {
+        "task-name": "ball-sorting-with-blocks-barrier",
+        "task-description": "On a tabletop, there are four balls and four zones of different colors (red, blue, green, and yellow). Each ball is located behind a line of small blocks of the same color. The task is to pick up each ball and place it into the zone of the same color, but without knocking over the blocks. The challenge lies in the precise navigation over the block barriers and color matching.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "zone/zone.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "color-coordinated-block-bridge": {
+        "task-name": "color-coordinated-block-bridge",
+        "task-description": "Construct a bridge by interleaving three differently colored blocks (red, blue, and green) on a pallet in a specific sequence - red block at the edges, blue block in the middle, and a green block on top of the red and blue blocks. Repeat this sequence until a bridge is formed across the length of the pallet.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-pyramid": {
+        "task-name": "color-coordinated-cylinder-pyramid",
+        "task-description": "Build a pyramid using five different colored cylinders (red, blue, green, yellow, orange) on a square pallet. The sequence from bottom to top should be orange, blue, green, yellow, and red.",
+        "assets-used": [
+            "pallet/pallet.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "sweep-and-sort-blocks": {
+        "task-name": "sweep-and-sort-blocks",
+        "task-description": "Sweep a pile of small blocks of different colors (red, blue, green, and yellow) into their corresponding colored zones marked on the tabletop. The challenge lies in the sweeping action, precise placement, and color coordination.",
+        "assets-used": [
+            "zone/zone.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "align-cylinders-in-zones": {
+        "task-name": "align-cylinders-in-zones",
+        "task-description": "Place four differently colored cylinders (red, blue, green, yellow) each into a matching colored zone. But, the zones are surrounded by small blocks, which the robot needs to move out of the way without knocking them out of their respective zones. The challenge includes precise placement of cylinders, color matching, and careful navigation around the small blocks.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "sphere-container-color-match": {
+        "task-name": "sphere-container-color-match",
+        "task-description": "On a tabletop, there are four spheres of different colors (red, blue, green, and yellow) inside four containers of a different color (red, blue, green, and yellow). The task is to pick up each sphere and place it into a container of the same color. The task is challenging due to the manipulation of spherical objects and the color coordination required.",
+        "assets-used": [
+            "sphere/sphere.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "insert-ell-along-square-path": {
+        "task-name": "insert-ell-along-square-path",
+        "task-description": "On the tabletop, there is a square path marked by small blocks. Along the path, there are four colored ell-shaped blocks (red, blue, green, and yellow) and four fixtures of matching colors. The task is to pick up each ell block and insert it into the fixture of the same color. However, the robot must move each ell block along the marked square path to reach the fixture. The task is challenging because it requires precise navigation along the path, color coordination, and insertion accuracy.",
+        "assets-used": [
+            "block/small.urdf",
+            "insertion/ell.urdf",
+            "insertion/fixture.urdf"
+        ]
+    },
+    "color-coordinated-box-ball-matching": {
+        "task-name": "color-coordinated-box-ball-matching",
+        "task-description": "On the tabletop, there are four boxes of different colors (red, blue, green, and yellow) and four balls of corresponding colors. The task is to pick up each ball and place it inside the box of the same color, however, the boxes are placed in a straight line with a row of small blocks acting as a barrier between the boxes and the balls. The challenge lies in the precise placement, color matching, and the navigation around the barrier without knocking over any small blocks.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "ball/ball-template.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "cylinder-balancing-and-placement": {
+        "task-name": "cylinder-balancing-and-placement",
+        "task-description": "On a table, there are three differently colored cylinders (red, green, and blue) and three square zones of matching colors. The task involves picking up each cylinder and balancing it on its end at the center of the corresponding colored zone, in the sequence of red, green, and blue from left to right. The task is challenging due to precise balancing required in placing the cylinders, color matching, and sequence following.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-sphere-and-cylinder-assembly": {
+        "task-name": "color-coordinated-sphere-and-cylinder-assembly",
+        "task-description": "The robot starts with four spheres of different colors (red, blue, green, yellow) and four cylinders of matching colors. The task is to pick up each sphere and place it on top of the cylinder of the same color, forming four sphere-and-cylinder pairs. However, the challenge here is to do this in a specific color sequence - red, blue, green, and finally yellow.",
+        "assets-used": [
+            "sphere/sphere-template.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "sequential-block-insertion": {
+        "task-name": "sequential-block-insertion",
+        "task-description": "There are four insertion fixtures of different colors (red, blue, green, yellow) and four blocks of matching colors. The task is to pick up each block and insert it into the corresponding colored fixture in a specific sequence: red first, then blue, followed by green, and finally yellow. The fixtures are surrounded by small blocks that the robot needs to navigate around without knocking over.",
+        "assets-used": [
+            "insertion/fixture.urdf",
+            "block/block.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "sequential-insertion-and-stacking": {
+        "task-name": "sequential-insertion-and-stacking",
+        "task-description": "The tabletop contains three fixtures and three ell-shaped blocks of different colors - red, blue, and green. The task is to first pick up and insert each ell block into the corresponding colored fixture in the sequence of red, blue, and green. After successful insertion, the robot must pick up the three blocks again from the fixtures and stack them in a corner of the tabletop in the same color sequence - red at the bottom, blue in the middle, and green on top.",
+        "assets-used": [
+            "insertion/ell.urdf",
+            "insertion/fixture.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "color-coordinated-block-shifting": {
+        "task-name": "color-coordinated-block-shifting",
+        "task-description": "On a tabletop, there are three zones marked in three different colors (red, blue, and green) and nine blocks of matching colors (three red, three blue, and three green). Each zone initially contains three blocks of a single color, but the colors of the blocks and zones do not match. The task involves picking up each block and precisely placing it in the zone of the same color. However, there are a few small blocks randomly scattered in the path between the zones. The robot has to strategically navigate around these blocks without knocking them over while transporting the blocks to the corresponding zones. The challenge lies in the precise navigation, placement of the blocks, color matching while avoiding the blocks.",
+        "assets-used": [
+            "zone/zone.urdf",
+            "block/block.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "guided-block-path": {
+        "task-name": "guided-block-path",
+        "task-description": "On the tabletop, there are four colored blocks (red, blue, green, and yellow) and four lines of the corresponding colors. The task is to pick up each block and move it along the line of the same color from start to end. The challenge lies in precise navigation along the line, color coordination, and block manipulation.",
+        "assets-used": [
+            "block/block.urdf",
+            "line/line-template.urdf"
+        ]
+    },
+    "mixed-color-block-barrier-insertion": {
+        "task-name": "mixed-color-block-barrier-insertion",
+        "task-description": "There are four different colored blocks (red, blue, green, and yellow), and four fixtures in corresponding colors. Two barriers, each made of three blocks (orange, purple, and brown), are placed in between the blocks and fixtures, forming a path that the robot must navigate. The task involves picking up each colored block, navigating the barriers, and inserting each block into the fixture of the same color. The fixtures are arranged in a sequence from left to right: red, blue, green, and yellow, providing a challenge in precise navigation, color coordination, and insertion.",
+        "assets-used": [
+            "block/block.urdf",
+            "insertion/fixture.urdf"
+        ]
+    },
+    "ball-in-bowl-obstacle-course": {
+        "task-name": "ball-in-bowl-obstacle-course",
+        "task-description": "With the tabletop setup consisting of a maze of small blocks, the task requires the robot to pick up four balls of different colors (red, blue, green, yellow) and place each of them into the corresponding colored bowls strategically positioned at different corners of the maze, without knocking over any blocks, demanding careful navigation and color coordination.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "block/small.urdf",
+            "bowl/bowl.urdf"
+        ]
+    },
+    "ball-in-bowl-obstacle-course-new": {
+        "task-name": "ball-in-bowl-obstacle-course-new",
+        "task-description": "With the tabletop setup consisting of a maze of small blocks, the task requires the robot to pick up four balls of different colors (red, blue, green, yellow) and place each of them into the corresponding colored bowls strategically positioned at different corners of the maze, without knocking over any blocks, demanding careful navigation and color coordination.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "block/small.urdf",
+            "bowl/bowl.urdf"
+        ]
+    },
+    "color-coordinated-arch-construction": {
+        "task-name": "color-coordinated-arch-construction",
+        "task-description": "The task is to construct an arch using six blocks: three red and three blue. The blocks are initially placed in a container. The robot needs to pick each block and place it on a pallet in the following arrangement: place two red blocks in parallel on the pallet, then place a blue block on top of the red blocks to form an arch. Repeat the process with the remaining blocks, placing them on top of the first arch to form a second layer. The task is challenging due to the need for precise placement of the blocks and maintaining the balance of the structure.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "color-coordinated-zone-arrangement": {
+        "task-name": "color-coordinated-zone-arrangement",
+        "task-description": "On the tabletop, there are nine blocks of three different colors (three red, three blue, and three green) and three pallets of matching colors (one red, one blue, one green). The task is to pick up each block and place it on the pallet of the same color, arranging the blocks on each pallet in a line. However, there are a few small blocks randomly scattered on the tabletop, which the robot has to navigate around without knocking them over while transporting the blocks to the corresponding pallets. The challenge lies in the precise navigation, placement of the blocks, color matching, and maintaining the balance on the pallets.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-stand-assembly": {
+        "task-name": "color-coordinated-cylinder-stand-assembly",
+        "task-description": "The robot starts with four cylinders of different colors (red, blue, green, yellow) and four stands of matching colors. The task is to pick up each cylinder and place it on top of the stand of the same color, forming four cylinder-and-stand pairs. However, the challenge here is to do this in a specific color sequence - green, yellow, blue, and finally red, while also ensuring that the cylinders do not topple over.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "stacking/stand.urdf"
+        ]
+    },
+    "color-coordinated-ball-stacking": {
+        "task-name": "color-coordinated-ball-stacking",
+        "task-description": "There are four balls of different colors (red, blue, green, yellow), and four containers of matching colors on the table. The task is to pick up each ball and stack it on top of the corresponding colored container. However, the stacking should be done in a specific color sequence - blue at the bottom, followed by yellow, then green, and finally red at the top. This task enforces challenging skills due to the precision required for stacking the balls, color coordination, and sequencing.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "color-coded-blocks-on-corner": {
+        "task-name": "color-coded-blocks-on-corner",
+        "task-description": "On a tabletop, there are four blocks of different colors (red, blue, green, and yellow) and a corner structure. The task involves picking up each block and placing it in the corner structure in a specific color sequence: from left to right, place red, blue, green, and finally yellow. The blocks must be arranged such that they form a straight line along the corner. The challenge lies in the precise placement, color coordination, and maintaining the balance of the blocks along the corner.",
+        "assets-used": [
+            "block/block.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "insertion-in-color-sequenced-zones": {
+        "task-name": "insertion-in-color-sequenced-zones",
+        "task-description": "On the table, there are four differently-colored insertion ell objects (red, blue, green, yellow) and four zones on the tabletop marked in the same colors. Initially, each ell is placed in a zone but not corresponding to the color of the zone. The task is to pick up each ell and place it in the zone of the same color, in the specific sequence of red, blue, green, and yellow from left to right, requiring careful navigation, precise placement, color matching, and sequence following.",
+        "assets-used": [
+            "insertion/ell.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-zone-stacking": {
+        "task-name": "color-coordinated-zone-stacking",
+        "task-description": "On the tabletop, there are three zones and nine blocks of three different colors (red, blue, green). Each color has three blocks and the blocks are scattered randomly on the table. The task is to pick up the blocks and stack them in the zones to form a pyramid shape. Each pyramid should contain blocks of the same color with two blocks on the base and one block on top. The zones with the pyramids should be arranged in a straight line in the following color order: red, blue, green from left to right. The challenge lies in the color coordination, precise stacking and the arrangement of the zones.",
+        "assets-used": [
+            "block/block.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-ball-match": {
+        "task-name": "color-coordinated-cylinder-ball-match",
+        "task-description": "On the tabletop, there are four cylinders of different colors (red, blue, green, and yellow) and four balls of corresponding colors. The task is to pick up each ball and place it on top of the cylinder of the same color without the ball rolling off. However, there are small blocks scattered randomly on the table that the robot has to navigate around without knocking them over. The challenge lies in the precise placement of the balls on top of the cylinders, color matching, and navigation around the blocks.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "ball/ball-template.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "multi-level-insertion-and-zone-matching": {
+        "task-name": "multi-level-insertion-and-zone-matching",
+        "task-description": "There are three levels of zones marked on the tabletop - the first level is red, second is blue, and third is green. On each level, there are large, medium, and small ell-shaped objects in corresponding colors. The task is to pick up each ell object from its current position and insert it into the corresponding colored zone on the same level, but in a specific order - large, medium, and small. The challenge lies in the precise control of insertion, color coordination, and the multi-level structure of the environment.",
+        "assets-used": [
+            "zone/zone.urdf",
+            "insertion/ell.urdf"
+        ]
+    },
+    "color-cued-ball-corner-sorting": {
+        "task-name": "color-cued-ball-corner-sorting",
+        "task-description": "On a tabletop, there are four different colored balls (red, blue, green, yellow) and four corners marked with corresponding colors using the corner template. The task involves picking up each ball and precisely placing it in the corner of the same color. However, there is a rectangular zone in the middle of the table marked by small blocks. The robot has to strategically navigate around this zone without touching the blocks while transporting the balls to the corresponding corners. The challenge lies in the precise navigation, placement of the balls, and color matching while avoiding the blocks.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "corner/corner-template.urdf",
+            "block/block_for_anchors.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "cylinder-ring-stack": {
+        "task-name": "cylinder-ring-stack",
+        "task-description": "On the tabletop, there are four differently colored cylinders (red, blue, green, yellow) and four blocks of matching colors. The task involves picking up each block and stacking it on top of the corresponding colored cylinder. However, each cylinder and block pair should be stacked inside a differently colored container (color sequence: red cylinder and block in blue container, blue in green, green in yellow, and yellow in red). The task offers challenges in multi-object manipulation, color coordination, and precise stacking in a confined space.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "block/block.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "color-coordinated-sphere-on-pallet-pyramid": {
+        "task-name": "color-coordinated-sphere-on-pallet-pyramid",
+        "task-description": "On the tabletop, there are three pallets and nine blocks of three different colors (red, blue, green). Each color has three blocks and the blocks are scattered randomly on the table. The task is to pick up the blocks and stack them on the pallets to form a pyramid shape. Each pyramid should contain blocks of the same color with two blocks on the base and one block on top. Additionally, there are three spheres of matching colors (red, blue, green). The task is to pick up each sphere and place it on top of the corresponding colored pyramid. The pallets with the pyramids and spheres should be arranged in a straight line in the following color order: red, blue, green from left to right. The challenge lies in the color coordination, precise stacking, and the arrangement of the pallets.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf",
+            "sphere/sphere.urdf"
+        ]
+    },
+    "color-sequenced-sphere-placement": {
+        "task-name": "color-sequenced-sphere-placement",
+        "task-description": "On the tabletop, there are four spheres of different colors (red, blue, green, and yellow) and four colored squares of matching colors. The task involves picking up each sphere and precisely placing it in the center of the square of the same color. However, the spheres must be placed in a specific sequence - red first, then blue, then green, and finally yellow. The task is challenging due to the need for precise placement, color coordination, and sequence following.",
+        "assets-used": [
+            "sphere/sphere.urdf",
+            "square/square-template.urdf"
+        ]
+    },
+    "color-ordered-insertion-new": {
+        "task-name": "color-ordered-insertion-new",
+        "task-description": "There are four differently-colored ell objects (red, blue, green, yellow) and a corresponding set of color-coded fixtures. The task involves picking up each ell object and inserting it into the matching color fixture in a specific order: from left to right, insert red, blue, green, and finally yellow. The challenge lies in the precise manipulation of the ell objects and the color-coordination required.",
+        "assets-used": [
+            "insertion/ell.urdf",
+            "insertion/fixture.urdf"
+        ]
+    },
+    "put-blocks-between-zones": {
+        "task-name": "put-blocks-between-zones",
+        "task-description": "Arrange four differently colored blocks (red, blue, green, and yellow) between two designated zones on the tabletop.",
+        "assets-used": [
+            "zone/zone.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "put-blues-around-red": {
+        "task-name": "put-blues-around-red",
+        "task-description": "place the blue blocks around the red block.",
+        "assets-used": [
+            "block/block_for_anchors.urdf"
+        ]
+    },
+    "place-blue-on-line-ends": {
+        "task-name": "place-blue-on-line-ends",
+        "task-description": "Pick up each blue box and accurately place it at the end of a green line.",
+        "assets-used": [
+            "line/line-template.urdf",
+            "box/box-template.urdf"
+        ]
+    },
+    "ball-on-box-on-container": {
+        "task-name": "ball-on-box-on-container",
+        "assets-used": [
+            "container/container-template.urdf",
+            "box/box-template.urdf",
+            "ball/ball.urdf"
+        ],
+        "task-description": "Pick up each ball and place it on the corresponding colored box, which are located in specific positions on a container."
+    },
+    "align-rope-along-line": {
+        "task-name": "align-rope-along-line",
+        "assets-used": [
+            "line/line-template.urdf"
+        ],
+        "task-description": "Align a deformable rope along a straight line marked on the tabletop."
+    },
+    "align-rope-cross-zone": {
+        "task-name": "align-rope-cross-zone",
+        "assets-used": [
+            "zone/zone.urdf"
+        ],
+        "task-description": "Align a deformable rope across the diagonal of a zone marked on the tabletop."
+    },
+    "put-kit-in-bowl": {
+        "task-name": "put-kit-in-bowl",
+        "assets-used": [
+            "stacking/block.urdf",
+            "bowl/bowl.urdf",
+            "kitting/object-template.urdf"
+        ],
+        "task-description": "Place the specific kit in a bowl of specified color."
+    },
+    "kit-in-bowl-in-zone": {
+        "task-name": "kit-in-bowl-in-zone",
+        "assets-used": [
+            "zone/zone.urdf",
+            "bowl/bowl.urdf",
+            "kitting/object-template.urdf"
+        ],
+        "task-description": "Pick up each kit and place it on the corresponding colored bowl, which are located in specific positions on a zone."
+    },
+    "move-kit-from-zone-to-cylinder": {
+        "task-name": "move-kit-from-zone-to-cylinder",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf",
+            "kitting/object-template.urdf",
+            "kitting/object-template.urdf"
+        ],
+        "task-description": "Place the specific kit from a zone to a cylinder."
+    },
+    "move-bowl-from-pallet-to-corner": {
+        "task-name": "move-bowl-from-pallet-to-corner",
+        "assets-used": [
+            "corner/corner-template.urdf",
+            "pallet/pallet.urdf",
+            "bowl/bowl.urdf"
+        ],
+        "task-description": "Place the specific bowl from a pallet to a corner."
+    },
+    "cylinder-alignment": {
+        "task-name": "cylinder-alignment",
+        "task-description": "The task involves three cylinders (red, blue, and green) and three boxes of the same colors. The boxes have a small hole on one of their sides. The task is to pick up each cylinder and align it with the hole in the box of the same color. The cylinders have to be aligned in the sequence of red, blue, and green.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "box/box-template.urdf"
+        ]
+    },
+    "align-cylinder-in-corner": {
+        "task-name": "align-cylinder-in-corner",
+        "task-description": "Align the blue cylinder to the L-shaped corner marker on the tabletop.",
+        "assets-used": [
+            "corner/corner-template.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "rotate-and-insert-cylinder": {
+        "task-name": "rotate-and-insert-cylinder",
+        "task-description": "Pick up a red cylinder, rotate it horizontally, and insert it into a green fixture that is positioned upright on the table.",
+        "assets-used": [
+            "insertion/fixture.urdf",
+            "cylinder/cylinder-template.urdf"
+        ],
+        "novelty": "This task introduces the concept of rotating an object before placing it, which adds an extra layer of complexity.",
+        "challenges": "The main challenges of this task are the precision required to rotate the cylinder, the need for correct alignment with the fixture, and the possible instability of the fixture during the insertion process."
+    },
+    "align-cylinders-in-boxes": {
+        "task-name": "align-cylinders-in-boxes",
+        "task-description": "Pick up four cylinders of different colors (red, blue, green, yellow) and align each of them vertically inside four boxes of the same colors. The challenge lies in the precise alignment of the cylinder within the box.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "box/box-template.urdf"
+        ]
+    },
+    "color-coordinated-ball-placement": {
+        "task-name": "color-coordinated-ball-placement",
+        "task-description": "There are three different colored balls (red, blue, and yellow) and three different colored boxes (red, blue, yellow) are placed randomly on the tabletop. The task is to pick up each ball and place it inside the box of the same color, while avoiding collision with other objects like small blocks placed randomly on the table.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "box/box-template.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "cylinder-line-placement": {
+        "task-name": "cylinder-line-placement",
+        "task-description": "On the tabletop, there are six cylinders of different colors (red, blue, green, yellow, orange, and purple) placed randomly. A green line is drawn on the table. The task involves picking up each cylinder and placing it on top of the green line in the specified color order - red, blue, green, yellow, orange, and purple from left to right. The cylinders need to be placed in such a way that they are touching each other side by side.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "line/single-green-line-template.urdf"
+        ]
+    },
+    "cylinder-corner-insert": {
+        "task-name": "cylinder-corner-insert",
+        "task-description": "Using the four colored cylinders (red, blue, green, yellow), place each into the corresponding color-marked corner of the table.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "stack-boxes-in-pallet": {
+        "task-name": "stack-boxes-in-pallet",
+        "task-description": "Pick up the yellow, green, and blue boxes, and stack them in the pallet in a specific sequence from bottom to top - yellow, green, then blue. All the boxes should be stacked neatly without any of them falling off. The challenge lies in the precise control of stacking and color sequence following.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "align-cylinders-box": {
+        "task-name": "align-cylinders-box",
+        "task-description": "Position three cylinders (red, green, blue) vertically inside a box such that the red cylinder is on the left, the green in the middle, and the blue one on the right. The challenge lies in precise control of the robot arm to avoid collision with the box and accurate alignment of cylinders inside the box.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "box/box-template.urdf"
+        ]
+    },
+    "nested-boxes": {
+        "task-name": "nested-boxes",
+        "task-description": "Place smaller boxes of different colors (blue, red, and green) inside a larger yellow box in a specific order: blue box should be at the bottom, then the red box, and finally the green box on top.",
+        "assets-used": [
+            "box/box-template.urdf"
+        ]
+    },
+    "place-box-in-pallet": {
+        "task-name": "place-box-in-pallet",
+        "task-description": "Place three boxes of different colors (red, blue, and green) into a pallet. The red box should be at the bottom, followed by the blue box in the middle, and finally the green box at the top.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "stack-cylinder-on-bowl": {
+        "task-name": "stack-cylinder-on-bowl",
+        "task-description": "There are three differently colored bowls (red, blue, and green) and three cylinders of the same colors. The task is to pick up each cylinder and stack it on top of the bowl of the matching color. The cylinders should be stacked in a specific sequence - red first, then blue, and finally green.",
+        "assets-used": [
+            "bowl/bowl.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "color-coordinated-bowl-insertion": {
+        "task-name": "color-coordinated-bowl-insertion",
+        "task-description": "There are three bowls and three L-shaped blocks of different colors (red, blue, green) on the tabletop. The task is to pick each L-shaped block and insert it into the corresponding colored bowl in a specific sequence: red first, then blue, and finally green.",
+        "assets-used": [
+            "insertion/ell.urdf",
+            "bowl/bowl.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-stacking": {
+        "task-name": "color-coordinated-cylinder-stacking",
+        "task-description": "There are three different colored cylinders (red, blue, green), and a pallet on the tabletop. The task is to pick up each cylinder and stack it on the pallet in a specific sequence: red at the bottom, then blue in the middle, and finally green at the top.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "align-boxes-on-line": {
+        "task-name": "align-boxes-on-line",
+        "task-description": "On the tabletop, there are three boxes of different colors (red, blue, and green) and a single green line. The task is to pick up each of the boxes and place them with one of their corners aligned to the green line in a specific color sequence - red at the left, then blue in the middle, and finally green at the right.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "line/single-green-line-template.urdf"
+        ]
+    },
+    "arrange-blocks-in-line": {
+        "task-name": "arrange-blocks-in-line",
+        "task-description": "Arrange four differently colored blocks (red, blue, green, yellow) in a line on the tabletop in the order of the colors of the rainbow.",
+        "assets-used": [
+            "stacking/block.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-and-box-insertion": {
+        "task-name": "color-coordinated-cylinder-and-box-insertion",
+        "task-description": "There are four different colored cylinders (red, blue, yellow, green) and four matching colored boxes (red, blue, yellow, green), each with a slot on the top. The task is to pick up each colored cylinder and insert it into the box of the same color, while the boxes should remain at their original positions.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "color-coordinated-container-fill": {
+        "task-name": "color-coordinated-container-fill",
+        "task-description": "Arrange four colored blocks (red, blue, green, and yellow) around a pallet. Then, pick up these blocks and place them inside a container marked in the same color. The task requires precise placement, color matching, and an understanding of spatial structures.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "cylinder-and-box-arrangement": {
+        "task-name": "cylinder-and-box-arrangement",
+        "task-description": "There are three different colored cylinders (red, blue, and yellow) and three different colored boxes (red, blue, yellow) placed randomly on the tabletop. The task is to pick up each cylinder and place it inside the box of the same color, while avoiding collision with other objects like small blocks placed randomly on the table.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "box/box-template.urdf",
+            "block/block-template.urdf"
+        ]
+    },
+    "align-cylinder-in-zone": {
+        "task-name": "align-cylinder-in-zone",
+        "task-description": "Place the red cylinder in the middle of the green zone, and the blue cylinder in the middle of the yellow zone, without disturbing the other colored zones.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-container-and-block-matching": {
+        "task-name": "color-coordinated-container-and-block-matching",
+        "task-description": "The environment includes four differently colored containers (red, blue, green, yellow) and four corresponding blocks at random locations. The task is to pick up each block and place it into the container of the same color. The sequence of placement should start with red, then blue, green, and finally yellow.",
+        "assets-used": [
+            "container/container-template.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "insert-color-blocks-into-cylinders": {
+        "task-name": "insert-color-blocks-into-cylinders",
+        "task-description": "There are four different colored blocks (red, blue, green, and yellow) and four matching colored cylinders on the tabletop, each cylinder has an opening on top. The task is to pick up each colored block and precisely insert it into the cylinder of the same color. The insertion should follow a specific sequence - red first, then blue, followed by green, and finally yellow.",
+        "assets-used": [
+            "block/block.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "color-coordinated-insertion-and-sweeping": {
+        "task-name": "color-coordinated-insertion-and-sweeping",
+        "task-description": "There are three different colored ell-shaped fixtures (red, blue, and green) and small blocks of matching colors scattered on the tabletop. The task is to pick up each block and insert it into the ell-shaped fixture of the same color, then sweep the blocks into three separate zones marked on the tabletop. The zones are surrounded by small blocks which are needed to be moved out of the way without knocking them out of their respective zones.",
+        "assets-used": [
+            "insertion/ell.urdf",
+            "block/small.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-block-and-sphere-arrangement": {
+        "task-name": "color-coordinated-block-and-sphere-arrangement",
+        "task-description": "On the table, there are four colored blocks (red, blue, green, and yellow) and corresponding colored spheres. The task is to place each block on top of the matching colored sphere while avoiding any collisions with other scattered smaller blocks on the table.",
+        "assets-used": [
+            "block/block.urdf",
+            "sphere/sphere-template.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "container-block-sorting": {
+        "task-name": "container-block-sorting",
+        "task-description": "Sort four differently colored blocks (red, blue, green, yellow) into four matching colored containers. The containers are initially stacked, and need to be unstacked before the blocks can be sorted into them.",
+        "assets-used": [
+            "container/container-template.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "color-coordinated-block-pyramid-construction": {
+        "task-name": "color-coordinated-block-pyramid-construction",
+        "task-description": "Construct two pyramids using six blocks of two different colors (three red and three blue) in two separate zones marked on the tabletop. The bottom layer should contain two blocks of the same color, followed by the second layer of one block. The pyramid in the left zone should be red and the one in the right zone should be blue. The task requires careful placement and color matching.",
+        "assets-used": [
+            "block/block.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-alignment": {
+        "task-name": "color-coordinated-cylinder-alignment",
+        "task-description": "On the tabletop, there are five cylinders of different colors (red, green, blue, yellow, orange) and five zones marked on the tabletop with matching colors. Initially, each cylinder is placed in a zone but not corresponding to the color of the zone. The task involves picking up each cylinder and placing it upright in the zone of the same color, arranged in the following sequence from left to right: red, green, blue, yellow, and orange.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf"
+        ]
+    },
+    "color-coordinated-block-insertion": {
+        "task-name": "color-coordinated-block-insertion",
+        "task-description": "The task involves picking up four differently-colored blocks (red, blue, green, yellow) and inserting them into four corresponding color-coded fixtures in a specific sequence: red, blue, green, and then yellow.",
+        "assets-used": [
+            "block/block.urdf",
+            "insertion/fixture.urdf"
+        ]
+    },
+    "align-blocks-on-line": {
+        "task-name": "align-blocks-on-line",
+        "task-description": "There are four colored blocks (red, blue, green, yellow) and four lines of matching colors on the tabletop. The task is to pick up each block and align it along the line of the same color. The alignment should follow a specific sequence - red first, then blue, green, and finally yellow.",
+        "assets-used": [
+            "block/block.urdf",
+            "line/line-template.urdf"
+        ]
+    },
+    "palette-color-match": {
+        "task-name": "palette-color-match",
+        "task-description": "There are four colored balls (red, blue, yellow, green) and one pallet with four slots of matching colors. The task is to pick up each ball and place it into the corresponding colored slot in the pallet, the placement should follow a specific sequence - blue first, then yellow, green, and finally red.",
+        "assets-used": [
+            "pallet/pallet.urdf",
+            "ball/ball.urdf"
+        ]
+    },
+    "color-coordinated-line-blocks": {
+        "task-name": "color-coordinated-line-blocks",
+        "task-description": "On a tabletop, there are five colored lines (red, blue, green, yellow, orange) and five differently colored blocks (red, blue, green, yellow, orange). Each line has a block of the same color placed at one end of it. The task is to pick up each block and place it at the other end of the corresponding line in a specific sequence - red first, then blue, then green, yellow, and finally orange. The challenge lies in the precise placement, color coordination, and sequence following.",
+        "assets-used": [
+            "line/line-template.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "color-sequenced-block-in-container": {
+        "task-name": "color-sequenced-block-in-container",
+        "task-description": "On the table, there are five different colored blocks (red, blue, green, yellow, and orange) and a large container. The task is to pick up each block and place it in the container in a specific color sequence - red first, then blue, followed by green, then yellow and finally orange.",
+        "assets-used": [
+            "block/block.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "color-coordinated-bowl-and-cylinder-matching": {
+        "task-name": "color-coordinated-bowl-and-cylinder-matching",
+        "task-description": "On the tabletop, there are four differently colored bowls (red, blue, green, yellow) and four corresponding colored cylinders. The task is to pick up each colored cylinder and place it into the bowl of the same color, ensuring the cylinders remain upright.",
+        "assets-used": [
+            "bowl/bowl.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "container-block-pyramid-assembly": {
+        "task-name": "container-block-pyramid-assembly",
+        "task-description": "On a tabletop, there are twelve blocks of four different colors (three red, three green, three blue, three yellow) and four containers of matching colors. The task involves picking up each block and placing them into the container of the same color, then stacking them in each container in a pyramid with the base layer containing two blocks and the top layer containing one block. The sequence should start with red, then blue, green, and finally yellow.",
+        "assets-used": [
+            "block/block.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "insert-blocks-into-pyramid": {
+        "task-name": "insert-blocks-into-pyramid",
+        "task-description": "There are three different colored blocks (red, blue, green) and a pyramid structure made from corner templates. The pyramid has three levels, each level is color coded to match the colors of the blocks. The task involves picking up each block and placing it on the corresponding color coded level in the pyramid from bottom (red) to top (green). However, each block must be inserted sideways into the corresponding slot in the pyramid structure.",
+        "assets-used": [
+            "block/block.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "cylinder-balancing-on-blocks": {
+        "task-name": "cylinder-balancing-on-blocks",
+        "task-description": "Construct a bridge using two red blocks placed parallel to each other with a gap in between, and then balance a green cylinder horizontally on top of the red blocks without it falling over.",
+        "assets-used": [
+            "block/block.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "color-coordinated-block-bowl-sorting": {
+        "task-name": "color-coordinated-block-bowl-sorting",
+        "task-description": "Sort four differently colored blocks (red, blue, green, yellow) into four matching colored bowls. The bowls are initially stacked, and the blocks are scattered randomly on the table. The task involves unstacking the bowls, picking up each colored block, and placing it into the bowl of the same color.",
+        "assets-used": [
+            "bowl/bowl.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-stand-stack": {
+        "task-name": "color-coordinated-cylinder-stand-stack",
+        "task-description": "Arrange three cylinders of different colors (red, blue, green) on three stands of corresponding colors. The task is to pick up each cylinder and place it on top of the same colored stand, forming a color-coordinated stack. The challenge lies in the color coordination and precise placement of the cylinders on the stands.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "stacking/stand.urdf"
+        ]
+    },
+    "color-coordinated-box-in-pallet": {
+        "task-name": "color-coordinated-box-in-pallet",
+        "task-description": "On the tabletop, there are four boxes of different colors (red, blue, green, and yellow) and a pallet. The task is to pick up each box and place it into the pallet in a specific color sequence: red at the bottom, then blue, followed by green, and finally yellow at the top. The challenge lies in the color coordination and precise placement of the boxes in the pallet.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "block-insertion-in-corner-pyramid": {
+        "task-name": "block-insertion-in-corner-pyramid",
+        "task-description": "There is a pyramid made of corner assets on the tabletop and four different colored blocks (red, blue, green, yellow) at random locations. The task is to insert each block into the corresponding color coded slot in the pyramid from bottom (red) to top (yellow). The block should be inserted sideways into the corresponding slot in the pyramid structure.",
+        "assets-used": [
+            "block/block.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "color-coordinated-cylinder-in-box": {
+        "task-name": "color-coordinated-cylinder-in-box",
+        "task-description": "There are four different colored boxes (red, blue, green, yellow) each having a slot on the top, and four corresponding colored cylinders on the tabletop. The task is to pick up each colored cylinder and place it into the box of the same color from top while the boxes should remain at their original positions. The cylinders must be placed in a specific sequence - red first, then blue, then green, and finally yellow.",
+        "assets-used": [
+            "box/box-template.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "colored-cylinder-zone-sorting": {
+        "task-name": "colored-cylinder-zone-sorting",
+        "task-description": "On a tabletop, there are three cylinders of different colors (red, blue, and green) and three zones marked in three different colors (red, blue, and green). The task is to pick up each cylinder and place it into the zone of the same color. However, there are small blocks scattered on the tabletop, which the robot has to navigate around without knocking them over while transporting the cylinders to the corresponding zones.",
+        "assets-used": [
+            "cylinder/cylinder-template.urdf",
+            "zone/zone.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "color-coordinated-block-corner-alignment": {
+        "task-name": "color-coordinated-block-corner-alignment",
+        "task-description": "On the table, there are four colored blocks (red, blue, green, and yellow) and four corners created by 'corner/corner-template.urdf'. Each corner is marked with a color matching one of the blocks. The task requires you to pick up each block and align it into the corner of the same color, arranged in the following sequence from top left to bottom right: red, green, blue, yellow.",
+        "assets-used": [
+            "block/block.urdf",
+            "corner/corner-template.urdf"
+        ]
+    },
+    "color-coordinated-block-in-container-placement": {
+        "task-name": "color-coordinated-block-in-container-placement",
+        "task-description": "On a tabletop, there are four blocks and four containers of different colors (red, blue, green, and yellow). The task is to pick up each block and accurately place it inside the container of the same color in a specific sequence - red first, then blue, followed by green, and finally yellow. The task poses challenges in accurate placement, color matching, and sequence following.",
+        "assets-used": [
+            "block/block.urdf",
+            "container/container-template.urdf"
+        ]
+    },
+    "color-coordinated-corner-placement": {
+        "task-name": "color-coordinated-corner-placement",
+        "task-description": "On the table, there are four corners marked in different colors (red, blue, green, yellow) and four cylinders of corresponding colors. The task is to pick up each cylinder and place it into the corner of the same color in a specific sequence - red first, then blue, green, and finally yellow. The challenge lies in precise placement of cylinders, color matching, and following the specific sequence.",
+        "assets-used": [
+            "corner/corner-template.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "symmetric-block-stand-assembly": {
+        "task-name": "symmetric-block-stand-assembly",
+        "task-description": "On a tabletop, create two symmetrical structures on two stands using eight blocks of two different colors (four red and four blue). Start by placing a blue block and a red block side by side at the center of each stand to form the base of the structure. Then, place a red block on top of the blue block and a blue block on top of the red block on each stand. Repeat this pattern until all blocks are used. The final structures should have alternating colors and be symmetrical to each other.",
+        "assets-used": [
+            "stacking/stand.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "color-coordinated-sphere-cylinder-matching": {
+        "task-name": "color-coordinated-sphere-cylinder-matching",
+        "task-description": "On the tabletop, there are four differently colored spheres (red, blue, green, yellow) and four corresponding colored cylinders. The task is to pick up each colored sphere and place it into the cylinder of the same color, ensuring the spheres are dropped from above the cylinder.",
+        "assets-used": [
+            "sphere/sphere.urdf",
+            "cylinder/cylinder-template.urdf"
+        ]
+    },
+    "color-sorted-blocks-on-pallet-with-barrier": {
+        "task-name": "color-sorted-blocks-on-pallet-with-barrier",
+        "task-description": "There are four colored blocks (red, blue, green, yellow) and a pallet on the table. The task is to pick up each block, navigate it over a line of small blocks (acting as a barrier), and place them on the pallet in the specific color sequence - red, blue, green, and finally yellow. The challenge lies in the precise navigation over the barrier, color coordination, and block manipulation.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf",
+            "block/small.urdf"
+        ]
+    },
+    "rainbow-pyramid-in-zone": {
+        "task-name": "rainbow-pyramid-in-zone",
+        "task-description": "Construct a pyramid inside a marked zone with differently colored blocks (red, blue, green, yellow, and purple) arranged in the order of a rainbow, with red at the bottom and purple at the top.",
+        "assets-used": [
+            "zone/zone.urdf",
+            "block/block.urdf"
+        ]
+    },
+    "color-coordinated-block-insertion-in-pallets": {
+        "task-name": "color-coordinated-block-insertion-in-pallets",
+        "task-description": "There are four different colored blocks (red, blue, green, and yellow) and four matching colored pallets on the tabletop. The task is to pick up each colored block and place it into the pallet of the same color. The placement should follow a specific sequence - red first, then blue, followed by green, and finally yellow. The challenge lies in precise placement, color matching, and following the specific sequence.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "color-matching-block-in-pallet": {
+        "task-name": "color-matching-block-in-pallet",
+        "task-description": "Arrange four different colored blocks (red, blue, green, yellow) on a pallet. The blocks should be placed such that they form a square, with the red block in the top left, blue block in the top right, green block in the bottom left, and yellow block in the bottom right.",
+        "assets-used": [
+            "block/block.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "color-corresponding-ball-block-stack": {
+        "task-name": "color-corresponding-ball-block-stack",
+        "task-description": "Arrange five colored balls (red, blue, green, yellow, orange) and five matching colored blocks on the tabletop, then stack the blocks in a tower on the pallet, followed by placing the corresponding colored ball on top of each block, the sequence from bottom to top should be red, blue, green, yellow, and orange.",
+        "assets-used": [
+            "ball/ball-template.urdf",
+            "block/block.urdf",
+            "pallet/pallet.urdf"
+        ]
+    },
+    "color-matching-blocks-to-corner-and-zone": {
+        "task-name": "color-matching-blocks-to-corner-and-zone",
+        "task-description": "On the tabletop, there are four colored corners (red, blue, green, yellow) and four matching colored zones, along with four blocks of the same colors randomly placed. The task is to pick each block and place it on the corner of the same color first, then move it to the corresponding colored zone, following the specific color sequence: red, blue, green, and finally yellow.",
+        "assets-used": [
+            "corner/corner-template.urdf",
+            "zone/zone.urdf",
+            "block/block.urdf"
         ]
     }
 }

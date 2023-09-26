@@ -50,5 +50,5 @@ class AlignBallsInColoredZones(Task):
         # Goal: each ball is in a different colored zone.
         for i in range(6):
             self.add_goal(objs=[balls[i]], matches=np.int32([[1]]), targ_poses=[zone_poses[i]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6)
-            self.lang_goals.append(self.lang_template.format(color=color_names[i]))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6,
+                language_goal=self.lang_template.format(color=color_names[i]))

@@ -69,7 +69,7 @@ class TwoStreamTransportLangFusion(Transport):
             in_tensors.append(in_tensor_i)
             crops.append(crop)
 
-        logits, kernels = self.transport(torch.cat(in_tensors,dim=0), torch.cat(crops, dim=0), lang_goal)
+        logits, kernels = self.transport(torch.cat(in_tensors,dim=0), torch.cat(crops, dim=0), lang_goal) #crops.shape:(8, 36, 6, 64, 64)
         res =  self.correlate(logits, kernels, softmax)
         return res
         
@@ -80,6 +80,109 @@ class TwoStreamTransportLangFusionLat(TwoStreamTransportLangFusion):
 
         self.fusion_type = cfg['train']['trans_stream_fusion_type']
         super().__init__(stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device)
+
+    def transport(self, in_tensor, crop, l):
+        key_out_one, key_lat_one = self.key_stream_one(in_tensor)
+        key_out_two = self.key_stream_two(in_tensor, key_lat_one, l)
+        logits = self.fusion_key(key_out_one, key_out_two)
+
+        query_out_one, query_lat_one = self.query_stream_one(crop)
+        query_out_two = self.query_stream_two(crop, query_lat_one, l)
+        kernel = self.fusion_query(query_out_one, query_out_two)
+
+        return logits, kernel
+    
+    
+class TwoStreamTransportLangFusionLatReduce(TwoStreamTransportLangFusionLat):
+    """Two Stream Transport (a.k.a Place) module with lateral connections"""
+
+    def __init__(self, stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device):
+
+        self.fusion_type = cfg['train']['trans_stream_fusion_type']
+        super().__init__(stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device)
+        
+        del self.query_stream_one
+        del self.query_stream_two
+        # del self.key_stream_one
+        # del self.key_stream_two
+
+        stream_one_fcn = 'plain_resnet_reduce_lat'
+        stream_one_model = models.names[stream_one_fcn]
+        stream_two_fcn = 'clip_ling'
+        stream_two_model = models.names[stream_two_fcn]
+        
+        
+        
+        # self.key_stream_one = stream_one_model(self.in_shape, self.output_dim, self.cfg, self.device, self.preprocess)
+        # self.key_stream_two = stream_two_model(self.in_shape, self.output_dim, self.cfg, self.device, self.preprocess)
+        
+        self.query_stream_one = stream_one_model(self.kernel_shape, self.kernel_dim, self.cfg, self.device, self.preprocess)
+        self.query_stream_two = stream_two_model(self.kernel_shape, self.kernel_dim, self.cfg, self.device, self.preprocess)
+
+    def transport(self, in_tensor, crop, l):
+        key_out_one, key_lat_one = self.key_stream_one(in_tensor)
+        key_out_two = self.key_stream_two(in_tensor, key_lat_one, l)
+        logits = self.fusion_key(key_out_one, key_out_two)
+
+        query_out_one, query_lat_one = self.query_stream_one(crop)
+        query_out_two = self.query_stream_two(crop, query_lat_one, l)
+        kernel = self.fusion_query(query_out_one, query_out_two)
+
+        return logits, kernel
+
+
+
+
+
+class TwoStreamTransportLangFusionLatReduceOneStream(TwoStreamTransportLangFusionLatReduce):
+    """Two Stream Transport (a.k.a Place) module with lateral connections"""
+
+    def __init__(self, stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device):
+
+        self.fusion_type = cfg['train']['trans_stream_fusion_type']
+        super().__init__(stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device)
+        
+        del self.query_stream_one
+        del self.query_stream_two
+
+        
+
+    def transport(self, in_tensor, crop, l):
+        key_out_one, key_lat_one = self.key_stream_one(in_tensor)
+        key_out_two = self.key_stream_two(in_tensor, key_lat_one, l)
+        logits = self.fusion_key(key_out_one, key_out_two)
+
+        query_out_one, query_lat_one = self.key_stream_one(crop)
+        query_out_two = self.key_stream_two(crop, query_lat_one, l)
+        kernel = self.fusion_query(query_out_one, query_out_two)
+
+        return logits, kernel
+
+
+
+
+class TwoStreamTransportLangFusionLatPretrained18(TwoStreamTransportLangFusionLat):
+    """Two Stream Transport (a.k.a Place) module with lateral connections"""
+
+    def __init__(self, stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device):
+
+        self.fusion_type = cfg['train']['trans_stream_fusion_type']
+        super().__init__(stream_fcn, in_shape, n_rotations, crop_size, preprocess, cfg, device)
+        
+        del self.query_stream_one
+        del self.query_stream_two
+        # del self.key_stream_one
+        # del self.key_stream_two
+        stream_one_fcn = 'pretrained_resnet18'
+        stream_one_model = models.names[stream_one_fcn]
+        stream_two_fcn = 'clip_ling'
+        stream_two_model = models.names[stream_two_fcn]
+        
+        # self.key_stream_one = stream_one_model(self.in_shape, self.output_dim, self.cfg, self.device, self.preprocess)
+        # self.key_stream_two = stream_two_model(self.in_shape, self.output_dim, self.cfg, self.device, self.preprocess)
+        
+        self.query_stream_one = stream_one_model(self.kernel_shape, self.kernel_dim, self.cfg, self.device, self.preprocess)
+        self.query_stream_two = stream_two_model(self.kernel_shape, self.kernel_dim, self.cfg, self.device, self.preprocess)
 
     def transport(self, in_tensor, crop, l):
         key_out_one, key_lat_one = self.key_stream_one(in_tensor)

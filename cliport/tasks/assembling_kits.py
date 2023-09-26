@@ -58,5 +58,5 @@ class AssemblingKits(Task):
         objects, matches = self.make_kitting_objects(env, targets=targets, obj_shapes=obj_shapes, n_objects=n_objects, colors=colors)
         matches = np.int32(matches)
         self.add_goal(objs=objects, matches=matches, targ_poses=targets, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1, language_goal=self.lang_template)
+ 

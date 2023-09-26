@@ -1,0 +1,7 @@
+Now I will provide you some reference code that might help you can write the code for the task "TASK_STRING_TEMPLATE". 
+
+
+TASK_CODE_LIST_TEMPLATE
+
+
+Please pick 3 task python files that you would like to use as reference. Format them in a python list. 

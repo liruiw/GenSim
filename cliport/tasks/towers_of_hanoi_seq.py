@@ -53,8 +53,8 @@ class TowersOfHanoiSeq(Task):
             targ_pos = rod_pos[step[2]]
             targ_pos = utils.apply(base_pose, targ_pos)
             targ_pose = (targ_pos, (0, 0, 0, 1))
+            language_goal = self.lang_template.format(obj=disks_names[disk_id],
+                                                             loc=rod_names[step[2]])
             self.add_goal(objs=[disk_id], matches=np.int32([[1]]), targ_poses=[targ_pose], replace=False,
                     rotations=True, metric='pose', params=None, step_max_reward=1 / len(hanoi_steps),
-                    symmetries=[0])
-            self.lang_goals.append(self.lang_template.format(obj=disks_names[disk_id],
-                                                             loc=rod_names[step[2]]))
+                    symmetries=[0] , language_goal=language_goal)

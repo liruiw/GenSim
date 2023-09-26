@@ -336,6 +336,9 @@ def preprocess(img, dist='transporter'):
     if dist == 'clip':
         color_mean = clip_color_mean
         color_std = clip_color_std
+    elif dist == 'mdetr':
+        color_mean = [0.485, 0.456, 0.406]
+        color_std = [0.229, 0.224, 0.225]
     elif dist == 'franka':
         color_mean = franka_color_mean
         color_std = franka_color_std
@@ -378,6 +381,8 @@ def preprocess(img, dist='transporter'):
 
     return img
 
+def map_kit_scale(scale):
+    return (scale[0] / 10, scale[1] / 10, scale[2] / 10)
 
 def deprocess(img):
     color_mean = 0.18877631
@@ -1026,7 +1031,7 @@ assembling_kit_shapes = {
 COLORS = {
     'blue': [78.0 / 255.0, 121.0 / 255.0, 167.0 / 255.0],
     'red': [255.0 / 255.0, 087.0 / 255.0, 089.0 / 255.0],
-    'green': [089.0 / 255.0, 169.0 / 255.0, 079.0 / 255.0],
+    'green': [089.0 / 255.0, 169.0 / 255.0, 078.0 / 255.0],
     'orange': [242.0 / 255.0, 142.0 / 255.0, 043.0 / 255.0],
     'yellow': [237.0 / 255.0, 201.0 / 255.0, 072.0 / 255.0],
     'purple': [176.0 / 255.0, 122.0 / 255.0, 161.0 / 255.0],
@@ -1061,12 +1066,12 @@ def get_colors_names(mode):
     if mode == 'train':
         return TRAIN_COLORS
     elif mode == 'full':
-        return TRAIN_COLORS + EVAL_COLORS
+        return TRAIN_COLORS
     else:
-        return EVAL_COLORS
+        return TRAIN_COLORS
 
 def get_random_color():
-    return self.get_colors(mode='train', n_colors=1)
+    return get_colors(mode='train', n_colors=1)
 
 def solve_hanoi_all(n_disks):
     # Solve Hanoi sequence with dynamic programming.

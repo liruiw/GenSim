@@ -62,8 +62,8 @@ class AlignRope(Task):
         # IMPORTANT: use `make_ropes` to add cable (series of articulated small blocks).
         objects, targets, matches = self.make_ropes(env, corners=(corner_0, corner_1))
         self.add_goal(objs=objects, matches=matches, targ_poses=targets, replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=1.)
-        self.lang_goals += [self.lang_template.format(direction=direction)] * len(self.goals)
+                rotations=False, metric='pose', params=None, step_max_reward=1.,
+                language_goal=[self.lang_template.format(direction=direction)] * len(objects))
 
         # wait for the scene to settle down
         for i in range(480):

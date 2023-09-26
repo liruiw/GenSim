@@ -38,5 +38,5 @@ class MixPiles(Task):
         blocks = piles1 + piles2
         matches = np.ones((len(blocks), 1))
         self.add_goal(objs=blocks, matches=matches, targ_poses=[zone_pose], replace=True,
-                      rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                      rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1,
+                          language_goal=self.lang_template)

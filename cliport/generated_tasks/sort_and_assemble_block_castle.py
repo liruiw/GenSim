@@ -56,6 +56,4 @@ class SortAndAssembleBlockCastle(Task):
             targs = [(utils.apply(zone_poses[i], pos), zone_poses[i][1]) for pos in place_pos]
             for j in range(4):
                 self.add_goal(objs=[zone_blocks[j]], matches=np.ones((1, 1)), targ_poses=[targs[j]], replace=False,
-                              rotations=True, metric='pose', params=None, step_max_reward=1/12)
-
-        self.lang_goals.append(self.lang_template)
+                              rotations=True, metric='pose', params=None, step_max_reward=1/12, language_goal=self.lang_template)

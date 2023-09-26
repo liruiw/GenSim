@@ -47,6 +47,5 @@ class StackBlocksInContainer(Task):
         # Goal: each block is stacked in the container in the specified order.
         for i in range(len(blocks)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[container_pose], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks))
-        
-        self.lang_goals.append(self.lang_template.format(order=', '.join(self.order)))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks),
+                            language_goal=self.lang_template.format(order=', '.join(self.order)))

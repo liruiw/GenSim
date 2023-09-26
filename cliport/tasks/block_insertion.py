@@ -14,6 +14,12 @@ class BlockInsertion(Task):
         self.task_completed_desc = "done with insertion."
         self.additional_reset()
 
+    def get_random_pose(self, env, obj_size):
+        pose = super().get_random_pose(env, obj_size)
+        pos, rot = pose
+        rot = utils.eulerXYZ_to_quatXYZW((0, 0, np.pi / 2))
+        return pos, rot
+
     def reset(self, env):
         super().reset(env)
 
@@ -30,5 +36,5 @@ class BlockInsertion(Task):
         env.add_object(urdf, targ_pose, 'fixed')
 
         self.add_goal(objs=[block_id], matches=np.int32([[1]]), targ_poses=[targ_pose], replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=1, symmetries=[2 * np.pi])
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='pose', params=None, step_max_reward=1, symmetries=[2 * np.pi],
+                language_goal=self.lang_template)

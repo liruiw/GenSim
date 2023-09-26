@@ -117,10 +117,10 @@ instruction at each timestep."""
         true_poses = []
         for obj_idx, (object_id, _) in enumerate(object_ids):
             true_poses.append(zone_pose)
+            language_goal = self.lang_template.format(obj=object_descs[obj_idx])
             self.add_goal(objs=[object_id], matches=np.int32([[1]]), targ_poses=[zone_pose], replace=False,
-                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / len(object_ids))
-
-            self.lang_goals.append(self.lang_template.format(obj=object_descs[obj_idx]))
+                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / len(object_ids),
+                language_goal=language_goal)
 
         # Only mistake allowed.
         self.max_steps = len(object_ids)+1

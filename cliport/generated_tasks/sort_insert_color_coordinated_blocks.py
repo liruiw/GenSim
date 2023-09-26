@@ -25,7 +25,11 @@ class SortInsertColorCoordinatedBlocks(Task):
 
         # Add containers.
         container_size = (0.12, 0.12, 0.12)
+        container_size = (0.1, 0.1, 0.1)
+        container_pose = self.get_random_pose(env, container_size)
         container_urdf = 'container/container-template.urdf'
+        replace = {'DIM': container_size, 'HALF': (container_size[0] / 2, container_size[1] / 2, container_size[2] / 2)}
+        container_urdf = self.fill_template(container_urdf, replace)
         container_colors = ['red', 'blue', 'green']
         container_poses = []
         for color in container_colors:
@@ -46,5 +50,4 @@ class SortInsertColorCoordinatedBlocks(Task):
         # Goal: each block is in a container of the same color.
         for i in range(len(blocks)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[container_poses[i//2]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks))
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks), language_goal=self.lang_template)

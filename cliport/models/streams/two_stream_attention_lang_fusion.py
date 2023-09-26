@@ -16,8 +16,8 @@ class TwoStreamAttentionLangFusion(Attention):
 
     def _build_nets(self):
         stream_one_fcn, stream_two_fcn = self.stream_fcn
-        stream_one_model = models.names[stream_one_fcn]
-        stream_two_model = models.names[stream_two_fcn]
+        stream_one_model = models.names[stream_one_fcn]  # resnet_lat.REsNet45_10s
+        stream_two_model = models.names[stream_two_fcn]  # clip_ligunet_lat.CLIP_LIGUnet_lat
 
         self.attn_stream_one = stream_one_model(self.in_shape, 1, self.cfg, self.device, self.preprocess)
         self.attn_stream_two = stream_two_model(self.in_shape, 1, self.cfg, self.device, self.preprocess)
@@ -81,6 +81,32 @@ class TwoStreamAttentionLangFusionLat(TwoStreamAttentionLangFusion):
     def __init__(self, stream_fcn, in_shape, n_rotations, preprocess, cfg, device):
         self.fusion_type = cfg['train']['attn_stream_fusion_type']
         super().__init__(stream_fcn, in_shape, n_rotations, preprocess, cfg, device)
+
+    def attend(self, x, l):
+        x1, lat = self.attn_stream_one(x)
+        x2 = self.attn_stream_two(x, lat, l)
+        x = self.fusion(x1, x2)
+        return x
+
+
+
+class TwoStreamAttentionLangFusionLatReduce(TwoStreamAttentionLangFusion):
+    """Language-Conditioned Attention (a.k.a Pick) module with lateral connections."""
+
+    def __init__(self, stream_fcn, in_shape, n_rotations, preprocess, cfg, device):
+        self.fusion_type = cfg['train']['attn_stream_fusion_type']
+        super().__init__(stream_fcn, in_shape, n_rotations, preprocess, cfg, device)
+        
+        del self.attn_stream_one
+        del self.attn_stream_two
+        
+        stream_one_fcn = 'plain_resnet_reduce_lat'
+        stream_one_model = models.names[stream_one_fcn]
+        stream_two_fcn = 'clip_ling'
+        stream_two_model = models.names[stream_two_fcn]
+        
+        self.attn_stream_one = stream_one_model(self.in_shape, 1, self.cfg, self.device, self.preprocess)
+        self.attn_stream_two = stream_two_model(self.in_shape, 1, self.cfg, self.device, self.preprocess)
 
     def attend(self, x, l):
         x1, lat = self.attn_stream_one(x)

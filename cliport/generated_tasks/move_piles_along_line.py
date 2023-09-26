@@ -66,5 +66,5 @@ class MovePilesAlongLine(Task):
         # Add goals.
         for i in range(3):
             self.add_goal(objs=[block_ids[i]], matches=np.ones((1, 1)), targ_poses=[zone_poses[i]], replace=False,
-                          rotations=False, metric='zone', params=[(zone_poses[i], zone_size)], step_max_reward=1/3)
-        self.lang_goals.append(self.lang_template)
+                          rotations=False, metric='zone', params=[(zone_poses[i], zone_size)], step_max_reward=1/3,
+                          language_goal=self.lang_template)

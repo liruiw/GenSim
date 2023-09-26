@@ -30,5 +30,4 @@ class SweepingPiles(Task):
 
         # Add goal
         self.add_goal(objs=obj_ids, matches=np.ones((50, 1)), targ_poses=[zone_pose], replace=True,
-                rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1, language_goal=self.lang_template)

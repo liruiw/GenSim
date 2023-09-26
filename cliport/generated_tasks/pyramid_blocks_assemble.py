@@ -57,6 +57,6 @@ class PyramidBlocksAssemble(Task):
         # Goal: blocks are stacked in a pyramid in a specific color order.
         for i in range(9):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[targs[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / 9)
-            self.lang_goals.append(self.lang_template.format(blocks="the blocks",
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / 9, 
+                          language_goal=self.lang_template.format(blocks="the blocks",
                                                              row="row"))

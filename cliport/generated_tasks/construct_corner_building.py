@@ -52,7 +52,6 @@ class ConstructCornerBuilding(Task):
         # Add goals
         for i in range(1,5):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[target_poses[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/6)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/6, language_goal=self.lang_template)
         self.add_goal(objs=[blocks[0]], matches=np.ones((1, 1)), targ_poses=[target_poses[0]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/6)
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/6, language_goal=self.lang_template)

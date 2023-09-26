@@ -53,35 +53,35 @@ class SymmetricBlockBridgeConstruction(Task):
 
         # Goal: blocks are stacked in a bridge (bottom row: red, red).
         self.add_goal(objs=objs[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*2)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*2,
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (second row: blue).
         self.add_goal(objs=objs[2:3], matches=np.ones((1, 1)), targ_poses=targs[2:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (third row: red).
         self.add_goal(objs=objs[3:4], matches=np.ones((1, 1)), targ_poses=targs[3:4], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (fourth row: blue).
         self.add_goal(objs=objs[4:5], matches=np.ones((1, 1)), targ_poses=targs[4:5], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (fifth row: red).
         self.add_goal(objs=objs[5:6], matches=np.ones((1, 1)), targ_poses=targs[5:6], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (sixth row: blue).
         self.add_goal(objs=objs[6:7], matches=np.ones((1, 1)), targ_poses=targs[6:7], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a bridge (top row: red, red).
         self.add_goal(objs=objs[7:], matches=np.ones((1, 1)), targ_poses=targs[7:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)

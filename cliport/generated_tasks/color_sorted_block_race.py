@@ -47,5 +47,5 @@ class ColorSortedBlockRace(Task):
         # Goal: each block is in the corresponding colored zone.
         for i, block in enumerate(blocks):
             self.add_goal(objs=[block], matches=np.ones((1, 1)), targ_poses=[zone_poses[i//3]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks))
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks),
+                          language_goal=self.lang_template)

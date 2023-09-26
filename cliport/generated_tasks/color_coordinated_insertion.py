@@ -12,12 +12,12 @@ from cliport.utils import utils
 import pybullet as p
 
 class ColorCoordinatedInsertion(Task):
-    """Insert each block into the fixture of the same color, and then place these fixtures onto a pallet."""
+    """Insert each block into the fixture of the same color"""
 
     def __init__(self):
         super().__init__()
         self.max_steps = 20
-        self.lang_template = "insert each block into the fixture of the same color, and then place these fixtures onto a pallet"
+        self.lang_template = "insert each block into the fixture of the same color"
         self.task_completed_desc = "done with color-coordinated-insertion."
         self.additional_reset()
 
@@ -52,11 +52,11 @@ class ColorCoordinatedInsertion(Task):
         # Goal: each block is in the fixture of the same color.
         for i in range(len(blocks)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[p.getBasePositionAndOrientation(fixtures[i])], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks),
+                          language_goal=self.lang_template)
 
         # Goal: each fixture is on the pallet.
         for i in range(len(fixtures)):
             self.add_goal(objs=[fixtures[i]], matches=np.ones((1, 1)), targ_poses=[pallet_pose], replace=False,
-                          rotations=True, metric='zone', params=[(pallet_pose, pallet_size)], step_max_reward=1 / len(fixtures))
-
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='zone', params=[(pallet_pose, pallet_size)], step_max_reward=1 / len(fixtures),
+                          language_goal=self.lang_template)

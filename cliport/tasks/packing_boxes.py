@@ -79,6 +79,4 @@ class PackingBoxes(Task):
             true_poses.append(true_pose)
 
         self.add_goal(objs=object_ids, matches=np.eye(len(object_ids)), targ_poses=true_poses, replace=False,
-                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1)
-
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1, language_goal=self.lang_template)

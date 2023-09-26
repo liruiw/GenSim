@@ -70,7 +70,7 @@ class PackingShapes(Task):
         num_objects_to_pick = 1
         for i in range(num_objects_to_pick):
             # IMPORTANT: Specify (obj_pts, [(zone_pose, zone_size)]) for target `zone`. obj_pts is a dict
+            language_goal = self.lang_template.format(obj=shapes[obj_shapes[i]])
             self.add_goal(objs=[objects[i]], matches=np.int32([[1]]), targ_poses=[zone_pose], replace=False,
-                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / num_objects_to_pick)
-
-            self.lang_goals.append(self.lang_template.format(obj=shapes[obj_shapes[i]]))
+                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / num_objects_to_pick,
+                language_goal=language_goal)

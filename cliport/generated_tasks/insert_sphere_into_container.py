@@ -42,5 +42,5 @@ class InsertSphereIntoContainer(Task):
 
         # Goal: the blue sphere is in the container.
         self.add_goal(objs=[sphere_id], matches=np.ones((1, 1)), targ_poses=[container_pose], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1,
+                          language_goal=self.lang_template)

@@ -41,8 +41,7 @@ class PlaceRedInGreen(Task):
 
         # Goal: each red block is in a different green bowl.
         self.add_goal(objs=blocks, matches=np.ones((len(blocks), len(bowl_poses))), targ_poses=bowl_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1, language_goal=self.lang_template)
 
         # Colors of distractor objects.
         bowl_colors = [utils.COLORS[c] for c in utils.COLORS if c != 'green']

@@ -27,9 +27,12 @@ class ColorOrderedContainerArrangement(Task):
         color_order = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
 
         # Add containers and blocks
+        container_template = 'container/container-template.urdf'
         container_size = (0.12, 0.12, 0.02)
+        replace = {'DIM': container_size, 'HALF': (container_size[0] / 2, container_size[1] / 2, container_size[2] / 2)}
+        container_urdf = self.fill_template(container_template, replace)
+
         block_size = (0.04, 0.04, 0.04)
-        container_urdf = 'container/container-template.urdf'
         block_urdf = 'block/block.urdf'
         containers = []
         blocks = []
@@ -46,11 +49,10 @@ class ColorOrderedContainerArrangement(Task):
 
             # Add subgoal to place block in container
             self.add_goal(objs=[block_id], matches=np.ones((1, 1)), targ_poses=[container_pose], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/6)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/6,
+                          language_goal=self.lang_template)
 
         # Add final goal to arrange containers in color order
         container_poses = [self.get_random_pose(env, container_size) for _ in color_order]
         self.add_goal(objs=containers, matches=np.eye(len(color_order)), targ_poses=container_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1)
-
-        self.lang_goals.append(self.lang_template)
+                      rotations=True, metric='pose', params=None, step_max_reward=1, language_goal=self.lang_template)

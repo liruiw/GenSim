@@ -1,32 +1,9 @@
 Before writing the code for the task "TASK_NAME_TEMPLATE". Here are some runtime errors that you do not want to make. Please confirm that you understand these runtime errors.
 
 """
-- environment.py, line 338, in info
-    pos, rot = p.getBasePositionAndOrientation(obj_id)
-TypeError: an integer is required (got type NoneType)
-
-- task.py, line 118, in act
-    objs, matches, targs, replace, rotations, _, _, _ = self.goals[0]
-IndexError: list index out of range
-
 - task.py, line 308, in is_match
     diff_pos = np.float32(pose0[0][:2]) - np.float32(pose1[0][:2])
 TypeError: 'float' object is not subscriptable
-
-- task.py", line 315, in is_match
-  rot1 = np.array(utils.quatXYZW_to_eulerXYZ(pose1[1]))[2]
-
-- utils.py", line 280, in quatXYZW_to_eulerXYZ
-  quaternion_wxyz = np.array([q[3], q[0], q[1], q[2]])
-IndexError: tuple index out of range
-
-- pallet_pose = self.get_random_pose(env, pallet_size)
-pallet_surface_height = pallet_pose[0][2]
-TypeError: 'NoneType' object is not subscriptable
-
-- No such file or directory: './cliport/environments/assets/circle/circle-template.urdf'
-
-- No such file or directory: './cliport/environments/assets/block/block-template.urdf'
 
 - task.py", line 308, in is_match
     diff_pos = np.float32(pose0[0][:2]) - np.float32(pose1[0][:2])
@@ -44,6 +21,10 @@ TypeError: cannot unpack non-iterable NoneType object
     pts = obj_pts[obj_id]
 IndexError: arrays used as indices must be of integer (or boolean) type
 
+- generated_task.py", line 41, in reset
+    utils.COLORS['green'], utils.COLORS['blue'], utils.COLORS['light blue'],
+KeyError: 'light blue'
+
 - environment.py", line 195, in reset
     self.task.reset(self)
   File "<string>", line 38, in reset
@@ -54,15 +35,9 @@ TypeError: can only concatenate str (not "list") to str
   in numpy.random.mtrand.RandomState.choice
 ValueError: a must be 1-dimensional
 
-- No such file or directory: 'assets/box-template/box-template.urdf'
-
 - line 38, in reset.py
 {'HALF': box_size / 2}
 TypeError: unsupported operand type(s) for /: 'tuple' and 'int'. box_size is a tuple not a float.
-
-- line 38, in reset.py
-IndexError: tuple index out of range
-box_pose = (pallet_pose[0], pallet_pose[1], pallet_pose[2] + np.sum(box_sizes[:i+1]))
 
 - task.py", line 338, in fill_template
     for i in range(len(replace[field])):
@@ -92,9 +67,5 @@ You do not want to make mistakes such as
 - accessing index out of bound `pallet_pose[2]` for `pallet_pose`.  `pallet_pose=get_random_pose` returns a tuple (translation, rotation). It does not have 3rd component. Similarly accessing `container_pose[2]` or `box_pose[2]` would cause errors as well. Since it's a tuple, try to modify it in-place will also trigger errors.
 - forget to replace str using `fill_template()` for urdfs with template such as `cylinder-template.urdf`. `ball-template.urdf`, `line-template.urf`. 
 - use `self.ee = Spatula()` as a function when doing pushing tasks, which is incorrect. It should be `self.ee = Spatula`.
-- forget to compute target poses `targ_poses` for matching. Do not use object IDs for poses.
-- change colors of complex objects such as `zone`. You can only change color of teomplate primitive such as `cylinder-template`.
 - mistakenly use `random_pose` for target pose. Design target poses based on task objectives.
-- forget to compute target poses `targ_poses` for matching. Do not use object IDs for poses.
-- set asset target poses such as `place_pos` at the wrong place near origin, it should be around the table center with [0.5,0,0]. 
-- forget to use functions `make_piles` and `make_ropes` for creating piles and rope. To use spatula together with the push primitives.
+- add only one or fewer language goals which causes language-motion inconsistentcy. Note that the language goals usually are the same number as the pick and place goals.

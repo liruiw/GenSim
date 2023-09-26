@@ -342,7 +342,7 @@ class Task():
 =========
 Note that the objects need to obey physics and not collide with each other, and the object goal poses need to be above the table with lower bound x=0.25, y=-0.5 and upper bound x=0.75, y=0.5. When there are multiple objects for a multi-step pick-and-place task, there are often multiple subgoals. Once the task and environment are generated, an agent with a pick and place primitive will follow the defined goal to accomplish the tasks. 
 
-Additionally, make sure you understand and summarize the ``self.goals`` variables, which has a list of 8-tuple with (objs, matches, targ_poses, replace, rotations, metric, params, substep_max_reward, symmetries).
+Additionally, make sure you understand and summarize the ``self.goals`` variables, which has a list of 8-tuple with (objs, matches, targ_poses, replace, rotations, metric, params, step_max_reward, symmetries).
 - objs (List of obj_id): object ID.
 - matches (Binary Matrix): a binary matrix that denotes which object is matched with which target. This matrix has dimension len(objs) x len(targs).
 - targ_poses (List of Poses [(translation, rotation)] ): a list of target poses of tuple (translation, rotation). 
@@ -350,6 +350,7 @@ Additionally, make sure you understand and summarize the ``self.goals`` variable
 - rotations (Boolean): whether the placement action has a rotation degree of freedom. 
 - metric (`pose` or `zone`): `pose` or `zone` that the object needs to be transported to. Example: `pose`. 
 - params (List of (zone_target, zone_size)): a list of (zone_target, zone_size) for each zone if the metric is `zone`. 
-- substep_max_reward (float): the total reward of matching all the objects with all the target poses. It is not dependent on the number of objects but dependent on the number of goals. 
+- step_max_reward (float): the total reward of matching all the objects with all the target poses. It is not dependent on the number of objects but dependent on the number of goals. 
 - symmetries: the radians that the object is symmetric around z axis.
+- language_goal: the low-level language instructions that denote the goal of this step.
  

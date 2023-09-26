@@ -56,7 +56,8 @@ class BuildBridge(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./4)
+                      step_max_reward=1./4,
+                      language_goal="Firstly, place the two yellow blocks on each of the two bases parallel to each other with a fair amount of space in between.")
 
         self.add_goal(objs=base_blocks[2:],
                       matches=np.ones((2, 2)),
@@ -65,8 +66,8 @@ class BuildBridge(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./2)
-        self.lang_goals.append("Firstly, place the two yellow blocks on each of the two bases parallel to each other with a fair amount of space in between.")
+                      step_max_reward=1./2,
+                      language_goal="Place the two yellow blocks on each of the two bases parallel to each other with a fair amount of space in between.")
 
         # Then, add the car body by stacking a blue block on top of the base.
         self.add_goal(objs=[body_block_id],
@@ -76,5 +77,5 @@ class BuildBridge(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./4)
-        self.lang_goals.append("Then, place the blue block horizontally on top of the yellow blocks.")
+                      step_max_reward=1./4,
+                      language_goal="Then, place the blue block horizontally on top of the yellow blocks.")

@@ -42,10 +42,10 @@ class PutBlockInBowl(Task):
             blocks.append(block_id)
 
         # Goal: put each block in a different bowl.
+        language_goal = (self.lang_template.format(pick=selected_color_names[0], place=selected_color_names[1]))
         self.add_goal(objs=blocks, matches=np.ones((len(blocks), len(bowl_poses))), targ_poses=bowl_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template.format(pick=selected_color_names[0],
-                                                         place=selected_color_names[1]))
+                rotations=True, metric='pose', params=None, step_max_reward=1, language_goal=language_goal)
+        
 
         # Only one mistake allowed.
         self.max_steps = len(blocks) + 1

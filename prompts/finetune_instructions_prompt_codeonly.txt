@@ -1,0 +1,1 @@
+Write the pybullet simulation task class [TASK_NAME_TEMPLATE]. Provide answers in a python code block starting with ```python

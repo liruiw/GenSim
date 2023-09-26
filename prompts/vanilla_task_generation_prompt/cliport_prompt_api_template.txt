@@ -318,6 +318,11 @@ class Task():
         size[2] = size[2] * (max_z - min_z) + min_z
         return tuple(size)
 
+    def color_random_brown(self, obj):
+        shade = np.random.rand() + 0.5
+        color = np.float32([shade * 156, shade * 117, shade * 95, 255]) / 255
+        p.changeVisualShape(obj, -1, rgbaColor=color)
+
   """""
   
   # Environment Class
@@ -340,11 +345,12 @@ Note that the objects need to obey physics and not collide with each other, and 
 Additionally, make sure you understand and summarize the ``self.goals`` variables, which has a list of 8-tuple with (objs, matches, targ_poses, replace, rotations, metric, params, step_max_reward, symmetries).
 - objs (List of obj_id): object ID.
 - matches (Binary Matrix): a binary matrix that denotes which object is matched with which target. This matrix has dimension len(objs) x len(targs).
-- targ_poses (List of Poses [(translation, rotation)] ): a list of target poses of tuple (translation, rotation). Don't pass in object IDs such as `bowls[i-1][0]` or  `[stands[i][0]]`. 
-- replace (Boolean): whether each object can match with one unique target.   This is important if we have one target and multiple objects. If it's set to be false, then any object matching with the target will satisfy.
+- targ_poses (List of Poses [(translation, rotation)] ): a list of target poses of tuple (translation, rotation). 
+- replace (Boolean): whether each object can match with one unique target. This is important if we have one target and multiple objects. If it's set to be false, then any object matching with the target will satisfy.
 - rotations (Boolean): whether the placement action has a rotation degree of freedom. 
 - metric (`pose` or `zone`): `pose` or `zone` that the object needs to be transported to. Example: `pose`. 
 - params (List of (zone_target, zone_size)): a list of (zone_target, zone_size) for each zone if the metric is `zone`. 
-- step_max_reward (float): subgoal reward threshold.  
+- step_max_reward (float): the total reward of matching all the objects with all the target poses. It is not dependent on the number of objects but dependent on the number of goals. 
 - symmetries: the radians that the object is symmetric around z axis.
+- language_goal: the low-level language instructions that denote the goal of this step.
  

@@ -41,8 +41,8 @@ class ConnectBoxesWithRope(Task):
         # IMPORTANT: use `make_ropes` to add cable (series of articulated small blocks).
         objects, targets, matches = self.make_ropes(env, corners=(corner_poses[0][0], corner_poses[1][0]), n_parts=n_parts)
         self.add_goal(objs=objects, matches=matches, targ_poses=targets, replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=1.)
-        self.lang_goals.append(self.lang_template.format(color1=target_colors[0], color2=target_colors[1]))
+                rotations=False, metric='pose', params=None, step_max_reward=1.,
+                language_goal=self.lang_template.format(color1=target_colors[0], color2=target_colors[1]))
 
         # wait for the scene to settle down
         for i in range(600):

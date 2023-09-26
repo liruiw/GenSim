@@ -47,10 +47,10 @@ class MultiLevelPyramidConstruction(Task):
 
         # Goal: blocks are stacked in a pyramid (first level: green blocks).
         self.add_goal(objs=blocks[:3], matches=np.ones((3, 3)), targ_poses=targs[:3], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the green blocks", row="bottom"))
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3,
+                          language_goal=self.lang_template.format(blocks="the green blocks", row="bottom"))
 
         # Goal: blocks are stacked in a pyramid (second level: blue blocks).
         self.add_goal(objs=blocks[3:], matches=np.ones((3, 3)), targ_poses=targs[3:], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the blue blocks", row="top"))
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3,
+                          language_goal=self.lang_template.format(blocks="the blue blocks", row="top"))

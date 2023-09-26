@@ -1,0 +1,3 @@
+ "TASK_NAME_TEMPLATE". Format the answer in a python dictionary with keys "task-name", "task-description", and "assets-used". Then write the pybullet simulation code for the task "TASK_NAME_TEMPLATE" in a python code block.
+###
+

@@ -248,9 +248,6 @@ class Task():
                     world_to_zone = utils.invert(zone_pose)
                     obj_to_zone = utils.multiply(world_to_zone, obj_pose)
                     pts = np.float32(utils.apply(obj_to_zone, pts))
-                    # if type(zone_size) is int:
-                    #      print("closest point:", p.getClosestPoints(obj_id, zone_size, 0.1))
-                    #     valid_pts = len(p.getClosestPoints(obj_id, zone_size, 0.1)) > 0
 
                     if len(zone_size) > 1:
                         valid_pts = np.logical_and.reduce([
@@ -333,7 +330,7 @@ class Task():
         mask = np.int32(cmaps)[0, Ellipsis, 3:].squeeze()
         return cmap, hmap, mask
 
-    def get_random_pose(self, env, obj_size, **kwargs) -> (List, List):
+    def get_random_pose(self, env, obj_size=0.1, **kwargs) -> (List, List):
         """
         Get random collision-free object pose within workspace bounds.
         :param obj_size: (3, ) contains the object size in x,y,z dimensions
@@ -496,7 +493,8 @@ class Task():
             objs.append((obj_id, (symmetry, None)))
         return objs
 
-    def add_goal(self, objs, matches, targ_poses, replace, rotations, metric, params, step_max_reward, symmetries=None, **kwargs):
+    def add_goal(self, objs, matches, targ_poses, replace, rotations, metric, params, step_max_reward,
+                        symmetries=None, language_goal=None, **kwargs):
         """ Add the goal to the environment
         - objs (List of Tuple [(obj_id, (float, None))] ): object ID, (the radians that the object is symmetric over, None). Do not pass in `(object id, object pose)` as the wrong tuple. or `object id` (such as `containers[i][0]`).
         - matches (Binary Matrix): a binary matrix that denotes which object is matched with which target. This matrix has dimension len(objs) x len(targ_poses).
@@ -510,7 +508,11 @@ class Task():
         objs = self.zip_obj_ids(objs, symmetries)
         self.goals.append((objs, matches, targ_poses, replace, rotations,
                            metric, params, step_max_reward))
-
+        if language_goal is not None:
+            if type(language_goal) is str:
+                self.lang_goals.append(language_goal)
+            elif type(language_goal) is list:
+                self.lang_goals.extend(language_goal)
 
     def make_piles(self, env, block_color=None, *args, **kwargs):
         """
@@ -525,6 +527,8 @@ class Task():
             xyzw = utils.eulerXYZ_to_quatXYZW((0, 0, theta))
             obj_id = env.add_object('block/small.urdf', (xyz, xyzw))
             if block_color is not None:
+                if type(block_color) is str:
+                    block_color = utils.COLORS[block_color]
                 p.changeVisualShape(obj_id, -1, rgbaColor=block_color + [1])
 
             obj_ids.append(obj_id)
@@ -533,7 +537,7 @@ class Task():
     def make_rope(self, *args, **kwargs):
         return self.make_ropes(*args, **kwargs)
 
-    def make_ropes(self, env, corners, radius=0.005, n_parts = 20, color_name='red', *args, **kwargs):
+    def make_ropes(self, env, corners, radius=0.005, n_parts=20, color_name='red', *args, **kwargs):
         """ add cables simulation for tasks that involve cables """
         # Get corner points of square.
         
@@ -575,6 +579,11 @@ class Task():
             target_xyz = np.float32(corner0) + i * increment + increment / 2
             objects.append((part_id, (0, None)))
             targets.append((target_xyz, (0, 0, 0, 1)))
+
+            if  hasattr(env, 'record_cfg') and 'blender_render' in env.record_cfg and env.record_cfg['blender_render']:
+                sphere_template = os.path.join(self.assets_root, 'sphere/sphere_rope.urdf')
+                env.blender_recorder.register_object(part_id, os.path.join(self.assets_root, 'sphere/sphere_rope.urdf'))
+
 
         matches = np.clip(np.eye(n_parts) + np.eye(n_parts)[::-1], 0, 1)
         return objects, targets, matches
@@ -643,3 +652,6 @@ class Task():
         # Wait until spawned box settles.
         for _ in range(480):
             p.stepSimulation()
+
+    def get_asset_full_path(self, path):
+        return path

@@ -57,5 +57,5 @@ class FourCornerPyramidChallenge(Task):
         # Goal: blocks are stacked in a pyramid in each zone.
         for i in range(4):
             self.add_goal(objs=blocks[i*4:(i+1)*4], matches=np.ones((4, 4)), targ_poses=targs[i*4:(i+1)*4], replace=False,
-                    rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*4)
-        self.lang_goals.append(self.lang_template)
+                    rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*4,
+                          language_goal=self.lang_template)

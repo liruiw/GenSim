@@ -1,4 +1,4 @@
-<?xml version="0.0" ?>
+<?xml version="1.0" ?>
 <robot name="suction-base.urdf">
   <material name="DarkGrey">
     <color rgba="0.2 0.2 0.2 1.0"/>

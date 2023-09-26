@@ -42,8 +42,11 @@ class Spatula(Gripper):
 
         # Load spatula model.
         pose = ((0.487, 0.109, 0.438), p.getQuaternionFromEuler((np.pi, 0, 0)))
+        self.base_urdf_path = os.path.join(self.assets_root, SPATULA_BASE_URDF)
+
         base = pybullet_utils.load_urdf(
-            p, os.path.join(self.assets_root, SPATULA_BASE_URDF), pose[0], pose[1])
+            p, self.base_urdf_path, pose[0], pose[1])
+        self.base = base
         p.createConstraint(
             parentBodyUniqueId=robot,
             parentLinkIndex=ee,
@@ -87,8 +90,11 @@ class Suction(Gripper):
 
         # Load suction gripper base model (visual only).
         pose = ((0.487, 0.109, 0.438), p.getQuaternionFromEuler((np.pi, 0, 0)))
+        self.base_urdf_path = os.path.join(self.assets_root, SUCTION_BASE_URDF)
+
         base = pybullet_utils.load_urdf(
-            p, os.path.join(self.assets_root, SUCTION_BASE_URDF), pose[0], pose[1])
+            p, self.base_urdf_path, pose[0], pose[1])
+        self.base = base
         p.createConstraint(
             parentBodyUniqueId=robot,
             parentLinkIndex=ee,
@@ -102,8 +108,9 @@ class Suction(Gripper):
         # Load suction tip model (visual and collision) with compliance.
         # urdf = 'assets/ur5/suction/suction-head.urdf'
         pose = ((0.487, 0.109, 0.347), p.getQuaternionFromEuler((np.pi, 0, 0)))
+        self.urdf_path = os.path.join(self.assets_root, SUCTION_HEAD_URDF)
         self.body = pybullet_utils.load_urdf(
-            p, os.path.join(self.assets_root, SUCTION_HEAD_URDF), pose[0], pose[1])
+            p, self.urdf_path, pose[0], pose[1])
         constraint_id = p.createConstraint(
             parentBodyUniqueId=robot,
             parentLinkIndex=ee,
@@ -113,7 +120,7 @@ class Suction(Gripper):
             jointAxis=(0, 0, 0),
             parentFramePosition=(0, 0, 0),
             childFramePosition=(0, 0, -0.08))
-        p.changeConstraint(constraint_id, maxForce=50)
+        p.changeConstraint(constraint_id, maxForce=100)
 
         # Reference to object IDs in environment for simulating suction.
         self.obj_ids = obj_ids

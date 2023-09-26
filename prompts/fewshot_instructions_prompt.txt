@@ -1,0 +1,114 @@
+You are an AI in robot simulation code and task design. I will provide you some example tasks, code implementation, and some guidelines for how to generate tasks and then you will help me generate a new task. My goal is to design diverse and feasible tasks for tabletop manipulation. I will first ask you to describe the task in natural languages and then will let you write the code for it. 
+
+=========
+Here are all the assets. Use only these assets in the task and code design. 
+"""
+insertion/:
+ell.urdf  fixture.urdf
+
+bowl/:
+bowl.urdf
+
+box/:
+box-template.urdf
+
+stacking/:
+block.urdf  stand.urdf
+
+zone/:
+zone.obj  zone.urdf
+
+pallet/:
+pallet.obj  pallet.urdf
+
+ball/:
+ball-template.urdf
+
+cylinder/:
+cylinder-template.urdf
+
+bowl/:
+bowl.urdf
+
+# assets not for picking
+corner/:
+corner-template.urdf
+
+line/:
+single-green-line-template.urdf
+
+container/:
+container-template.urdf
+"""
+
+"""
+import numpy as np
+from cliport.tasks.task import Task
+from cliport.utils import utils
+import pybullet as p
+
+
+class PlaceRedInGreen(Task):
+    """pick up the red blocks and place them into the green bowls amidst other objects."""
+
+    def __init__(self):
+        super().__init__()
+        self.max_steps = 10
+        self.lang_template = "put the red blocks in a green bowl"
+        self.task_completed_desc = "done placing blocks in bowls."
+        self.additional_reset()
+
+    def reset(self, env):
+        super().reset(env)
+        n_bowls = np.random.randint(1, 4)
+        n_blocks = np.random.randint(1, n_bowls + 1)
+
+        # Add bowls.
+        # x, y, z dimensions for the asset size
+        bowl_size = (0.12, 0.12, 0)
+        bowl_urdf = 'bowl/bowl.urdf'
+        bowl_poses = []
+        for _ in range(n_bowls):
+            bowl_pose = self.get_random_pose(env, obj_size=bowl_size)
+            env.add_object(urdf=bowl_urdf, pose=bowl_pose, category='fixed')
+            bowl_poses.append(bowl_pose)
+
+        # Add blocks.
+        # x, y, z dimensions for the asset size
+        blocks = []
+        block_size = (0.04, 0.04, 0.04)
+        block_urdf = 'stacking/block.urdf'
+        for _ in range(n_blocks):
+            block_pose = self.get_random_pose(env, obj_size=block_size)
+            block_id = env.add_object(block_urdf, block_pose)
+            blocks.append(block_id)
+
+        # Goal: each red block is in a different green bowl.
+        self.add_goal(objs=blocks, matches=np.ones((len(blocks), len(bowl_poses))), targ_poses=bowl_poses, replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1)
+        self.lang_goals.append(self.lang_template)
+
+        # Colors of distractor objects.
+        # IMPORTANT: RETRIEVE THE ACTUAL COLOR VALUES
+        bowl_colors = [utils.COLORS[c] for c in utils.COLORS if c != 'green']
+        block_colors = [utils.COLORS[c] for c in utils.COLORS if c != 'red']
+
+        # Add distractors.
+        n_distractors = 0
+        while n_distractors < 6:
+            is_block = np.random.rand() > 0.5
+            urdf = block_urdf if is_block else bowl_urdf
+            size = block_size if is_block else bowl_size
+            colors = block_colors if is_block else bowl_colors
+            pose = self.get_random_pose(env, obj_size=size)
+            color = colors[n_distractors % len(colors)]
+
+            obj_id = env.add_object(urdf, pose, color=color)
+            n_distractors += 1
+"""
+
+=========
+Please describe the task "TASK_NAME_TEMPLATE" in natural languages and format the answer in a python dictionary with keys "task-name" and value type string, "task-description" (one specific sentence) and value type string, and "assets-used" and value type list of strings.
+
+=========
+Now write the pybullet simulation code for the task "TASK_NAME_TEMPLATE" in python code block starting with ```python.  

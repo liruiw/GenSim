@@ -46,35 +46,28 @@ class StackBlockPyramidSeq(Task):
         targs = [(utils.apply(base_pose, i), base_pose[1]) for i in place_pos]
 
         # Goal: make bottom row.
+        language_goal = (self.lang_template.format(pick=color_names[0], place="the lightest brown block"))        
         self.add_goal(objs=[objs[0]], matches=np.ones((1, 1)), targ_poses=[targs[0]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)
 
-        self.lang_goals.append(self.lang_template.format(pick=color_names[0],
-                                                         place="the lightest brown block"))
-
+        language_goal = (self.lang_template.format(pick=color_names[1], place="the middle brown block"))
         self.add_goal(objs=[objs[1]], matches=np.ones((1, 1)), targ_poses=[targs[1]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(pick=color_names[1],
-                                                         place="the middle brown block"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)
 
+        language_goal = (self.lang_template.format(pick=color_names[2], place="the darkest brown block"))
         self.add_goal(objs=[objs[2]], matches=np.ones((1, 1)), targ_poses=[targs[2]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(pick=color_names[2],
-                                                         place="the darkest brown block"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)
 
         # Goal: make middle row.
+        language_goal = (self.lang_template.format(pick=color_names[3], place=f"the {color_names[0]} and {color_names[1]} blocks"))        
         self.add_goal(objs=[objs[3]], matches=np.ones((1, 1)), targ_poses=[targs[3]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(pick=color_names[3],
-                                                         place=f"the {color_names[0]} and {color_names[1]} blocks"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)
 
+        language_goal = (self.lang_template.format(pick=color_names[4], place=f"the {color_names[1]} and {color_names[2]} blocks"))
         self.add_goal(objs=[objs[4]], matches=np.ones((1, 1)), targ_poses=[targs[4]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(pick=color_names[4],
-                                                         place=f"the {color_names[1]} and {color_names[2]} blocks"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)
 
         # Goal: make top row.
+        language_goal = (self.lang_template.format(pick=color_names[5], place=f"the {color_names[3]} and {color_names[4]} blocks"))
         self.add_goal(objs=[objs[5]], matches=np.ones((1, 1)), targ_poses=[targs[5]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(pick=color_names[5],
-                                                         place=f"the {color_names[3]} and {color_names[4]} blocks"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=language_goal)

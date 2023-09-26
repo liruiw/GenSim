@@ -59,5 +59,5 @@ class ColorSpecificContainerFill(Task):
         # Goal: each block is in a container of the same color.
         for i in range(len(colors)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[p.getBasePositionAndOrientation(containers[i])], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / len(colors))
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / len(colors),
+                          language_goal=self.lang_template.format(color=colors[i]))

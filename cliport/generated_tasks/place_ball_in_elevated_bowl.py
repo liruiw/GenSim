@@ -26,9 +26,6 @@ class PlaceBallInElevatedBowl(Task):
 
         # Add elevated platform.
         platform_size = (0.3, 0.3, 0.05)
-        platform_urdf = 'platform/platform.urdf'
-        platform_pose = self.get_random_pose(env, platform_size)
-        env.add_object(platform_urdf, platform_pose, 'fixed')
 
         # Add bowl on the platform.
         bowl_size = (0.12, 0.12, 0)
@@ -52,5 +49,5 @@ class PlaceBallInElevatedBowl(Task):
 
         # Goal: the red ball is in the bowl.
         self.add_goal(objs=[ball_id], matches=np.ones((1, 1)), targ_poses=[bowl_pose], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                      rotations=True, metric='pose', params=None, step_max_reward=1,
+                          language_goal=self.lang_template)

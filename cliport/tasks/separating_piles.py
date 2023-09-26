@@ -48,7 +48,6 @@ relevant to the task, another as a distractor."""
         obj_ids = self.make_piles(env, block_color=block_color)
 
         # Goal: all small blocks must be in the correct zone.
+        language_goal = self.lang_template.format(block_color=color_names[2], square_color=zone_target_color)
         self.add_goal(objs=obj_ids, matches=np.ones((50, 1)), targ_poses=[zone_target], replace=True,
-                rotations=False, metric='zone', params=[(zone_target, zone_size)], step_max_reward=1)
-        self.lang_goals.append(self.lang_template.format(block_color=color_names[2],
-                                                         square_color=zone_target_color))
+                rotations=False, metric='zone', params=[(zone_target, zone_size)], step_max_reward=1, language_goal=language_goal)

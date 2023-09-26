@@ -50,8 +50,8 @@ class MultiLevelBlockConstruction(Task):
 
         # Goal: red blocks are placed side by side on the pallet.
         self.add_goal(objs=blocks[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2, language_goal=self.lang_template)
 
         # Goal: blue blocks are stacked on top of the red blocks.
         self.add_goal(objs=blocks[2:], matches=np.ones((2, 2)), targ_poses=targs[2:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2, language_goal=self.lang_template)

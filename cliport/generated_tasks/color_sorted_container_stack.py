@@ -54,5 +54,5 @@ class ColorSortedContainerStack(Task):
         # Goal: each block is stacked in the container in the order: red, blue, green, yellow.
         for i in range(4):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[container_pose], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                language_goal=self.lang_template)

@@ -352,4 +352,5 @@ Additionally, make sure you understand and summarize the ``self.goals`` variable
 - params (List of (zone_target, zone_size)): a list of (zone_target, zone_size) for each zone if the metric is `zone`. 
 - step_max_reward (float): the total reward of matching all the objects with all the target poses. It is not dependent on the number of objects but dependent on the number of goals. 
 - symmetries: the radians that the object is symmetric around z axis.
+- language_goal: the low-level language instructions that denote the goal of this step.
  

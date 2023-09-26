@@ -49,8 +49,8 @@ class SortAndStackClrBlocks(Task):
 
         # Goal: blocks are sorted into separate corners of the pallet.
         self.add_goal(objs=blocks, matches=np.eye(4), targ_poses=targs, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=0.5, symmetries=[np.pi/2]*4)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=0.5, symmetries=[np.pi/2]*4,
+                          language_goal=self.lang_template)
 
         # Associate stacking locations for goals.
         stack_pos = [(0, 0, 0.02), (0, 0, 0.06), (0, 0, 0.10), (0, 0, 0.14)]
@@ -58,5 +58,5 @@ class SortAndStackClrBlocks(Task):
 
         # Goal: blocks are stacked on top of the pallet in the order of green, blue, red, and yellow.
         self.add_goal(objs=blocks, matches=np.eye(4), targ_poses=targs, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=0.5, symmetries=[np.pi/2]*4)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=0.5, symmetries=[np.pi/2]*4,
+                          language_goal=self.lang_template)

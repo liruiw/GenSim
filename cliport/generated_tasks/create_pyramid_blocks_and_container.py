@@ -31,6 +31,8 @@ class CreatePyramidBlocksAndContainer(Task):
         replace = {'DIM': container_size, 'HALF': (container_size[0] / 2, container_size[1] / 2, container_size[2] / 2)}
         container_urdf = self.fill_template(container_urdf, replace)
         env.add_object(container_urdf, container_pose, 'fixed')
+        self.add_corner_anchor_for_pose(env, container_pose)
+
 
         # Add blocks.
         # x, y, z dimensions for the asset size
@@ -49,18 +51,18 @@ class CreatePyramidBlocksAndContainer(Task):
 
         # Goal: blocks are stacked in a pyramid (bottom row: green, green, blue).
         self.add_goal(objs=blocks[2:5], matches=np.ones((3, 3)), targ_poses=targs[:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the green and blue blocks",
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3,
+                          language_goal=self.lang_template.format(blocks="the green and blue blocks",
                                                          row="bottom"))
 
         # Goal: blocks are stacked in a pyramid (middle row: red, red).
         self.add_goal(objs=blocks[:2], matches=np.ones((2, 2)), targ_poses=targs[3:5], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2)
-        self.lang_goals.append(self.lang_template.format(blocks="the red blocks",
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2,
+                          language_goal=self.lang_template.format(blocks="the red blocks",
                                                          row="middle"))
 
         # Goal: blocks are stacked in a pyramid (top row: blue).
         self.add_goal(objs=blocks[5:], matches=np.ones((1, 1)), targ_poses=targs[5:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template.format(blocks="the blue block",
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2],
+                          language_goal=self.lang_template.format(blocks="the blue block",
                                                          row="top"))

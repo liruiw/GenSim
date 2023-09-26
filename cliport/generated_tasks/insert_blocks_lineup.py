@@ -54,5 +54,5 @@ class InsertBlocksLineup(Task):
         # Goal: each block is in the corresponding color fixture.
         for i in range(4):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[fixture_poses[i][0]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/4)
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1/4,
+                          language_goal=self.lang_template.format(color=colors[i]))

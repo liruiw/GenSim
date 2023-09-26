@@ -43,5 +43,5 @@ class AlignPairColoredBlocksAlongLine(Task):
 
         # Goal: each pair of similarly colored blocks are touching and both pairs are aligned along the line.
         self.add_goal(objs=blocks, matches=np.ones((4, 4)), targ_poses=anchor_base_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1,
+                language_goal=self.lang_template)

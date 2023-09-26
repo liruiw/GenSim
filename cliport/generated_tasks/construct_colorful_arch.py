@@ -44,20 +44,20 @@ class ConstructColorfulArch(Task):
 
         # Goal: blocks are stacked in an arch (bottom layer: red, red).
         self.add_goal(objs=blocks[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2)
-        self.lang_goals.append("Place two red blocks on the tabletop parallel to each other")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2,
+                          language_goal="Place two red blocks on the tabletop parallel to each other")
 
         # Goal: blocks are stacked in an arch (second layer: blue).
         self.add_goal(objs=blocks[2:3], matches=np.ones((1, 1)), targ_poses=targs[2:3], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-        self.lang_goals.append("Place a blue block on top of the red blocks to form a basic arch")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2],
+                          language_goal="Place a blue block on top of the red blocks to form a basic arch")
 
         # Goal: blocks are stacked in an arch (third layer: red, red).
         self.add_goal(objs=blocks[3:5], matches=np.ones((2, 2)), targ_poses=targs[3:5], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2)
-        self.lang_goals.append("Place a red block on each side of the base arch")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2,
+                          language_goal="Place a red block on each side of the base arch")
 
         # Goal: blocks are stacked in an arch (top layer: blue).
         self.add_goal(objs=blocks[5:], matches=np.ones((1, 1)), targ_poses=targs[5:], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-        self.lang_goals.append("Bridge them with the last blue block")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2],
+                          language_goal="Bridge them with the last blue block")

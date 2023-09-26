@@ -52,5 +52,5 @@ class ColorCoordinatedSphereInsertion(Task):
         # Goal: each sphere is in a bowl of the same color.
         for i in range(4):
             self.add_goal(objs=[spheres[i]], matches=np.ones((1, 1)), targ_poses=[bowl_poses[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/4)
-            self.lang_goals.append(f"insert the {colors[i]} sphere into the {colors[i]} bowl")
+                          rotations=True, metric='pose', params=None, step_max_reward=1/4,
+                          language_goal=f"insert the {colors[i]} sphere into the {colors[i]} bowl")

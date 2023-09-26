@@ -49,10 +49,8 @@ class BuildWheel(Task):
                         circle_center[2]) for angle in angles]
         block_poses = [(utils.apply(sphere_pose, pos), sphere_pose[1]) for pos in block_poses]
         self.add_goal(objs=blocks, matches=np.ones((8, 8)), targ_poses=block_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=8 / 9)
+                rotations=True, metric='pose', params=None, step_max_reward=8 / 9, language_goal=self.lang_template)
 
         # Goal: sphere is in the center of the blocks.
         self.add_goal(objs=[sphere_id], matches=np.ones((1, 1)), targ_poses=[sphere_pose], replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=1 / 9)
-
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='pose', params=None, step_max_reward=1 / 9, language_goal=self.lang_template)

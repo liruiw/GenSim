@@ -46,6 +46,10 @@ class TransporterAgent(LightningModule):
         self.save_steps = cfg['train']['save_steps']
 
         self._build_model()
+        ##
+        # reduce the number of parameters here
+        ##
+
         self._optimizers = {
             'attn': torch.optim.Adam(self.attention.parameters(), lr=self.cfg['train']['lr']),
             'trans': torch.optim.Adam(self.transport.parameters(), lr=self.cfg['train']['lr'])

@@ -51,5 +51,5 @@ class ColorfulBlockTowerOnCylinderBase(Task):
         # Goal: blocks are stacked on the cylindrical base in the order red, blue, green, yellow from bottom to top.
         for i in range(4):
             self.add_goal(objs=[objs[i]], matches=np.ones((1, 1)), targ_poses=[targs[i]], replace=False,
-                    rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2])
-            self.lang_goals.append(self.lang_template)
+                    rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2],
+                          language_goal=self.lang_template)

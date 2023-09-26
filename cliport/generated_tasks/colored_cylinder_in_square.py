@@ -40,5 +40,5 @@ class ColoredCylinderInSquare(Task):
         # Goal: each cylinder is placed along the corresponding color edge.
         for i, cylinder in enumerate(cylinders):
             self.add_goal(objs=[cylinder], matches=np.ones((1, 1)), targ_poses=[targs[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / 5)
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / 5,
+                          language_goal=self.lang_template.format(color=colors[i]))

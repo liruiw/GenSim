@@ -45,19 +45,16 @@ class StackBlockPyramid(Task):
         targs = [(utils.apply(base_pose, i), base_pose[1]) for i in place_pos]
 
         # Goal: blocks are stacked in a pyramid (bottom row: green, blue, purple).
+        language_goal = self.lang_template.format(blocks="the green, blue and purple blocks", row="bottom")
         self.add_goal(objs=objs[:3], matches=np.ones((3, 3)), targ_poses=targs[:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the green, blue and purple blocks",
-                                                         row="bottom"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3, language_goal=language_goal)
 
         # Goal: blocks are stacked in a pyramid (middle row: yellow, orange).
-        self.add_goal(objs=objs[3:5], matches=np.ones((3, 3)), targ_poses=targs[3:5], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the yellow and orange blocks",
-                                                         row="middle"))
+        language_goal = self.lang_template.format(blocks="the yellow and orange blocks", row="middle")      
+        self.add_goal(objs=objs[3:5], matches=np.ones((2, 2)), targ_poses=targs[3:5], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2, language_goal=language_goal)
 
         # Goal: blocks are stacked in a pyramid (top row: red).
-        self.add_goal(objs=objs[5:], matches=np.ones((3, 3)), targ_poses=targs[5:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the red block",
-                                                         row="top"))
+        language_goal = self.lang_template.format(blocks="the red block", row="top")
+        self.add_goal(objs=objs[5:], matches=np.ones((1, 1)), targ_poses=targs[5:], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2]*1, language_goal=language_goal)

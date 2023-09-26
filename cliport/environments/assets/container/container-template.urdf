@@ -1,4 +1,5 @@
-<?xml version="0.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <robot name="container.urdf">
   <link name="baseLink">
     <contact>

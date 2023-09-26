@@ -16,6 +16,7 @@ class ResNet45_10s(nn.Module):
         self.device = device
         self.batchnorm = self.cfg['train']['batchnorm']
         self.preprocess = preprocess
+        # import IPython; IPython.embed()
 
         self._make_layers()
 
@@ -48,17 +49,17 @@ class ResNet45_10s(nn.Module):
             IdentityBlock(512, [512, 512, 512], kernel_size=3, stride=1, batchnorm=self.batchnorm),
         )
 
-        self.layer5 = nn.Sequential(
-            ConvBlock(512, [1024, 1024, 1024], kernel_size=3, stride=2, batchnorm=self.batchnorm),
-            IdentityBlock(1024, [1024, 1024, 1024], kernel_size=3, stride=1, batchnorm=self.batchnorm),
-        )
+        # self.layer5 = nn.Sequential(
+        #     ConvBlock(512, [1024, 1024, 1024], kernel_size=3, stride=2, batchnorm=self.batchnorm),
+        #     IdentityBlock(1024, [1024, 1024, 1024], kernel_size=3, stride=1, batchnorm=self.batchnorm),
+        # )
 
-        # head
-        self.layer6 = nn.Sequential(
-            ConvBlock(1024, [512, 512, 512], kernel_size=3, stride=1, batchnorm=self.batchnorm),
-            IdentityBlock(512, [512, 512, 512], kernel_size=3, stride=1, batchnorm=self.batchnorm),
-            nn.UpsamplingBilinear2d(scale_factor=2),
-        )
+        # # head
+        # self.layer6 = nn.Sequential(
+        #     ConvBlock(1024, [512, 512, 512], kernel_size=3, stride=1, batchnorm=self.batchnorm),
+        #     IdentityBlock(512, [512, 512, 512], kernel_size=3, stride=1, batchnorm=self.batchnorm),
+        #     nn.UpsamplingBilinear2d(scale_factor=2),
+        # )
 
         self.layer7 = nn.Sequential(
             ConvBlock(512, [256, 256, 256], kernel_size=3, stride=1, batchnorm=self.batchnorm),
@@ -96,13 +97,23 @@ class ResNet45_10s(nn.Module):
         x = self.preprocess(x, dist='transporter')
         in_shape = x.shape
 
+        # # encoder
+        # for layer in [self.conv1, self.layer1, self.layer2, self.layer3, self.layer4, self.layer5]:
+        #     x = layer(x)
+
+        # # decoder
+        # im = []
+        # for layer in [self.layer6, self.layer7, self.layer8, self.layer9, self.layer10, self.conv2]:
+        #     im.append(x)
+        #     x = layer(x)
+
         # encoder
-        for layer in [self.conv1, self.layer1, self.layer2, self.layer3, self.layer4, self.layer5]:
+        for layer in [self.conv1, self.layer1, self.layer2, self.layer3, self.layer4]:
             x = layer(x)
 
         # decoder
         im = []
-        for layer in [self.layer6, self.layer7, self.layer8, self.layer9, self.layer10, self.conv2]:
+        for layer in [self.layer7, self.layer8, self.layer9, self.layer10, self.conv2]:
             im.append(x)
             x = layer(x)
 

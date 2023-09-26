@@ -1,5 +1,5 @@
-<?xml version="0.0" ?>
-<robot name="workspace.urdf">
+<?xml version="1.0"?>
+<robot name="workspace">
   <link name="baseLink">
     <contact>
       <lateral_friction value="1.0"/>

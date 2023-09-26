@@ -47,15 +47,21 @@ class CLIPLingUNetLat(nn.Module):
         self.lang_proj3 = nn.Linear(self.proj_input_dim, 256)
 
         # vision
+        # self.conv1 = nn.Sequential(
+        #     nn.Conv2d(self.input_dim, 1024, kernel_size=3, stride=1, padding=1, bias=False),
+        #     nn.ReLU(True)
+        # )
+
+        # self.up1 = Up(2048, 1024 // self.up_factor, self.bilinear)
+        # self.lat_fusion1 = FusionConvLat(input_dim=1024+512, output_dim=512)
+
+        # self.up2 = Up(1024, 512 // self.up_factor, self.bilinear)
+        # self.lat_fusion2 = FusionConvLat(input_dim=512+256, output_dim=256)
+        
         self.conv1 = nn.Sequential(
-            nn.Conv2d(self.input_dim, 1024, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.Conv2d(self.input_dim, 256, kernel_size=3, stride=1, padding=1, bias=False),
             nn.ReLU(True)
         )
-        self.up1 = Up(2048, 1024 // self.up_factor, self.bilinear)
-        self.lat_fusion1 = FusionConvLat(input_dim=1024+512, output_dim=512)
-
-        self.up2 = Up(1024, 512 // self.up_factor, self.bilinear)
-        self.lat_fusion2 = FusionConvLat(input_dim=512+256, output_dim=256)
 
         self.up3 = Up(512, 256 // self.up_factor, self.bilinear)
         self.lat_fusion3 = FusionConvLat(input_dim=256+128, output_dim=128)
@@ -92,7 +98,7 @@ class CLIPLingUNetLat(nn.Module):
 
     def encode_text(self, x):
         with torch.no_grad():
-            tokens = tokenize([x]).to(self.device)
+            tokens = tokenize(x).to(self.device)
             text_feat, text_emb = self.clip_rn50.encode_text_with_embeddings(tokens)
 
         text_mask = torch.where(tokens==0, tokens, 1)  # [1, max_token_len]
@@ -114,13 +120,15 @@ class CLIPLingUNetLat(nn.Module):
         assert x.shape[1] == self.input_dim
         x = self.conv1(x)
 
-        x = self.lang_fuser1(x, l_input, x2_mask=l_mask, x2_proj=self.lang_proj1)
-        x = self.up1(x, im[-2])
-        x = self.lat_fusion1(x, lat[-6])
+        # x = self.lang_fuser1(x, l_input, x2_mask=l_mask, x2_proj=self.lang_proj1)
+        # x = self.up1(x, im[-2])
+        # x = self.lat_fusion1(x, lat[-6])
 
-        x = self.lang_fuser2(x, l_input, x2_mask=l_mask, x2_proj=self.lang_proj2)
-        x = self.up2(x, im[-3])
-        x = self.lat_fusion2(x, lat[-5])
+        # x = self.lang_fuser2(x, l_input, x2_mask=l_mask, x2_proj=self.lang_proj2)
+        # x = self.up2(x, im[-3])
+        # x = self.lat_fusion2(x, lat[-5])
+        if (x.shape[0] > 8) and ((x.shape[0] % 36) == 0):
+            l_input = l_input.repeat_interleave(36, dim=0)
 
         x = self.lang_fuser3(x, l_input, x2_mask=l_mask, x2_proj=self.lang_proj3)
         x = self.up3(x, im[-4])

@@ -45,6 +45,14 @@ class Fusion(nn.Module):
         x2 = x2.unsqueeze(-1).unsqueeze(-1)
         x2 = x2.repeat(x1.shape[0], 1, x1.shape[-2], x1.shape[-1])
         return x2
+    
+    def batch_tile_x2(self, x1, x2, x2_proj=None):
+        if x2_proj:
+            x2 = x2_proj(x2)
+
+        x2 = x2.unsqueeze(-1).unsqueeze(-1)
+        x2 = x2.repeat(1, 1, x1.shape[-2], x1.shape[-1])
+        return x2
 
     def forward(self, x1, x2, x2_mask=None, x2_proj=None):
         raise NotImplementedError()
@@ -70,7 +78,7 @@ class FusionMult(Fusion):
 
     def forward(self, x1, x2, x2_mask=None, x2_proj=None):
         if x1.shape != x2.shape and len(x1.shape) != len(x2.shape):
-            x2 = self.tile_x2(x1, x2, x2_proj)
+            x2 = self.batch_tile_x2(x1, x2, x2_proj)  # self.batch_tile_x2(x1, x2, x2_proj)
         return x1 * x2
 
 

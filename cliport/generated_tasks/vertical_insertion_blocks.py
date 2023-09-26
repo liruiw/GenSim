@@ -50,5 +50,5 @@ class VerticalInsertionBlocks(Task):
         # Goal: each block is inserted into the stand of the same color.
         for i in range(len(blocks)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[p.getBasePositionAndOrientation(stands[i])], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks))
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                rotations=True, metric='pose', params=None, step_max_reward=1/len(blocks),
+                language_goal=self.lang_template.format(color=colors[i]))

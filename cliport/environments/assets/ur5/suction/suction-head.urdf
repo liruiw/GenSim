@@ -1,4 +1,4 @@
-<?xml version="0.0" ?>
+<?xml version="1.0" ?>
 <robot name="suction-head.urdf">
   <link name="headLink">
     <contact>
@@ -17,7 +17,7 @@
         <mesh filename="head.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="darkgrey">
-        <color rgba="0.2 0.2 0.2 1"/>
+        <color rgba="0.2 0.2 0.2 1.0"/>
       </material>
     </visual>
     <collision>
@@ -54,7 +54,7 @@
         <mesh filename="tip.obj" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="blue">
-        <color rgba="0.18039216, 0.50588235, 0.77254902 1"/>
+        <color rgba="0.18039216 0.50588235 0.77254902 1.0"/>
       </material>
     </visual>
     <collision>

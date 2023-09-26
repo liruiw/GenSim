@@ -55,8 +55,7 @@ class AssembleSingleCar(Task):
 
         # Add the goals.
         self.add_goal(objs=[roof_id], matches=np.ones((1, 1)), targ_poses=[roof_targ_pose], replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1/3)
-        self.add_goal(objs=wheel_ids, matches=np.ones((2, 2)), targ_poses=wheel_targ_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=2/3)
+                      rotations=True, metric='pose', params=None, step_max_reward=1/3, language_goal=self.lang_template)
 
-        self.lang_goals.append(self.lang_template)
+        self.add_goal(objs=wheel_ids, matches=np.ones((2, 2)), targ_poses=wheel_targ_poses, replace=False,
+                      rotations=True, metric='pose', params=None, step_max_reward=2/3, language_goal=self.lang_template)

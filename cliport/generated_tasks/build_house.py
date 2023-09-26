@@ -68,17 +68,17 @@ class BuildHouse(Task):
         # Add goals for each step of the house construction.
         # Break the language prompt step-by-step
         self.add_goal(objs=base_blocks, matches=np.ones((4, 4)), targ_poses=base_target_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-        self.lang_goals.append("Construct a house structure using blocks and a cylinder. Begin by forming the base of the house with four red blocks arranged in a square shape.")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                      language_goal="Construct a house structure using blocks and a cylinder. Begin by forming the base of the house with four red blocks arranged in a square shape.")
 
         self.add_goal(objs=wall_blocks, matches=np.ones((4, 4)), targ_poses=wall_target_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-        self.lang_goals.append("Then build the walls by stacking two blue blocks on top of each base block. ")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                      language_goal="Then build the walls by stacking two blue blocks on top of each base block. ")
 
         self.add_goal(objs=roof_blocks, matches=np.ones((2, 2)), targ_poses=roof_target_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-        self.lang_goals.append("Create a roof by placing two yellow blocks on the uppermost blue blocks, angled to form an apex. ")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                      language_goal="Create a roof by placing two yellow blocks on the uppermost blue blocks, angled to form an apex. ")
 
         self.add_goal(objs=[chimney_id], matches=np.ones((1, 1)), targ_poses=chimney_target_pose, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4)
-        self.lang_goals.append("Finally, position a green cylinder in the center of the square created by the base blocks to represent a chimney.")
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 4,
+                      language_goal="Finally, position a green cylinder in the center of the square created by the base blocks to represent a chimney.")

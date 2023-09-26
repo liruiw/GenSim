@@ -21,7 +21,7 @@ def main(cfg):
         hz=480,
         record_cfg=cfg['record']
     )
-
+    cfg['task'] = cfg['task'].replace("_", "-")
     task = tasks.names[cfg['task']]()
     task.mode = cfg['mode']
     record = cfg['record']['save_video']
@@ -52,6 +52,8 @@ def main(cfg):
         dataset.n_episodes = 0
 
     curr_run_eps = 0
+    total_rews = 0
+
     # Collect training data from oracle demonstrations.
     while dataset.n_episodes < cfg['n'] and curr_run_eps < max_eps:
     # for epi_idx in range(cfg['n']):
@@ -90,21 +92,31 @@ def main(cfg):
                     break
             if record:
                 env.end_rec()
+
         except Exception as e:
-            print(e)
+            from pygments import highlight
+            from pygments.lexers import PythonLexer
+            from pygments.formatters import TerminalFormatter
+            import traceback
+
+            to_print = highlight(f"{str(traceback.format_exc())}", PythonLexer(), TerminalFormatter())
+            print(to_print)
             if record:
                 env.end_rec()
             continue
 
         episode.append((obs, None, reward, info))
 
-        # End video recording
-
-
         # Only save completed demonstrations.
         if save_data and total_reward > 0.99:
             dataset.add(seed, episode)
+            total_rews += 1
 
+        if hasattr(env, 'blender_recorder'):
+            print("blender pickle saved to ", '{}/blender_demo_{}.pkl'.format(data_path, dataset.n_episodes))
+            env.blender_recorder.save('{}/blender_demo_{}.pkl'.format(data_path, dataset.n_episodes))
+
+        print(f"Current Reward: {total_rews} / Episodes: {curr_run_eps}")
 
 if __name__ == '__main__':
     main()

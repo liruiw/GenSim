@@ -45,12 +45,15 @@ class ConstructCornerBlocks(Task):
 
         # Goal: blocks are stacked in a corner (bottom row: two red blocks).
         self.add_goal(objs=blocks[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2,
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a corner (middle row: one green block).
         self.add_goal(objs=blocks[2:3], matches=np.ones((1, 1)), targ_poses=targs[2:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*1)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*1,
+                          language_goal=self.lang_template)
 
         # Goal: blocks are stacked in a corner (top row: one blue block).
         self.add_goal(objs=blocks[3:], matches=np.ones((1, 1)), targ_poses=targs[3:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*1)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 4, symmetries=[np.pi/2]*1,
+                          language_goal=self.lang_template)

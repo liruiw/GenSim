@@ -51,5 +51,5 @@ class CornerSortCylinders(Task):
         # Add goals
         for i in range(len(cylinders)):
             self.add_goal(objs=[cylinders[i]], matches=np.int32([[1]]), targ_poses=[corner_poses[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(cylinders))
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(cylinders),
+                          language_goal=self.lang_template.format(color=colors[i]))

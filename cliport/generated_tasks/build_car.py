@@ -67,8 +67,8 @@ class BuildCar(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./3)
-        self.lang_goals.append("Firstly, create the base of the car by positioning two red blocks side by side.")
+                      step_max_reward=1./3,
+                      language_goal="Firstly, create the base of the car by positioning two red blocks side by side.")
 
         # Then, add the car body by stacking a blue block on top of the base.
         self.add_goal(objs=[body_block_id],
@@ -78,8 +78,8 @@ class BuildCar(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./3)
-        self.lang_goals.append("Then, add the car body by stacking a blue block on top of the base.")
+                      step_max_reward=1./3,
+                      language_goal="Then, add the car body by stacking a blue block on top of the base.")
 
         # For the wheels, place a black cylinder on each side of the base blocks.
         self.add_goal(objs=wheels,
@@ -89,6 +89,6 @@ class BuildCar(Task):
                       rotations=True,
                       metric='pose',
                       params=None,
-                      step_max_reward=1./3)
-        self.lang_goals.append("For the wheels, place a black cylinder on each side of the base blocks.")
+                      step_max_reward=1./3,
+                      language_goal="For the wheels, place a black cylinder on each side of the base blocks.")
 

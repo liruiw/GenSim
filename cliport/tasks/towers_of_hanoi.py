@@ -46,5 +46,4 @@ class TowersOfHanoi(Task):
             targ_pose = (targ_position, (0, 0, 0, 1))
             self.add_goal(objs=[disk_id], matches=np.int32([[1]]), targ_poses=[targ_pose], replace=False,
                     rotations=True, metric='pose', params=None, step_max_reward=1 / len(hanoi_steps),
-                    symmetries=[0])
-            self.lang_goals.append(self.lang_template)
+                    symmetries=[0], language_goal=self.lang_template)

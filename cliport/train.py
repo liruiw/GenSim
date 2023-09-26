@@ -5,7 +5,7 @@ from pathlib import Path
 
 import torch
 from cliport import agents
-from cliport.dataset import RavensDataset, RavensMultiTaskDataset
+from cliport.dataset import RavensDataset, RavensMultiTaskDataset, RavenMultiTaskDatasetBalance
 
 import hydra
 from pytorch_lightning import Trainer
@@ -18,10 +18,21 @@ import IPython
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_only
 import datetime
+import time
+import random
+
+
+def set_seed_everywhere(seed):
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
 
 @hydra.main(config_path="./cfg", config_name='train', version_base="1.2")
 def main(cfg):
     # Logger
+    set_seed_everywhere(1)
     wandb_logger = None
 
     if cfg['train']['log']:
@@ -74,14 +85,26 @@ def main(cfg):
     task = cfg['train']['task']
     agent_type = cfg['train']['agent']
     n_demos = cfg['train']['n_demos']
+    
+    if agent_type == 'mdetr':
+        print('======import torch.multiprocessing to avioid shared memory issue======')
+        import torch.multiprocessing
+        torch.multiprocessing.set_sharing_strategy('file_system')
+
+    # n_demos = cfg['train']['n_demos']
+    # n_demos = cfg['train']['n_demos']
     n_val = cfg['train']['n_val']
     name = '{}-{}-{}'.format(task, agent_type, n_demos)
             
     # Datasets
     dataset_type = cfg['dataset']['type']
     if 'multi' in dataset_type:
-        train_ds = RavensMultiTaskDataset(data_dir, cfg, group=task, mode='train', n_demos=n_demos, augment=True)
+        train_ds = RavensMultiTaskDataset(data_dir, cfg, group=task, mode='train', 
+                    n_demos=n_demos, augment=True)
         val_ds = RavensMultiTaskDataset(data_dir, cfg, group=task, mode='val', n_demos=n_val, augment=False)
+    elif 'weighted' in dataset_type:
+        train_ds = RavenMultiTaskDatasetBalance(data_dir, cfg, group=task, mode='train', n_demos=n_demos, augment=True)
+        val_ds = RavenMultiTaskDatasetBalance(data_dir, cfg, group=task, mode='val', n_demos=n_val, augment=False)
     else:
         train_ds = RavensDataset(os.path.join(data_dir, '{}-train'.format(task)), cfg, n_demos=n_demos, augment=True)
         val_ds = RavensDataset(os.path.join(data_dir, '{}-val'.format(task)), cfg, n_demos=n_val, augment=False)
@@ -99,9 +122,12 @@ def main(cfg):
     agent = agents.names[agent_type](name, cfg, train_loader, test_loader)
     dt_string = datetime.datetime.now().strftime("%d_%m_%Y_%H:%M:%S")
     print("current time:", dt_string)
-
+    
+    start_time = time.time()
     # Main training loop
     trainer.fit(agent, ckpt_path=last_checkpoint)
+    
+    print("current time:", time.time() - start_time)
 
 if __name__ == '__main__':
     main()

@@ -197,7 +197,39 @@ class RavensDataset(Dataset):
         # Data augmentation.
         if augment:
             img, _, (p0, p1), perturb_params = utils.perturb(img, [p0, p1], theta_sigma=self.aug_theta_sigma)
+            # print("augment:", self.cfg['train']['data_augmentation'])
+            if self.cfg['train']['data_augmentation']:
+                # visualize original color, depth and augmented color and depth
+                # import IPython
+                # IPython.embed()
+                color = img[...,:3]
+                depth = img[...,3:]
+                original_color = color.copy()
+                original_depth = depth.copy()
 
+                from cliport.utils.dataaug import chromatic_transform, add_noise,  add_noise_depth
+                if np.random.rand(1) > 0.1:
+                    color = chromatic_transform(color.astype(np.uint8))
+                if np.random.rand(1) > 0.1:
+                    color = add_noise(color)
+                if np.random.rand(1) > 0.1:
+                    depth = add_noise_depth(depth)
+
+                # visualization
+                # import matplotlib.pyplot as plt
+                # fig = plt.figure(figsize=(32, 18))
+                # ax = fig.add_subplot(2, 2, 1)
+                # plt.imshow(original_color.astype(np.uint8))
+                # ax = fig.add_subplot(2, 2, 2)
+                # plt.imshow(color.astype(np.uint8))
+                # ax = fig.add_subplot(2, 2, 3)
+                # plt.imshow(original_depth)
+                # ax = fig.add_subplot(2, 2, 4)
+                # plt.imshow(depth)
+                # plt.show()
+
+                color = color.astype(np.float32)
+                img = np.concatenate((color, depth, depth, depth), axis=-1)
         # print("sample", p0,p1,p0_theta,p1_theta,perturb_params)
         sample = {
             'img': img.copy(),
@@ -294,7 +326,7 @@ class RavensMultiTaskDataset(RavensDataset):
         self.mode = mode
         if group not in self.MULTI_TASKS:
             # generate the groups on the fly
-            self.tasks = group# .split(" ")
+            self.tasks = list(set(group)) # .split(" ")
         else:
             self.tasks = self.MULTI_TASKS[group][mode]
         
@@ -333,7 +365,7 @@ class RavensMultiTaskDataset(RavensDataset):
                 raise Exception(f"{task}-{mode} has 0 episodes. Remove it from the list in dataset.py")
 
             # Select random episode depending on the size of the dataset.
-            episodes[task] = np.random.choice(range(n_episodes), min(self.n_demos, n_episodes), False)
+            episodes[task] = np.random.choice(range(self.n_demos), min(self.n_demos, n_episodes), False)
 
         if self.n_demos > 0:
             self.images = self.cfg['dataset']['images']
@@ -353,7 +385,7 @@ class RavensMultiTaskDataset(RavensDataset):
 
     def __getitem__(self, idx):
         # Choose random task.
-        self._task = np.random.choice(self.tasks)
+        self._task = self.tasks[idx % len(self.tasks)] # np.random.choice(self.tasks)
         self._path = os.path.join(self.root_path, f'{self._task}')
 
         # Choose random episode.
@@ -392,19 +424,19 @@ class RavensMultiTaskDataset(RavensDataset):
         raise Exception("Adding tasks not supported with multi-task dataset")
 
     def load(self, episode_id, images=True, cache=False):
-        if self.attr_train_task is None or self.mode in ['val', 'test']:
-            self._task = np.random.choice(self.tasks)
-        else:
-            all_other_tasks = list(self.tasks)
-            all_other_tasks.remove(self.attr_train_task)
-            all_tasks = [self.attr_train_task] + all_other_tasks # add seen task in the front
+        # if self.attr_train_task is None or self.mode in ['val', 'test']:
+        #     self._task = np.random.choice(self.tasks)
+        # else:
+        #     all_other_tasks = list(self.tasks)
+        #     all_other_tasks.remove(self.attr_train_task)
+        #     all_tasks = [self.attr_train_task] + all_other_tasks # add seen task in the front
 
-            # 50% chance of sampling the main seen task and 50% chance of sampling any other seen-unseen task
-            mult_attr_seen_sample_prob = 0.5
-            sampling_probs = [(1-mult_attr_seen_sample_prob) / (len(all_tasks)-1)] * len(all_tasks)
-            sampling_probs[0] = mult_attr_seen_sample_prob
+        #     # 50% chance of sampling the main seen task and 50% chance of sampling any other seen-unseen task
+        #     mult_attr_seen_sample_prob = 0.5
+        #     sampling_probs = [(1-mult_attr_seen_sample_prob) / (len(all_tasks)-1)] * len(all_tasks)
+        #     sampling_probs[0] = mult_attr_seen_sample_prob
 
-            self._task = np.random.choice(all_tasks, p=sampling_probs)
+        #     self._task = np.random.choice(all_tasks, p=sampling_probs)
 
         self._path = os.path.join(self.root_path, f'{self._task}-{self.mode}')
         return super().load(episode_id, images, cache)
@@ -822,3 +854,119 @@ class RavensMultiTaskDataset(RavensDataset):
         },
 
     }
+    
+    
+    
+class RavenMultiTaskDatasetBalance(RavensMultiTaskDataset):
+    def __init__(self, path, cfg, group='multi-all',
+                 mode='train', n_demos=100, augment=False, balance_weight=0.1):
+        """A multi-task dataset for balancing data."""
+        self.root_path = path
+        self.mode = mode
+        if group not in self.MULTI_TASKS:
+            # generate the groups on the fly
+            self.tasks = group# .split(" ")
+        else:
+            self.tasks = self.MULTI_TASKS[group][mode]
+        
+        print("self.tasks:", self.tasks)
+        self.attr_train_task = self.MULTI_TASKS[group]['attr_train_task'] if group in self.MULTI_TASKS and 'attr_train_task' in self.MULTI_TASKS[group] else None
+
+        self.cfg = cfg
+        self.sample_set = {}
+        self.max_seed = -1
+        self.n_episodes = 0
+        self.images = self.cfg['dataset']['images']
+        self.cache = self.cfg['dataset']['cache']
+        self.n_demos = n_demos
+        self.augment = augment
+
+        self.aug_theta_sigma = self.cfg['dataset']['augment']['theta_sigma'] if 'augment' in self.cfg['dataset'] else 60  # legacy code issue: theta_sigma was newly added
+        self.pix_size = 0.003125
+        self.in_shape = (320, 160, 6)
+        self.cam_config = cameras.RealSenseD415.CONFIG
+        self.bounds = np.array([[0.25, 0.75], [-0.5, 0.5], [0, 0.28]])
+
+        self.n_episodes = {}
+        episodes = {}
+
+        for task in self.tasks:
+            task_path = os.path.join(self.root_path, f'{task}-{mode}')
+            action_path = os.path.join(task_path, 'action')
+            n_episodes = 0
+            if os.path.exists(action_path):
+                for fname in sorted(os.listdir(action_path)):
+                    if '.pkl' in fname:
+                        n_episodes += 1
+            self.n_episodes[task] = n_episodes
+
+            if n_episodes == 0:
+                raise Exception(f"{task}-{mode} has 0 episodes. Remove it from the list in dataset.py")
+
+            # Select random episode depending on the size of the dataset.
+            if task in self.ORIGINAL_NAMES and self.mode == 'train':
+                assert self.n_demos < 200 # otherwise, we need to change the code below
+                episodes[task] = np.random.choice(range(n_episodes), min(int(self.n_demos*balance_weight), n_episodes), False)
+            else:       
+                episodes[task] = np.random.choice(range(n_episodes), min(self.n_demos, n_episodes), False)
+
+        if self.n_demos > 0:
+            self.images = self.cfg['dataset']['images']
+            self.cache = False 
+            self.set(episodes)
+
+        self._path = None
+        self._task = None
+        
+        
+        
+    ORIGINAL_NAMES = [
+    # demo conditioned
+    'align-box-corner',
+    'assembling-kits',
+    'assembling-kits-easy',
+    'block-insertion',
+    'block-insertion-easy',
+    'block-insertion-nofixture',
+    'block-insertion-sixdof',
+    'block-insertion-translation',
+    'manipulating-rope',
+    'packing-boxes',
+    'palletizing-boxes',
+    'place-red-in-green',
+    'stack-block-pyramid',
+    'sweeping-piles',
+    'towers-of-hanoi',
+    'gen-task',
+    # goal conditioned
+    'align-rope',
+    'assembling-kits-seq',
+    'assembling-kits-seq-seen-colors',
+    'assembling-kits-seq-unseen-colors',
+    'assembling-kits-seq-full',
+    'packing-shapes',
+    'packing-boxes-pairs',
+    'packing-boxes-pairs-seen-colors',
+    'packing-boxes-pairs-unseen-colors',
+    'packing-boxes-pairs-full',
+    'packing-seen-google-objects-seq',
+    'packing-unseen-google-objects-seq',
+    'packing-seen-google-objects-group',
+    'packing-unseen-google-objects-group',
+    'put-block-in-bowl',
+    'put-block-in-bowl-seen-colors',
+    'put-block-in-bowl-unseen-colors',
+    'put-block-in-bowl-full',
+    'stack-block-pyramid-seq',
+    'stack-block-pyramid-seq-seen-colors',
+    'stack-block-pyramid-seq-unseen-colors',
+    'stack-block-pyramid-seq-full',
+    'separating-piles',
+    'separating-piles-seen-colors',
+    'separating-piles-unseen-colors',
+    'separating-piles-full',
+    'towers-of-hanoi-seq',
+    'towers-of-hanoi-seq-seen-colors',
+    'towers-of-hanoi-seq-unseen-colors',
+    'towers-of-hanoi-seq-full',
+    ]

@@ -55,5 +55,4 @@ class ColorOrderedBlocksOnPallet(Task):
         # Goal: blocks are placed on the pallet in the order of red, blue, green, yellow, orange, purple.
         for i in range(6):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[targs[i]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2])
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2], language_goal=self.lang_template)

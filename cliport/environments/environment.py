@@ -15,6 +15,7 @@ import string
 import pybullet as p
 import tempfile
 import random
+import sys
 
 PLACE_STEP = 0.0003
 PLACE_DELTA_THRESHOLD = 0.005
@@ -199,7 +200,16 @@ class Environment(gym.Env):
         if color is not None:
             if type(color) is str:
                 color = utils.COLORS[color]
-            p.changeVisualShape(obj_id, -1, rgbaColor=color + [1])
+            color = color + [1.]
+            p.changeVisualShape(obj_id, -1, rgbaColor=color)
+
+        if  hasattr(self, 'record_cfg') and 'blender_render' in self.record_cfg and self.record_cfg['blender_render']:
+            # print("urdf:", os.path.join(self.assets_root, urdf))
+            # if color is None:
+            #     color = (0.5,0.5,0.5,1) # by default
+            print("color:", color)
+
+            self.blender_recorder.register_object(obj_id, os.path.join(self.assets_root, urdf), color=color)
 
         return obj_id
 
@@ -229,9 +239,9 @@ class Environment(gym.Env):
         # Temporarily disable rendering to load scene faster.
         p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 0)
 
-        pybullet_utils.load_urdf(p, os.path.join(self.assets_root, PLANE_URDF_PATH),
+        plane = pybullet_utils.load_urdf(p, os.path.join(self.assets_root, PLANE_URDF_PATH),
                                  [0, 0, -0.001])
-        pybullet_utils.load_urdf(
+        workspace = pybullet_utils.load_urdf(
             p, os.path.join(self.assets_root, UR5_WORKSPACE_URDF_PATH), [0.5, 0, 0])
 
         # Load UR5 robot arm equipped with suction end effector.
@@ -240,6 +250,19 @@ class Environment(gym.Env):
             p, os.path.join(self.assets_root, UR5_URDF_PATH))
         self.ee = self.task.ee(self.assets_root, self.ur5, 9, self.obj_ids)
         self.ee_tip = 10  # Link ID of suction cup.
+
+        if  hasattr(self, 'record_cfg') and 'blender_render' in self.record_cfg and self.record_cfg['blender_render']:
+            from misc.pyBulletSimRecorder import PyBulletRecorder
+            self.blender_recorder = PyBulletRecorder()
+
+            self.blender_recorder.register_object(plane, os.path.join(self.assets_root, PLANE_URDF_PATH))
+            self.blender_recorder.register_object(workspace, os.path.join(self.assets_root, UR5_WORKSPACE_URDF_PATH))
+            self.blender_recorder.register_object(self.ur5, os.path.join(self.assets_root, UR5_URDF_PATH))
+
+            self.blender_recorder.register_object(self.ee.base,  self.ee.base_urdf_path)
+            if hasattr(self.ee, 'body'):
+                self.blender_recorder.register_object(self.ee.body,  self.ee.urdf_path)
+
 
         # Get revolute joint indices of robot (skip fixed joints).
         n_joints = p.getNumJoints(self.ur5)
@@ -412,7 +435,7 @@ class Environment(gym.Env):
     def movej(self, targj, speed=0.01, timeout=5):
         """Move UR5 to target joint configuration."""
         if self.save_video:
-            timeout = timeout * 5 # 50?
+            timeout = timeout * 30 # 50?
 
         t0 = time.time()
         while (time.time() - t0) < timeout:
@@ -473,13 +496,17 @@ class Environment(gym.Env):
         color, depth, _ = self.render_camera(config, image_size, shadow=0)
         color = np.array(color)
 
+        if hasattr(self.record_cfg, 'blender_render') and  self.record_cfg['blender_render']:
+            # print("add blender key frame")
+            self.blender_recorder.add_keyframe()
+
         # Add language instruction to video.
         if self.record_cfg['add_text']:
             lang_goal = self.get_lang_goal()
             reward = f"Success: {self.task.get_reward():.3f}"
 
             font = cv2.FONT_HERSHEY_DUPLEX
-            font_scale =   0.65
+            font_scale = 0.65
             font_thickness =  1
 
             # Write language goal.

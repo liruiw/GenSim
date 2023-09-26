@@ -107,9 +107,6 @@ class PackingBoxesPairs(Task):
             relevant_desc = f'{relevant_color_names[0]}'
 
         # IMPORTANT: Specify (obj_pts, [(zone_pose, zone_size)]) for target `zone`. obj_pts is a dict
+        language_goal = self.lang_template.format(colors=relevant_desc)
         self.add_goal(objs=object_ids, matches=np.eye(len(object_ids)), targ_poses=true_poses, replace=False,
-                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1)
-
-        self.lang_goals.append(self.lang_template.format(
-            colors=relevant_desc,
-        ))
+                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1, language_goal=language_goal)

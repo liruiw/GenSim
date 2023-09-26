@@ -36,6 +36,4 @@ class RainbowStack(Task):
         # Goal: stack the blocks on the stand in the order of the rainbow from bottom to top.
         for i in range(len(blocks)):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[stand_pose], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks))
-
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / len(blocks), language_goal=self.lang_template)

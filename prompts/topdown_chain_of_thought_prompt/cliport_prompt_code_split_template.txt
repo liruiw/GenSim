@@ -60,7 +60,7 @@ class PackingShapes(Task):
             pose= self.get_random_pose(env, size)
             fname = f'{shape:02d}.obj'
             fname = os.path.join(self.assets_root, 'kitting', fname)
-            scale = [0.003, 0.003, 0.001]  
+            scale = [0.003, 0.003, 0.001]  # .0005
             replace = {'FNAME': (fname,),
                        'SCALE': scale,
                        'COLOR': colors[i]}
@@ -74,10 +74,10 @@ class PackingShapes(Task):
         num_objects_to_pick = 1
         for i in range(num_objects_to_pick):
             # IMPORTANT: Specify (obj_pts, [(zone_pose, zone_size)]) for target `zone`. obj_pts is a dict
+            language_goal = self.lang_template.format(obj=shapes[obj_shapes[i]])
             self.add_goal(objs=[objects[i]], matches=np.int32([[1]]), targ_poses=[zone_pose], replace=False,
-                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / num_objects_to_pick)
-
-            self.lang_goals.append(self.lang_template.format(obj=shapes[obj_shapes[i]]))
+                rotations=True, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1 / num_objects_to_pick,
+                language_goal=language_goal)
 """
 """
 import numpy as np
@@ -123,11 +123,9 @@ class PlaceRedInGreen(Task):
 
         # Goal: each red block is in a different green bowl.
         self.add_goal(objs=blocks, matches=np.ones((len(blocks), len(bowl_poses))), targ_poses=bowl_poses, replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1, language_goal=self.lang_template)
 
         # Colors of distractor objects.
-        # IMPORTANT: RETRIEVE THE ACTUAL COLOR VALUES
         bowl_colors = [utils.COLORS[c] for c in utils.COLORS if c != 'green']
         block_colors = [utils.COLORS[c] for c in utils.COLORS if c != 'red']
 
@@ -160,6 +158,8 @@ class SweepingPiles(Task):
         self.max_steps = 20
         self.lang_template = "push the pile of blocks into the green square"
         self.task_completed_desc = "done sweeping."
+        self.primitive = primitives.push
+        self.ee = Spatula
         self.additional_reset()
 
     def reset(self, env):
@@ -170,13 +170,12 @@ class SweepingPiles(Task):
         zone_pose = self.get_random_pose(env, zone_size)
         env.add_object('zone/zone.urdf', zone_pose, 'fixed')
 
-        #  use `make_piles` to add pile of small blocks.
+        # Add pile of small blocks with `make_piles` function
         obj_ids = self.make_piles(env)
 
         # Add goal
         self.add_goal(objs=obj_ids, matches=np.ones((50, 1)), targ_poses=[zone_pose], replace=True,
-                rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1)
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='zone', params=[(zone_pose, zone_size)], step_max_reward=1, language_goal=self.lang_template)
 """
 """
 import numpy as np
@@ -210,7 +209,6 @@ class StackBlockPyramid(Task):
         ]
 
         # Add blocks.
-        # x, y, z dimensions for the asset size
         block_size = (0.04, 0.04, 0.04)
         block_urdf = 'stacking/block.urdf'
 
@@ -220,38 +218,30 @@ class StackBlockPyramid(Task):
             block_id = env.add_object(block_urdf, block_pose, color=colors[i])
             objs.append(block_id)
 
-        # Associate placement locations for goals.
+        # IMPORTANT Associate placement locations for goals.
         place_pos = [(0, -0.05, 0.03), (0, 0, 0.03),
                      (0, 0.05, 0.03), (0, -0.025, 0.08),
                      (0, 0.025, 0.08), (0, 0, 0.13)]
         targs = [(utils.apply(base_pose, i), base_pose[1]) for i in place_pos]
 
         # Goal: blocks are stacked in a pyramid (bottom row: green, blue, purple).
+        language_goal = self.lang_template.format(blocks="the green, blue and purple blocks", row="bottom")
         self.add_goal(objs=objs[:3], matches=np.ones((3, 3)), targ_poses=targs[:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the green, blue and purple blocks",
-                                                         row="bottom"))
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3, language_goal=language_goal)
 
         # Goal: blocks are stacked in a pyramid (middle row: yellow, orange).
-        self.add_goal(objs=objs[3:5], matches=np.ones((3, 3)), targ_poses=targs[3:5], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the yellow and orange blocks",
-                                                         row="middle"))
+        language_goal = self.lang_template.format(blocks="the yellow and orange blocks", row="middle")      
+        self.add_goal(objs=objs[3:5], matches=np.ones((2, 2)), targ_poses=targs[3:5], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2, language_goal=language_goal)
 
         # Goal: blocks are stacked in a pyramid (top row: red).
-        self.add_goal(objs=objs[5:], matches=np.ones((3, 3)), targ_poses=targs[5:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template.format(blocks="the red block",
-                                                         row="top"))
+        language_goal = self.lang_template.format(blocks="the red block", row="top")
+        self.add_goal(objs=objs[5:], matches=np.ones((1, 1)), targ_poses=targs[5:], replace=False,
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 6, symmetries=[np.pi/2]*1, language_goal=language_goal)
 """
 
 
 
-Do not use libraries, functions, and assets that you don't know. For each object, try to describe its color, size, category in the task first before you write the code. You do not need extra helper functions. Comment the code liberally to explain what each piece does and why it's written that way. Use functions `make_piles` and `make_cables` for creating piles and cables. To use spatula together with the push primitives, import the libraries 
-"""
-from cliport.tasks import primitives;
-from cliport.tasks.grippers import Spatula
-"""
-and then use `self.primitive = primitives.push` and `self.ee = Spatula`.
+Do not use libraries, functions, and assets that you don't know. For each object, try to describe its color, size, category in the task first before you write the code. You do not need extra helper functions. Comment the code liberally to explain what each piece does and why it's written that way. Use functions `make_piles` and `make_ropes` for creating piles and cables.  Note that the number of language goals usually match the number of motion goals, since they should correspond to each other.
 
 Now write the code for the task "TASK_NAME_TEMPLATE" in python code block starting with ```python.  Reminder: TASK_STRING_TEMPLATE 

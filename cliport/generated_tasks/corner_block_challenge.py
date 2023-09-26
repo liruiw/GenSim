@@ -49,9 +49,10 @@ class CornerBlockChallenge(Task):
         # Goal: each block is stacked in the correct corner in the correct order.
         for i in range(4):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[corner_poses[0]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/8)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/8,
+                          language_goal=self.lang_template)
+
         for i in range(4, 8):
             self.add_goal(objs=[blocks[i]], matches=np.ones((1, 1)), targ_poses=[corner_poses[1]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/8)
-
-        self.lang_goals.append(self.lang_template)
+                          rotations=True, metric='pose', params=None, step_max_reward=1/8,
+                          language_goal=self.lang_template)

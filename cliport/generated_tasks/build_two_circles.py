@@ -58,8 +58,6 @@ class BuildTwoCircles(Task):
 
         # Goal: each red block is in the red circle, each blue block is in the blue circle.
         self.add_goal(objs=red_blocks, matches=np.ones((6, 6)), targ_poses=red_circle_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2)
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, language_goal=self.lang_template)
         self.add_goal(objs=blue_blocks, matches=np.ones((6, 6)), targ_poses=blue_circle_poses, replace=False,
-                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2)
-
-        self.lang_goals.append(self.lang_template)
+                      rotations=True, metric='pose', params=None, step_max_reward=1 / 2, language_goal=self.lang_template)

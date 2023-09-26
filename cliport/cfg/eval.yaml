@@ -47,3 +47,4 @@ record:
   video_height: 640
   video_width: 720
   add_task_text: False
+  blender_render: False # new: use blender recorder for rendering

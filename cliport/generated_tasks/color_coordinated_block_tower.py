@@ -50,15 +50,15 @@ class ColorCoordinatedBlockTower(Task):
         # Goal: two blue blocks are placed side by side on the pallet.
         # Break the language prompt step-by-step
         self.add_goal(objs=blocks[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2)
-        self.lang_goals.append("place two blue blocks side by side on the pallet")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*2,
+                language_goal="place two blue blocks side by side on the pallet")
 
         # Goal: one red block is placed centered on the blue blocks.
         self.add_goal(objs=blocks[2:3], matches=np.ones((1, 1)), targ_poses=targs[2:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-        self.lang_goals.append("place one red block centered on the blue blocks")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2],
+                language_goal="place one red block centered on the blue blocks")
 
         # Goal: one green block is placed on top of the red block.
         self.add_goal(objs=blocks[3:], matches=np.ones((1, 1)), targ_poses=targs[3:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2])
-        self.lang_goals.append("place one green block on top of the red block")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2],
+                language_goal="place one green block on top of the red block")

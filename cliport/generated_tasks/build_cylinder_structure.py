@@ -53,15 +53,15 @@ class BuildCylinderStructure(Task):
 
         # Goal: red and blue cylinders are placed side by side on the base.
         self.add_goal(objs=objs[:2], matches=np.ones((2, 2)), targ_poses=targs[:2], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2)
-        self.lang_goals.append("place the red and blue cylinders side by side on the base")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*2,
+                language_goal="place the red and blue cylinders side by side on the base")
 
         # Goal: green cylinder is placed on top of the blue cylinder.
         self.add_goal(objs=[objs[2]], matches=np.ones((1, 1)), targ_poses=[targs[2]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2])
-        self.lang_goals.append("place the green cylinder on top of the blue cylinder")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2],
+                language_goal="place the green cylinder on top of the blue cylinder")
 
         # Goal: yellow cylinder is placed on top of the red cylinder.
         self.add_goal(objs=[objs[3]], matches=np.ones((1, 1)), targ_poses=[targs[3]], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2])
-        self.lang_goals.append("place the yellow cylinder on top of the red cylinder")
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2],
+                language_goal="place the yellow cylinder on top of the red cylinder")

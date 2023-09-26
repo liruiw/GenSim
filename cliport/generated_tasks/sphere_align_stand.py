@@ -30,7 +30,7 @@ class SphereAlignStand(Task):
         # Add stands.
         # x, y, z dimensions for the asset size
         stand_size = (0.05, 0.05, 0.05)
-        stand_urdf = 'stand/stand.urdf'
+        stand_urdf = 'stacking/stand.urdf'
         stand_poses = []
         for i in range(5):
             stand_pose = self.get_random_pose(env, stand_size)
@@ -50,5 +50,5 @@ class SphereAlignStand(Task):
         # Goal: each sphere is on the stand of the matching color.
         for i in range(5):
             self.add_goal(objs=[spheres[i]], matches=np.ones((1, 1)), targ_poses=[stand_poses[i]], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1/5)
-            self.lang_goals.append(self.lang_template.format(color=color_names[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1/5,
+                          language_goal=self.lang_template.format(color=color_names[i]))

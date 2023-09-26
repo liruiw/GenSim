@@ -48,5 +48,5 @@ class ColorOrderedInsertion(Task):
         # Goal: each ell is inserted into the matching color fixture in the correct order.
         for i, ell in enumerate(ells):
             self.add_goal(objs=[ell], matches=np.ones((1, 1)), targ_poses=[p.getBasePositionAndOrientation(fixtures[i])], replace=False,
-                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(ells))
-            self.lang_goals.append(self.lang_template.format(color=colors[i]))
+                          rotations=True, metric='pose', params=None, step_max_reward=1 / len(ells),
+                          language_goal=self.lang_template.format(color=colors[i]))

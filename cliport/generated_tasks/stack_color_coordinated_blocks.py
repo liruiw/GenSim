@@ -59,10 +59,10 @@ class StackColorCoordinatedBlocks(Task):
         # Goal: blocks are stacked on the pallet in two separate stacks.
         # First stack: red at the bottom, blue in the middle, and green at top.
         self.add_goal(objs=blocks[:3], matches=np.ones((3, 3)), targ_poses=targs[:3], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3,
+                language_goal=self.lang_template)
 
         # Second stack: yellow at the bottom, orange in the middle, and purple at the top.
         self.add_goal(objs=blocks[3:], matches=np.ones((3, 3)), targ_poses=targs[3:], replace=False,
-                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3)
-
-        self.lang_goals.append(self.lang_template)
+                rotations=True, metric='pose', params=None, step_max_reward=1 / 2, symmetries=[np.pi/2]*3,
+                language_goal=self.lang_template)

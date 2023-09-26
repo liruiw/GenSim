@@ -56,5 +56,5 @@ class BlockPyramidWithLimitedSpace(Task):
         # Goal: blocks are sorted and stacked in a pyramid in each zone.
         for i in range(3):
             self.add_goal(objs=blocks[i*3:(i+1)*3], matches=np.ones((3, 3)), targ_poses=targs[i*3:(i+1)*3], replace=False,
-                    rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3)
-        self.lang_goals.append(self.lang_template)
+                    rotations=True, metric='pose', params=None, step_max_reward=1 / 3, symmetries=[np.pi/2]*3,
+                    language_goal=self.lang_template)

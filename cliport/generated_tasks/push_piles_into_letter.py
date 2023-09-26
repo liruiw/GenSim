@@ -43,5 +43,5 @@ class PushPilesIntoLetter(Task):
 
         # Add goal
         self.add_goal(objs=obj_ids, matches=np.ones((num_blocks, num_blocks)), targ_poses=target_poses, replace=False,
-                rotations=False, metric='pose', params=None, step_max_reward=2)
-        self.lang_goals.append(self.lang_template)
+                rotations=False, metric='pose', params=None, step_max_reward=2,
+                          language_goal=self.lang_template)
