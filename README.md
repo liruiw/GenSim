@@ -1,7 +1,9 @@
 
 # GenSim: Generating Robotic Simulation Tasks via Large Language Models
 
-[Project Page](https://gensim.github.io/) | [Arxiv]() | [Video]() | [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim) | [Huggingface Dataset](https://huggingface.co/datasets/Gen-Sim/Gen-Sim)
+### Lirui Wang, Yiyang Ling, Zhecheng Yuan, Mohit Shridhar, Chen Bao, Yuzhe Qin, Bailin Wang, Huazhe Xu, Xiaolong Wang
+
+[Project Page](https://liruiw.github.io/gensim) | [Arxiv](https://arxiv.org/abs/2310.01361) | [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim) | [Huggingface Dataset](https://huggingface.co/datasets/Gen-Sim/Gen-Sim)
 
 This repo explores the use of an LLM code generation pipeline to write simulation environments and expert goals to augment diverse simulation tasks. 
 
@@ -47,7 +49,7 @@ python gensim/run_simulation.py  disp=True  prompt_folder=topdown_chain_of_thoug
 
 
 ## 🎛️ LLM Finetune
-1. Prepare data using `python gensim/prepare_finetune_gpt.py`. 
+1. Prepare data using `python gensim/prepare_finetune_gpt.py`. Released dataset is [here](https://huggingface.co/datasets/Gen-Sim/Gen-Sim)
 
 2. Finetune using openai api ` openai api fine_tunes.create --training_file output/finetune_data_prepared.jsonl --model davinci --suffix 'GenSim'`
 
@@ -77,3 +79,14 @@ python gensim/run_simulation.py  disp=True  prompt_folder=topdown_chain_of_thoug
 9. blender rendering `python cliport/demos.py n=310 task=align-box-corner mode=test disp=True +record.blender_render=True record.save_video=True`
 
 ![](media/teaser_figure.png)
+
+### Citation
+If you find GenSim useful in your research, please consider citing:
+```
+@inproceedings{wang2023gen,
+author    = {Lirui Wang, Yiyang Ling, Zhecheng Yuan, Mohit Shridhar, Chen Bao, Yuzhe Qin, Bailin Wang, Huazhe Xu, Xiaolong Wang},
+title     = {GenSim: Generating Robotic Simulation Tasks via Large Language Models},
+booktitle = {Arxiv},
+year      = {2023}
+}
+```
