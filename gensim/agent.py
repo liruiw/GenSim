@@ -130,9 +130,6 @@ class Agent:
                     task_code_reference_replace_prompt += f'```\n{self.memory.online_code_buffer[key]}\n```\n\n'
                 else:
                     print("missing task reference code:", key)
-        else:
-            task_code_reference_replace_prompt = sample_list_reference(base_task_codes, sample_num=cfg['task_code_candidate_num'])
-        # print("Template Reference Code PROMPT: ", task_code_reference_replace_prompt)
 
         return task_code_reference_replace_prompt
 

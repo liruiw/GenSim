@@ -42,7 +42,7 @@ def main(cfg):
         simulation_runner.task_creation()
         simulation_runner.simulate_task()
         simulation_runner.print_current_stats()
-        # clear_messages()
+        clear_messages()
 
     simulation_runner.save_stats()
 

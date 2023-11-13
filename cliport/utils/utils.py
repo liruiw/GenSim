@@ -20,6 +20,7 @@ from omegaconf import OmegaConf
 import os
 import torch
 import torchvision
+from collections import defaultdict
 
 
 # -----------------------------------------------------------------------------
@@ -1047,6 +1048,7 @@ COLORS = {
     'gold': [255.0 / 255.0, 215.0 / 255.0, 0.0 / 255.0],    
 
 }
+COLORS = defaultdict(lambda: [255.0 / 255.0, 0.0, 0.], COLORS)
 
 COLORS_NAMES = list(COLORS.keys())
 TRAIN_COLORS = ['blue', 'red', 'green', 'yellow', 'brown', 'gray', 'cyan']

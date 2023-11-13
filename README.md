@@ -3,9 +3,9 @@
 
 ### Lirui Wang, Yiyang Ling, Zhecheng Yuan, Mohit Shridhar, Chen Bao, Yuzhe Qin, Bailin Wang, Huazhe Xu, Xiaolong Wang
 
-[Project Page](https://liruiw.github.io/gensim) | [Arxiv](https://arxiv.org/abs/2310.01361) | [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim) | [Huggingface Dataset](https://huggingface.co/datasets/Gen-Sim/Gen-Sim) | [Finetuned Code-LLama Model](https://huggingface.co/Gen-Sim/Gen-Sim)
+[Project Page](https://liruiw.github.io/gensim) | [Arxiv](https://arxiv.org/abs/2310.01361) | [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim) | [Huggingface Dataset](https://huggingface.co/datasets/Gen-Sim/Gen-Sim) | [Finetuned Code-LLama Model](https://huggingface.co/Gen-Sim/Gen-Sim) | [GPTs](https://chat.openai.com/g/g-rqxeNpjxd-gensim)
 
-This repo explores the use of an LLM code generation pipeline to write simulation environments and expert goals to augment diverse simulation tasks. Strongly recommend also checking out the [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim).
+This repo explores the use of an LLM code generation pipeline to write simulation environments and expert goals to augment diverse simulation tasks. Strongly recommend also checking out the [Gradio Demo](https://huggingface.co/spaces/Gen-Sim/Gen-Sim) and [GPTs](https://chat.openai.com/g/g-rqxeNpjxd-gensim).
 
 
 ![](media/gensim_teaser_v1.gif)
@@ -65,11 +65,12 @@ python gensim/run_simulation.py  disp=True  prompt_folder=topdown_chain_of_thoug
 
 8. offline eval: `python -m gensim.evaluate_finetune_model_offline model_output_dir=after_finetune_CodeLlama-13b-Instruct-hf_fewshot_False_epoch_10_0`
 
-## 🤖 Policy Training Benchmark
-0. Note that the 100+ generated tasks by GenSim can be used for benchmarking algorithms in multitask policy training. See `prompts/policy_training_list.json` for a list of training tasks.
+## 🤖 Policy Benchmark
+0. Note that the 100+ generated tasks by GenSim can be used for benchmarking algorithms in multitask policy training. See `scripts/task_list/GPT_*.json` for a list of benchmark settings. Pretrained multitask models can be found [here](https://drive.google.com/drive/folders/1RRSa4hXQKuN1ABuUVEdfV6urqZ99KZ57?usp=drive_link).
 1. Generate multitask demonstrations. For example, run  `bash scripts/generate_datasets.sh data 'align-box-corner assembling-kits block-insertion' `
-2. Single-task training  `sh scripts/train_test_multi_task.sh data "[align-rope,align-box-corner] `
+2. Single-task training  `sh scripts/train_test_multi_task.sh data "[align-rope,align-box-corner]`
 3. Multi-task training   `sh scripts/train_test_single_task.sh data align-box-corner`
+
 
 ## ✅ Note
 0. Temperature `0.5-0.8 `is good range for diversity, `0.0-0.2` is for stable results.

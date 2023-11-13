@@ -187,6 +187,10 @@ class Environment(gym.Env):
           print(f"missing urdf error: {os.path.join(self.assets_root, urdf)}. use dummy block.")
           urdf = 'stacking/block.urdf'
 
+        if len(pose) == 3 and (not hasattr(pose[0], '__len__')):
+            # add default orientation if missing
+            pose = (pose, (0,0,0,1))
+
         obj_id = pybullet_utils.load_urdf(
             p,
             os.path.join(self.assets_root, urdf),

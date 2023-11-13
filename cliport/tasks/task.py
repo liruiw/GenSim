@@ -27,6 +27,7 @@ class Task():
         self.sixdof = False
         self.primitive = primitives.PickPlace()
         self.oracle_cams = cameras.Oracle.CONFIG
+        self.rng = None
 
         # Evaluation epsilons (for pose evaluation metric).
         self.pos_eps = 0.01
