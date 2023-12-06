@@ -91,7 +91,7 @@ python gensim/run_simulation.py  disp=True  prompt_folder=topdown_chain_of_thoug
 If you find GenSim useful in your research, please consider citing:
 ```
 @inproceedings{wang2023gen,
-author    = {Lirui Wang, Yiyang Ling, Zhecheng Yuan, Mohit Shridhar, Chen Bao, Yuzhe Qin, Bailin Wang, Huazhe Xu, Xiaolong Wang},
+author    = {Lirui Wang and Yiyang Ling and Zhecheng Yuan and Mohit Shridhar and Chen Bao and Yuzhe Qin and Bailin Wang and Huazhe Xu and Xiaolong Wang},
 title     = {GenSim: Generating Robotic Simulation Tasks via Large Language Models},
 booktitle = {Arxiv},
 year      = {2023}
