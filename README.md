@@ -12,7 +12,7 @@ This repo explores the use of an LLM code generation pipeline to write simulatio
 
 ## ⚙️ Installation
 0. ``pip install -r requirements.txt``
-1. ``python setup.py develop``
+1. ``python -m pip install --editable .``
 2. ``export GENSIM_ROOT=$(pwd)``
 3. ``export OPENAI_KEY=YOUR KEY``. We use OpenAI's GPT-4 as the language model. You need to have an OpenAI API key to run task generation with GenSim. You can get one from [here](https://platform.openai.com/account/api-keys).
 
